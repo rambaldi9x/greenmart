@@ -1,0 +1,38 @@
+version: '3.8'
+
+#services:
+#  postgres:
+#    image: postgres:15-alpine
+#    container_name: greenmart-postgres
+#    restart: unless-stopped
+#    ports:
+#      - "5432:5432"
+#    environment:
+#      POSTGRES_DB: greenmart
+#      POSTGRES_USER: postgres
+#      POSTGRES_PASSWORD: postgres
+#    volumes:
+#      - greenmart_pgdata:/var/lib/postgresql/data
+#
+#volumes:
+#  greenmart_pgdata:
+#
+
+
+services:
+  mysql-db:
+    image: mysql:8.0
+    container_name: my_mysql_container
+    restart: always
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: mysql
+      MYSQL_DATABASE: greenmart
+      MYSQL_USER: greenmart
+      MYSQL_PASSWORD: greenmart
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+volumes:
+  mysql_data:
