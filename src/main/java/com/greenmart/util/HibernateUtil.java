@@ -33,6 +33,7 @@ public class HibernateUtil {
                     settings.put(Environment.SHOW_SQL, appProps.getProperty("hibernate.show_sql"));
                     settings.put(Environment.FORMAT_SQL, appProps.getProperty("hibernate.format_sql"));
                     settings.put(Environment.HBM2DDL_AUTO, appProps.getProperty("hibernate.hbm2ddl.auto"));
+                    settings.put(Environment.GLOBALLY_QUOTED_IDENTIFIERS, appProps.getProperty("hibernate.globally_quoted_identifiers"));
                 }
             }
 

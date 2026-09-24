@@ -10,4 +10,22 @@
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
+
+    <!-- Khai báo Web Servlet tích hợp sẵn của H2 -->
+    <servlet>
+        <servlet-name>H2Console</servlet-name>
+        <servlet-class>org.h2.server.web.WebServlet</servlet-class>
+        <!-- Cho phép các máy tính khác trong mạng kết nối nếu cần (Tùy chọn) -->
+        <init-param>
+            <param-name>-webAllowOthers</param-name>
+            <param-value>true</param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+    <!-- Định nghĩa đường dẫn truy cập H2 Console -->
+    <servlet-mapping>
+        <servlet-name>H2Console</servlet-name>
+        <url-pattern>/h2-console/*</url-pattern>
+    </servlet-mapping>
 </web-app>
