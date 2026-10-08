@@ -858,7 +858,7 @@
     </a>
 
     <!-- Nút 2: Chat Shopee-style dính đáy màn hình (Chuẩn theo pasted-image-1.png) -->
-    <a href="chat${not empty foundOrder ? '?withAdmin=1&orderCode=' += foundOrder.orderCode : ''}" class="dock-btn dock-btn-chat" title="${not empty foundOrder ? 'Chat với CSKH về đơn #' += foundOrder.orderCode : 'Chat tư vấn trực tuyến với CSKH'}">
+    <a href="chat<c:if test="${not empty foundOrder}">?withAdmin=1&orderCode=${foundOrder.orderCode}</c:if>" class="dock-btn dock-btn-chat" title="<c:choose><c:when test="${not empty foundOrder}">Chat với CSKH về đơn #${foundOrder.orderCode}</c:when><c:otherwise>Chat tư vấn trực tuyến với CSKH</c:otherwise></c:choose>">
       <div class="dock-chat-icon-wrap">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block; vertical-align:middle;">
           <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" fill="white" stroke="white"></path>

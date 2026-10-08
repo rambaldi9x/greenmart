@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <c:if test="${orders == null}">
   <c:redirect url="/admin"/>
 </c:if>
@@ -405,7 +406,14 @@
                       <td>
                         <strong style="color:var(--text-heading); font-size:14px;">#${o.orderCode}</strong>
                         <div style="font-size:11.5px; color:#64748b; margin-top:3px;">
-                          ${fn:substring(o.createdAt, 0, 16)}
+                          <c:choose>
+                            <c:when test="${not empty o.createdAt and fn:length(o.createdAt) >= 16}">
+                              ${fn:substring(o.createdAt, 0, 16)}
+                            </c:when>
+                            <c:otherwise>
+                              ${not empty o.createdAt ? o.createdAt : ''}
+                            </c:otherwise>
+                          </c:choose>
                         </div>
                         <c:choose>
                           <c:when test="${o.paymentMethod == 'BANK'}">
@@ -421,7 +429,7 @@
                       <td>
                         <div class="customer-cell">
                           <div class="customer-avatar-sm">
-                            ${fn:toUpperCase(fn:substring(o.name, 0, 1))}
+                            ${not empty o.name ? fn:toUpperCase(fn:substring(o.name, 0, 1)) : 'U'}
                           </div>
                           <div>
                             <div style="font-weight:700; color:var(--text-heading); font-size:13.5px;">${o.name}</div>
@@ -657,7 +665,10 @@
     <div class="modal-content" style="max-width: 500px;">
       <div class="modal-header">
         <h3 style="font-size: 18px; color: var(--text-heading);">
-          ${not empty editProduct ? 'Chỉnh sửa sản phẩm #' += editProduct.id : 'Thêm sản phẩm mới'}
+          <c:choose>
+            <c:when test="${not empty editProduct}">Chỉnh sửa sản phẩm #${editProduct.id}</c:when>
+            <c:otherwise>Thêm sản phẩm mới</c:otherwise>
+          </c:choose>
         </h3>
         <a href="admin?tab=products" class="close-btn" style="text-decoration: none; font-size: 24px; color: #888;">&times;</a>
       </div>
@@ -717,7 +728,7 @@
           <button type="button" onclick="window.print()" style="background:rgba(255,255,255,0.18); border:none; color:white; padding:6px 12px; border-radius:6px; font-size:12.5px; cursor:pointer;" title="In hóa đơn">
             <i class="fa-solid fa-print"></i> In
           </button>
-          <a href="admin?tab=orders${not empty statusFilter ? '&statusFilter=' += statusFilter : ''}" class="close-btn" style="text-decoration: none; font-size: 24px; color: #ffffff; opacity:0.8;">&times;</a>
+          <a href="admin?tab=orders<c:if test="${not empty statusFilter}">&statusFilter=${statusFilter}</c:if>" class="close-btn" style="text-decoration: none; font-size: 24px; color: #ffffff; opacity:0.8;">&times;</a>
         </div>
       </div>
 
@@ -912,7 +923,7 @@
           <form action="admin" method="POST" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
             <input type="hidden" name="action" value="updateOrderStatus">
             <input type="hidden" name="id" value="${viewOrderObj.id}">
-            <input type="hidden" name="redirect" value="admin?tab=orders&viewOrder=${viewOrderObj.id}${not empty statusFilter ? '&statusFilter=' += statusFilter : ''}">
+            <input type="hidden" name="redirect" value="admin?tab=orders&viewOrder=${viewOrderObj.id}<c:if test="${not empty statusFilter}">&statusFilter=${statusFilter}</c:if>">
             
             <div style="display:flex; align-items:center; gap:8px;">
               <label style="font-size:13px; font-weight:700; color:var(--text-heading);">Cập nhật trạng thái:</label>

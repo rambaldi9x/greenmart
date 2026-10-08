@@ -38,7 +38,7 @@ public class AdminServlet extends HttpServlet {
         HttpSession session = request.getSession(false);
         User user = (session != null) ? (User) session.getAttribute("user") : null;
         if (user == null || !"admin".equalsIgnoreCase(user.getRole())) {
-            response.sendRedirect(request.getContextPath() + "/auth?error=unauthorized");
+            response.sendRedirect(request.getContextPath() + "/auth?error=unauthorized&redirect=admin");
             return false;
         }
         return true;

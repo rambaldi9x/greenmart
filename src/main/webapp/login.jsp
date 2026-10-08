@@ -83,6 +83,11 @@
         <i class="fa-solid fa-circle-exclamation"></i> ${error}
       </div>
     </c:if>
+    <c:if test="${param.error == 'unauthorized'}">
+      <div class="alert-error">
+        <i class="fa-solid fa-triangle-exclamation"></i> <strong>Yêu cầu quyền Quản trị:</strong> Vui lòng đăng nhập bằng tài khoản Admin để truy cập Bảng điều khiển quản trị!
+      </div>
+    </c:if>
 
     <c:choose>
       <c:when test="${mode == 'register'}">
