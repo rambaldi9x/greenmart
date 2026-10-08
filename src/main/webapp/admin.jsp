@@ -773,6 +773,471 @@
     .btn-track-pill:hover {
       background: #e2e8f0;
     }
+
+    /* =========================================================
+       MODERN PRODUCTS MANAGEMENT STYLES
+       ========================================================= */
+    .admin-products-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 22px;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .admin-products-title h2 {
+      font-size: 22px;
+      font-weight: 800;
+      color: #0f172a;
+      margin: 0 0 5px 0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .admin-products-title p {
+      font-size: 13.5px;
+      color: #64748b;
+      margin: 0;
+    }
+
+    /* Products 4-Stat Cards */
+    .products-stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 22px;
+    }
+    .products-stat-card {
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 16px 20px;
+      border: 1px solid #e2e8f0;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .products-stat-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.06);
+    }
+    .p-stat-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+    .p-stat-icon.emerald { background: #ecfdf5; color: #059669; }
+    .p-stat-icon.blue { background: #eff6ff; color: #2563eb; }
+    .p-stat-icon.amber { background: #fffbeb; color: #d97706; }
+    .p-stat-icon.rose { background: #fff1f2; color: #e11d48; }
+
+    .products-stat-card .p-stat-info h5 {
+      font-size: 12.5px;
+      color: #64748b;
+      font-weight: 600;
+      margin: 0 0 4px 0;
+    }
+    .products-stat-card .p-stat-info .stat-val {
+      font-size: 21px;
+      font-weight: 800;
+      color: #0f172a;
+      line-height: 1.2;
+    }
+    .products-stat-card .p-stat-info .stat-sub {
+      font-size: 11px;
+      color: #94a3b8;
+      margin-top: 2px;
+    }
+
+    /* Toolbar: Filters & Actions */
+    .admin-products-toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 18px;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .search-products-form {
+      display: flex;
+      align-items: center;
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      border-radius: 30px;
+      padding: 4px 6px 4px 16px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+      width: 380px;
+      max-width: 100%;
+      transition: all 0.2s;
+    }
+    .search-products-form:focus-within {
+      border-color: #3bb77e;
+      box-shadow: 0 0 0 3px rgba(59, 183, 126, 0.2);
+    }
+    .search-products-form input {
+      border: none;
+      outline: none;
+      font-size: 13.5px;
+      color: #0f172a;
+      width: 100%;
+      background: transparent;
+    }
+    .search-products-form button {
+      background: #3bb77e;
+      color: white;
+      border: none;
+      border-radius: 25px;
+      padding: 8px 18px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: background 0.2s;
+    }
+    .search-products-form button:hover {
+      background: #2ea16d;
+    }
+
+    .btn-create-product {
+      background: linear-gradient(135deg, #3bb77e 0%, #059669 100%);
+      color: #ffffff !important;
+      padding: 10px 22px;
+      border-radius: 25px;
+      font-size: 14px;
+      font-weight: 700;
+      text-decoration: none !important;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 4px 12px rgba(59, 183, 126, 0.35);
+      transition: all 0.2s;
+      border: none;
+      cursor: pointer;
+    }
+    .btn-create-product:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(59, 183, 126, 0.45);
+    }
+
+    /* Products Category & Stock Filter Chips */
+    .admin-product-filters {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+      background: #ffffff;
+      padding: 10px 14px;
+      border-radius: 12px;
+      border: 1px solid #e2e8f0;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.03);
+    }
+    .prod-filter-chip {
+      padding: 7px 15px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #475569;
+      text-decoration: none !important;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+    .prod-filter-chip:hover {
+      background: #f1f5f9;
+      color: #0f172a;
+      border-color: #cbd5e1;
+    }
+    .prod-filter-chip.active {
+      background: #3bb77e !important;
+      color: #ffffff !important;
+      border-color: #3bb77e !important;
+      box-shadow: 0 2px 8px rgba(59, 183, 126, 0.35);
+    }
+    .prod-filter-chip .chip-counter {
+      background: rgba(0, 0, 0, 0.06);
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-size: 11px;
+      font-weight: 700;
+    }
+    .prod-filter-chip.active .chip-counter {
+      background: rgba(255, 255, 255, 0.25);
+      color: #ffffff;
+    }
+
+    /* Modern Products Table */
+    .admin-products-table-wrap {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+      margin-bottom: 30px;
+    }
+    .admin-products-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+    }
+    .admin-products-table thead th {
+      background: #f8fafc;
+      color: #475569;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 14px 18px;
+      border-bottom: 2px solid #e2e8f0;
+      white-space: nowrap;
+    }
+    .admin-products-table tbody tr {
+      border-bottom: 1px solid #f1f5f9;
+      transition: background 0.15s;
+    }
+    .admin-products-table tbody tr:hover {
+      background: #f8fafc;
+    }
+    .admin-products-table td {
+      padding: 14px 18px;
+      font-size: 13.5px;
+      color: #334155;
+      vertical-align: middle;
+    }
+
+    /* Product Item Cell */
+    .prod-cell {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .prod-thumb-box {
+      width: 52px;
+      height: 52px;
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid #e2e8f0;
+      background: #f8fafc;
+      flex-shrink: 0;
+      position: relative;
+    }
+    .prod-thumb-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.2s;
+    }
+    .prod-thumb-box:hover img {
+      transform: scale(1.08);
+    }
+    .prod-info-name {
+      font-weight: 700;
+      color: #0f172a;
+      font-size: 14px;
+      line-height: 1.35;
+      margin-bottom: 3px;
+    }
+    .prod-info-desc {
+      font-size: 11.5px;
+      color: #94a3b8;
+      max-width: 280px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* Category Badges */
+    .cat-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    .cat-badge.rau-cu { background: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; }
+    .cat-badge.thit-ca { background: #fff7ed; color: #c2410c; border: 1px solid #fed7aa; }
+    .cat-badge.do-uong { background: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; }
+    .cat-badge.banh-keo { background: #faf5ff; color: #7e22ce; border: 1px solid #e9d5ff; }
+    .cat-badge.thuc-pham-kho { background: #fefce8; color: #a16207; border: 1px solid #fef08a; }
+    .cat-badge.default { background: #f1f5f9; color: #475569; border: 1px solid #e2e8f0; }
+
+    /* Price formatting */
+    .prod-price-text {
+      color: #059669;
+      font-weight: 800;
+      font-size: 15px;
+    }
+
+    /* Inventory Progress */
+    .stock-box {
+      min-width: 120px;
+    }
+    .stock-number-wrap {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 5px;
+      font-size: 12.5px;
+      font-weight: 700;
+    }
+    .stock-progress-bar {
+      height: 6px;
+      background: #e2e8f0;
+      border-radius: 4px;
+      overflow: hidden;
+      position: relative;
+    }
+    .stock-progress-fill {
+      height: 100%;
+      border-radius: 4px;
+      transition: width 0.3s;
+    }
+    .stock-progress-fill.safe { background: #10b981; }
+    .stock-progress-fill.warn { background: #f59e0b; }
+    .stock-progress-fill.danger { background: #ef4444; }
+
+    /* Actions buttons */
+    .prod-action-group {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .btn-prod-act {
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 12.5px;
+      font-weight: 600;
+      text-decoration: none !important;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      transition: all 0.15s ease;
+      cursor: pointer;
+      border: 1px solid transparent;
+    }
+    .btn-prod-edit {
+      background: #eff6ff;
+      color: #2563eb;
+      border-color: #bfdbfe;
+    }
+    .btn-prod-edit:hover {
+      background: #dbeafe;
+      color: #1d4ed8;
+    }
+    .btn-prod-view {
+      background: #f8fafc;
+      color: #475569;
+      border-color: #cbd5e1;
+    }
+    .btn-prod-view:hover {
+      background: #f1f5f9;
+      color: #0f172a;
+    }
+    .btn-prod-del {
+      background: #fff1f2;
+      color: #e11d48;
+      border-color: #fecdd3;
+    }
+    .btn-prod-del:hover {
+      background: #ffe4e6;
+      color: #be123c;
+    }
+
+    /* Modern Product Create / Edit Modal */
+    .product-modal-container {
+      background: #ffffff;
+      border-radius: 16px;
+      max-width: 680px;
+      width: 95%;
+      overflow: hidden;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.18);
+      animation: modalFadeIn 0.25s ease-out;
+    }
+    .product-modal-top {
+      background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+      color: #ffffff;
+      padding: 18px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px solid #3bb77e;
+    }
+    .product-modal-top h3 {
+      font-size: 17px;
+      font-weight: 700;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #ffffff;
+    }
+    .product-modal-body {
+      padding: 24px;
+      max-height: 80vh;
+      overflow-y: auto;
+    }
+    .product-form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .form-full-width {
+      grid-column: 1 / -1;
+    }
+    .product-input-label {
+      display: block;
+      font-size: 13px;
+      font-weight: 700;
+      color: #334155;
+      margin-bottom: 6px;
+    }
+    .product-input-control {
+      width: 100%;
+      padding: 10px 14px;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      font-size: 13.5px;
+      outline: none;
+      transition: all 0.2s;
+      background: #f8fafc;
+      box-sizing: border-box;
+    }
+    .product-input-control:focus {
+      border-color: #3bb77e;
+      background: #ffffff;
+      box-shadow: 0 0 0 3px rgba(59, 183, 126, 0.18);
+    }
+    .img-preview-box {
+      width: 100%;
+      height: 140px;
+      border: 2px dashed #cbd5e1;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      background: #f8fafc;
+      margin-top: 6px;
+    }
+    .img-preview-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
   </style>
 </head>
 <body>
@@ -908,69 +1373,336 @@
       </div>
     </c:if>
 
-    <!-- Tab 2: Quản lý sản phẩm (CRUD) -->
+    <!-- Tab 2: Quản lý sản phẩm (Modern Redesigned UI) -->
     <c:if test="${currentTab == 'products'}">
       <div>
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
-          <h2 style="color: var(--text-heading);">Danh sách sản phẩm</h2>
-          <a href="admin?tab=products&action=new" class="btn-primary" style="text-decoration:none;">
-            <i class="fa fa-plus"></i> Thêm sản phẩm mới
-          </a>
-        </div>
-        <div style="margin-bottom: 16px;">
-          <form action="admin" method="GET" style="display:flex; gap:10px;">
-            <input type="hidden" name="tab" value="products">
-            <input type="text" name="search" value="${search}" placeholder="🔍 Tìm theo tên hoặc danh mục..."
-              style="padding:10px 14px;border:1px solid var(--border-color);border-radius:6px;width:340px;font-size:14px;outline:none;">
-            <button type="submit" class="btn-primary" style="padding:10px 18px;">Tìm</button>
-            <c:if test="${not empty search}">
-              <a href="admin?tab=products" style="padding:10px 14px;border:1px solid #ccc;background:white;border-radius:6px;text-decoration:none;color:#555;">✕ Xóa tìm</a>
-            </c:if>
-          </form>
+        <!-- Products Header -->
+        <div class="admin-products-header">
+          <div class="admin-products-title">
+            <h2><i class="fa-solid fa-boxes-stacked" style="color:var(--primary-color);"></i> Quản Lý Kho Hàng & Sản Phẩm</h2>
+            <p>Kiểm soát danh mục hàng hóa, số lượng tồn kho thời gian thực và điều chỉnh giá bán toàn sàn GreenMart.</p>
+          </div>
+          <div>
+            <span style="font-size:13px; color:#64748b; background:white; padding:8px 14px; border-radius:8px; border:1px solid #e2e8f0; display:inline-flex; align-items:center; gap:8px;">
+              <span>Tổng kho: <strong style="color:#0f172a;">${totalStockUnits}</strong> đơn vị</span>
+              <span style="color:#cbd5e1;">|</span>
+              <span>Mặt hàng: <strong style="color:var(--primary-color);">${totalProducts}</strong> loại</span>
+            </span>
+          </div>
         </div>
 
-        <table class="admin-table">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Hình ảnh</th>
-              <th>Tên sản phẩm</th>
-              <th>Danh mục</th>
-              <th>Giá bán</th>
-              <th>Tồn kho</th>
-              <th>Thao tác</th>
-            </tr>
-          </thead>
-          <tbody>
-            <c:choose>
-              <c:when test="${empty products}">
-                <tr><td colspan="7" style="text-align:center;padding:30px;color:#888;">Không tìm thấy sản phẩm nào.</td></tr>
-              </c:when>
-              <c:otherwise>
-                <c:forEach var="p" items="${products}">
+        <!-- 4 Quick Stat Cards for Products -->
+        <div class="products-stats-grid">
+          <div class="products-stat-card">
+            <div class="p-stat-icon blue">
+              <i class="fa-solid fa-boxes-stacked"></i>
+            </div>
+            <div class="p-stat-info">
+              <h5>Tổng sản phẩm</h5>
+              <div class="stat-val">${totalProducts}</div>
+              <div class="stat-sub">${categoriesCount} danh mục phân loại</div>
+            </div>
+          </div>
+          <div class="products-stat-card">
+            <div class="p-stat-icon emerald">
+              <i class="fa-solid fa-circle-check"></i>
+            </div>
+            <div class="p-stat-info">
+              <h5>Còn hàng dồi dào</h5>
+              <div class="stat-val" style="color:#059669;">${inStockCount}</div>
+              <div class="stat-sub">Tồn kho an toàn (&gt;15 đơn vị)</div>
+            </div>
+          </div>
+          <div class="products-stat-card">
+            <div class="p-stat-icon amber">
+              <i class="fa-solid fa-triangle-exclamation"></i>
+            </div>
+            <div class="p-stat-info">
+              <h5>Cảnh báo sắp hết</h5>
+              <div class="stat-val" style="color:#d97706;">${lowStockCount}</div>
+              <div class="stat-sub">Cần nhập thêm (&le;15 đơn vị)</div>
+            </div>
+          </div>
+          <div class="products-stat-card">
+            <div class="p-stat-icon rose">
+              <i class="fa-solid fa-circle-xmark"></i>
+            </div>
+            <div class="p-stat-info">
+              <h5>Đã hết hàng tồn</h5>
+              <div class="stat-val" style="color:#e11d48;">${outOfStockCount}</div>
+              <div class="stat-sub">Tạm ngừng hiển thị giỏ hàng</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Toolbar: Search bar & Add Button -->
+        <div class="admin-products-toolbar">
+          <form action="admin" method="GET" class="search-products-form">
+            <input type="hidden" name="tab" value="products">
+            <c:if test="${not empty categoryFilter}">
+              <input type="hidden" name="categoryFilter" value="${categoryFilter}">
+            </c:if>
+            <c:if test="${not empty stockFilter}">
+              <input type="hidden" name="stockFilter" value="${stockFilter}">
+            </c:if>
+            <i class="fa-solid fa-magnifying-glass" style="color:#94a3b8; font-size:14px; margin-right:8px;"></i>
+            <input type="text" name="search" value="${search}" placeholder="Tìm theo tên sản phẩm, mã ID hoặc danh mục...">
+            <button type="submit">
+              Tìm kiếm
+            </button>
+            <c:if test="${not empty search}">
+              <a href="admin?tab=products<c:if test="${not empty categoryFilter}">&categoryFilter=${categoryFilter}</c:if><c:if test="${not empty stockFilter}">&stockFilter=${stockFilter}</c:if>"
+                style="margin-left:8px; font-size:12px; color:#ef4444; text-decoration:none;" title="Xóa tìm kiếm">
+                <i class="fa-solid fa-xmark"></i>
+              </a>
+            </c:if>
+          </form>
+
+          <a href="admin?tab=products&action=new" class="btn-create-product">
+            <i class="fa-solid fa-plus"></i> Thêm Sản Phẩm Mới
+          </a>
+        </div>
+
+        <!-- Filter Chips Bar: Stock & Categories -->
+        <div class="admin-product-filters">
+          <span style="font-size:12px; font-weight:700; color:#64748b; text-transform:uppercase; letter-spacing:0.5px; margin-right:4px;">
+            <i class="fa-solid fa-filter" style="color:var(--primary-color);"></i> Lọc:
+          </span>
+
+          <a href="admin?tab=products<c:if test="${not empty search}">&search=${search}</c:if>"
+             class="prod-filter-chip ${(empty stockFilter and empty categoryFilter) ? 'active' : ''}"
+             data-filter-type="all" data-filter-val="all">
+            Tất cả sản phẩm
+            <span class="chip-counter">${totalProducts != null ? totalProducts : 0}</span>
+          </a>
+
+          <a href="admin?tab=products&stockFilter=available<c:if test="${not empty search}">&search=${search}</c:if>"
+             class="prod-filter-chip ${stockFilter == 'available' ? 'active' : ''}"
+             data-filter-type="stock" data-filter-val="available">
+            <i class="fa-solid fa-circle-check" style="color:#10b981; font-size:11px;"></i> Còn hàng
+            <span class="chip-counter">${inStockCount != null ? inStockCount : 0}</span>
+          </a>
+
+          <a href="admin?tab=products&stockFilter=low<c:if test="${not empty search}">&search=${search}</c:if>"
+             class="prod-filter-chip ${stockFilter == 'low' ? 'active' : ''}"
+             data-filter-type="stock" data-filter-val="low">
+            <i class="fa-solid fa-triangle-exclamation" style="color:#f59e0b; font-size:11px;"></i> Sắp hết
+            <span class="chip-counter">${lowStockCount != null ? lowStockCount : 0}</span>
+          </a>
+
+          <a href="admin?tab=products&stockFilter=out<c:if test="${not empty search}">&search=${search}</c:if>"
+             class="prod-filter-chip ${stockFilter == 'out' ? 'active' : ''}"
+             data-filter-type="stock" data-filter-val="out">
+            <i class="fa-solid fa-circle-xmark" style="color:#ef4444; font-size:11px;"></i> Hết hàng
+            <span class="chip-counter">${outOfStockCount != null ? outOfStockCount : 0}</span>
+          </a>
+
+          <div style="height:20px; width:1px; background:#e2e8f0; margin:0 4px;"></div>
+
+          <a href="admin?tab=products&categoryFilter=rau-cu<c:if test="${not empty search}">&search=${search}</c:if>"
+             class="prod-filter-chip ${categoryFilter == 'rau-cu' or fn:contains(categoryFilter, 'Rau') ? 'active' : ''}"
+             data-filter-type="category" data-filter-val="rau-cu">
+            🌱 Rau củ & Trái cây
+            <span class="chip-counter">${rauCuCount != null ? rauCuCount : 0}</span>
+          </a>
+
+          <a href="admin?tab=products&categoryFilter=thit-ca<c:if test="${not empty search}">&search=${search}</c:if>"
+             class="prod-filter-chip ${categoryFilter == 'thit-ca' or fn:contains(categoryFilter, 'Thịt') ? 'active' : ''}"
+             data-filter-type="category" data-filter-val="thit-ca">
+            🥩 Thịt, Cá & Trứng
+            <span class="chip-counter">${thitCaCount != null ? thitCaCount : 0}</span>
+          </a>
+
+          <a href="admin?tab=products&categoryFilter=do-uong<c:if test="${not empty search}">&search=${search}</c:if>"
+             class="prod-filter-chip ${categoryFilter == 'do-uong' or fn:contains(categoryFilter, 'uống') or fn:contains(categoryFilter, 'Sữa') ? 'active' : ''}"
+             data-filter-type="category" data-filter-val="do-uong">
+            🥛 Đồ uống & Sữa
+            <span class="chip-counter">${doUongCount != null ? doUongCount : 0}</span>
+          </a>
+
+          <a href="admin?tab=products&categoryFilter=banh-keo<c:if test="${not empty search}">&search=${search}</c:if>"
+             class="prod-filter-chip ${categoryFilter == 'banh-keo' or fn:contains(categoryFilter, 'Bánh') ? 'active' : ''}"
+             data-filter-type="category" data-filter-val="banh-keo">
+            🍪 Bánh kẹo & Ăn vặt
+            <span class="chip-counter">${banhKeoCount != null ? banhKeoCount : 0}</span>
+          </a>
+
+          <a href="admin?tab=products&categoryFilter=thuc-pham-kho<c:if test="${not empty search}">&search=${search}</c:if>"
+             class="prod-filter-chip ${categoryFilter == 'thuc-pham-kho' or fn:contains(categoryFilter, 'khô') ? 'active' : ''}"
+             data-filter-type="category" data-filter-val="thuc-pham-kho">
+            🌾 Thực phẩm khô
+            <span class="chip-counter">${thucPhamKhoCount != null ? thucPhamKhoCount : 0}</span>
+          </a>
+        </div>
+
+        <!-- Products Table -->
+        <div class="admin-products-table-wrap">
+          <table class="admin-products-table">
+            <thead>
+              <tr>
+                <th style="width: 70px;">Mã SP</th>
+                <th>Sản phẩm & Thông tin</th>
+                <th>Danh mục</th>
+                <th>Giá niêm yết</th>
+                <th style="width: 160px;">Tồn kho</th>
+                <th>Trạng thái</th>
+                <th style="text-align: right; width: 170px;">Thao tác</th>
+              </tr>
+            </thead>
+            <tbody>
+              <c:choose>
+                <c:when test="${empty products}">
                   <tr>
-                    <td>#${p.id}</td>
-                    <td><img src="${p.image}" style="width:45px;height:45px;object-fit:cover;border-radius:4px;" alt="${p.name}"></td>
-                    <td><strong>${p.name}</strong></td>
-                    <td>${p.category}</td>
-                    <td style="color:var(--primary-color);font-weight:bold;">
-                      <fmt:formatNumber value="${p.price}" type="currency" currencySymbol="₫" maxFractionDigits="0"/>
-                    </td>
-                    <td>${p.count != null ? p.count : '0'}</td>
-                    <td>
-                      <a href="admin?tab=products&action=edit&id=${p.id}" class="btn-action btn-edit">
-                        <i class="fa-solid fa-pen"></i> Sửa
-                      </a>
-                      <a href="admin?action=deleteProduct&id=${p.id}" class="btn-action btn-delete">
-                        <i class="fa fa-trash"></i> Xóa
-                      </a>
+                    <td colspan="7" style="text-align:center; padding:45px 20px; color:#64748b;">
+                      <div style="font-size:36px; margin-bottom:10px; color:#cbd5e1;">
+                        <i class="fa-solid fa-box-open"></i>
+                      </div>
+                      <div style="font-weight:700; font-size:15px; color:#334155; margin-bottom:4px;">Không tìm thấy sản phẩm phù hợp</div>
+                      <div style="font-size:13px; color:#94a3b8;">Vui lòng thử từ khóa tìm kiếm hoặc bỏ chọn các bộ lọc phân loại.</div>
+                      <c:if test="${not empty search or not empty categoryFilter or not empty stockFilter}">
+                        <a href="admin?tab=products" style="display:inline-block; margin-top:14px; padding:6px 16px; background:#f1f5f9; color:#475569; border-radius:6px; font-weight:600; font-size:12.5px; text-decoration:none;">
+                          <i class="fa-solid fa-rotate-left"></i> Đặt lại bộ lọc
+                        </a>
+                      </c:if>
                     </td>
                   </tr>
-                </c:forEach>
-              </c:otherwise>
-            </c:choose>
-          </tbody>
-        </table>
+                </c:when>
+                <c:otherwise>
+                  <!-- Client-side empty message placeholder -->
+                  <tr id="productsEmptyRow" style="display:none;">
+                    <td colspan="7" style="text-align:center; padding:45px 20px; color:#64748b;">
+                      <div style="font-size:36px; margin-bottom:10px; color:#cbd5e1;">
+                        <i class="fa-solid fa-box-open"></i>
+                      </div>
+                      <div style="font-weight:700; font-size:15px; color:#334155; margin-bottom:4px;">Không có sản phẩm nào thuộc bộ lọc này</div>
+                      <div style="font-size:13px; color:#94a3b8;">Vui lòng chọn bộ lọc khác hoặc nhấn Tất cả sản phẩm.</div>
+                    </td>
+                  </tr>
+
+                  <c:forEach var="p" items="${products}">
+                    <tr class="product-item-row"
+                        data-cat-slug="${fn:contains(p.category, 'Rau') or fn:contains(p.category, 'Trái') ? 'rau-cu' : (fn:contains(p.category, 'Thịt') or fn:contains(p.category, 'Cá') ? 'thit-ca' : (fn:contains(p.category, 'uống') or fn:contains(p.category, 'Sữa') ? 'do-uong' : (fn:contains(p.category, 'Bánh') ? 'banh-keo' : (fn:contains(p.category, 'khô') ? 'thuc-pham-kho' : 'other'))))}"
+                        data-stock-status="${p.count != null and p.count > 15 ? 'available' : (p.count != null and p.count > 0 ? 'low' : 'out')}"
+                        data-name="${fn:toLowerCase(p.name)}"
+                        data-id="${p.id}">
+                      <!-- ID -->
+                      <td>
+                        <span style="font-size:12px; font-weight:700; color:#64748b; background:#f1f5f9; padding:3px 8px; border-radius:6px;">
+                          #${p.id}
+                        </span>
+                      </td>
+
+                      <!-- Product Image & Name -->
+                      <td>
+                        <div class="prod-cell">
+                          <div class="prod-thumb-box">
+                            <img src="${p.image}" alt="${p.name}" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1542838132-92c53300491e?w=200';">
+                          </div>
+                          <div>
+                            <div class="prod-info-name">${p.name}</div>
+                            <div class="prod-info-desc">
+                              ${not empty p.description ? p.description : 'Sản phẩm tiêu chuẩn chất lượng GreenMart PTIT'}
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+
+                      <!-- Category -->
+                      <td>
+                        <c:choose>
+                          <c:when test="${fn:contains(p.category, 'Rau') or fn:contains(p.category, 'Trái')}">
+                            <span class="cat-badge rau-cu"><i class="fa-solid fa-carrot"></i> ${p.category}</span>
+                          </c:when>
+                          <c:when test="${fn:contains(p.category, 'Thịt') or fn:contains(p.category, 'Cá')}">
+                            <span class="cat-badge thit-ca"><i class="fa-solid fa-drumstick-bite"></i> ${p.category}</span>
+                          </c:when>
+                          <c:when test="${fn:contains(p.category, 'uống') or fn:contains(p.category, 'Sữa')}">
+                            <span class="cat-badge do-uong"><i class="fa-solid fa-bottle-water"></i> ${p.category}</span>
+                          </c:when>
+                          <c:when test="${fn:contains(p.category, 'Bánh')}">
+                            <span class="cat-badge banh-keo"><i class="fa-solid fa-cookie-bite"></i> ${p.category}</span>
+                          </c:when>
+                          <c:when test="${fn:contains(p.category, 'khô')}">
+                            <span class="cat-badge thuc-pham-kho"><i class="fa-solid fa-wheat-awn"></i> ${p.category}</span>
+                          </c:when>
+                          <c:otherwise>
+                            <span class="cat-badge default"><i class="fa-solid fa-tag"></i> ${p.category}</span>
+                          </c:otherwise>
+                        </c:choose>
+                      </td>
+
+                      <!-- Price -->
+                      <td>
+                        <span class="prod-price-text">
+                          <fmt:formatNumber value="${p.price}" type="currency" currencySymbol="₫" maxFractionDigits="0"/>
+                        </span>
+                      </td>
+
+                      <!-- Stock & Progress -->
+                      <td>
+                        <div class="stock-box">
+                          <div class="stock-number-wrap">
+                            <span style="color:#0f172a;">${p.count != null ? p.count : 0} <span style="font-size:11px; font-weight:500; color:#64748b;">món</span></span>
+                            <span style="font-size:11px; color:#94a3b8;">
+                              <c:choose>
+                                <c:when test="${p.count == null || p.count <= 0}">0%</c:when>
+                                <c:when test="${p.count >= 100}">100%</c:when>
+                                <c:otherwise>${p.count}%</c:otherwise>
+                              </c:choose>
+                            </span>
+                          </div>
+                          <div class="stock-progress-bar">
+                            <c:set var="stockPct" value="${p.count != null ? (p.count > 100 ? 100 : p.count) : 0}"/>
+                            <div class="stock-progress-fill ${p.count > 15 ? 'safe' : (p.count > 0 ? 'warn' : 'danger')}"
+                                 style="width: ${stockPct}%;"></div>
+                          </div>
+                        </div>
+                      </td>
+
+                      <!-- Status Pill -->
+                      <td>
+                        <c:choose>
+                          <c:when test="${p.count != null and p.count > 15}">
+                            <span class="status-pill completed">
+                              <span class="status-dot"></span> Đang bán
+                            </span>
+                          </c:when>
+                          <c:when test="${p.count != null and p.count > 0}">
+                            <span class="status-pill shipping">
+                              <span class="status-dot"></span> Sắp hết
+                            </span>
+                          </c:when>
+                          <c:otherwise>
+                            <span class="status-pill canceled">
+                              <span class="status-dot"></span> Hết hàng
+                            </span>
+                          </c:otherwise>
+                        </c:choose>
+                      </td>
+
+                      <!-- Action Buttons -->
+                      <td style="text-align: right;">
+                        <div class="prod-action-group" style="justify-content: flex-end;">
+                          <a href="admin?tab=products&action=edit&id=${p.id}" class="btn-prod-act btn-prod-edit" title="Chỉnh sửa sản phẩm">
+                            <i class="fa-solid fa-pen-to-square"></i> Sửa
+                          </a>
+                          <a href="home?keyword=${p.name}" target="_blank" class="btn-prod-act btn-prod-view" title="Xem trên trang chủ khách hàng">
+                            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                          </a>
+                          <a href="admin?action=deleteProduct&id=${p.id}" class="btn-prod-act btn-prod-del"
+                             onclick="return confirm('Bạn có chắc chắn muốn xóa sản phẩm \'${p.name}\' (ID #${p.id}) khỏi danh mục không?');"
+                             title="Xóa sản phẩm">
+                            <i class="fa-solid fa-trash-can"></i>
+                          </a>
+                        </div>
+                      </td>
+                    </tr>
+                  </c:forEach>
+                </c:otherwise>
+              </c:choose>
+            </tbody>
+          </table>
+        </div>
       </div>
     </c:if>
 
@@ -1383,57 +2115,104 @@
   </main>
 </div>
 
-<!-- Modal Thêm / Sửa Sản Phẩm (Điều hướng bằng Java Servlet) -->
+<!-- Modal Thêm / Sửa Sản Phẩm (Modern Enterprise Modal with Live Preview) -->
 <c:if test="${param.action == 'new' || param.action == 'edit' || not empty editProduct}">
   <div class="modal" id="productModal" style="display: flex;">
-    <div class="modal-content" style="max-width: 500px;">
-      <div class="modal-header">
-        <h3 style="font-size: 18px; color: var(--text-heading);">
+    <div class="product-modal-container">
+      <div class="product-modal-top">
+        <h3>
+          <i class="fa-solid fa-boxes-stacked" style="color:var(--primary-color);"></i>
           <c:choose>
-            <c:when test="${not empty editProduct}">Chỉnh sửa sản phẩm #${editProduct.id}</c:when>
-            <c:otherwise>Thêm sản phẩm mới</c:otherwise>
+            <c:when test="${not empty editProduct}">Chỉnh Sửa Thông Tin Sản Phẩm — <strong>#${editProduct.id}</strong></c:when>
+            <c:otherwise>Thêm Mới Sản Phẩm Vào Kho GreenMart</c:otherwise>
           </c:choose>
         </h3>
-        <a href="admin?tab=products" class="close-btn" style="text-decoration: none; font-size: 24px; color: #888;">&times;</a>
+        <a href="admin?tab=products" class="close-btn" style="text-decoration: none; font-size: 24px; color: #ffffff; opacity:0.8; transition:opacity 0.2s;" title="Đóng">&times;</a>
       </div>
-      <form action="admin" method="POST">
+
+      <form action="admin" method="POST" class="product-modal-body">
         <input type="hidden" name="action" value="saveProduct">
         <input type="hidden" name="id" value="${editProduct != null ? editProduct.id : ''}">
-        
-        <div class="form-group">
-          <label>Tên sản phẩm <span style="color:red;">*</span></label>
-          <input type="text" name="name" value="${editProduct != null ? editProduct.name : ''}" required placeholder="Ví dụ: Nui rau củ Safoco">
+
+        <div class="product-form-grid">
+          <!-- Tên sản phẩm -->
+          <div class="form-full-width">
+            <label class="product-input-label">Tên sản phẩm <span style="color:#ef4444;">*</span></label>
+            <input type="text" name="name" class="product-input-control" value="${editProduct != null ? editProduct.name : ''}"
+                   required placeholder="Ví dụ: Táo Envy New Zealand Hộp 1kg">
+          </div>
+
+          <!-- Danh mục -->
+          <div>
+            <label class="product-input-label">Danh mục sản phẩm <span style="color:#ef4444;">*</span></label>
+            <select name="category" class="product-input-control" style="cursor:pointer;">
+              <option value="Rau củ & Trái cây" ${editProduct.category == 'Rau củ & Trái cây' ? 'selected' : ''}>🌱 Rau củ & Trái cây</option>
+              <option value="Thịt, Cá & Trứng" ${editProduct.category == 'Thịt, Cá & Trứng' ? 'selected' : ''}>🥩 Thịt, Cá & Trứng</option>
+              <option value="Đồ uống & Sữa" ${editProduct.category == 'Đồ uống & Sữa' ? 'selected' : ''}>🥛 Đồ uống & Sữa</option>
+              <option value="Bánh kẹo" ${editProduct.category == 'Bánh kẹo' ? 'selected' : ''}>🍪 Bánh kẹo & Ăn vặt</option>
+              <option value="Thực phẩm khô" ${editProduct.category == 'Thực phẩm khô' ? 'selected' : ''}>🌾 Thực phẩm khô</option>
+            </select>
+          </div>
+
+          <!-- Giá bán -->
+          <div>
+            <label class="product-input-label">Giá bán niêm yết (VNĐ) <span style="color:#ef4444;">*</span></label>
+            <input type="number" name="price" class="product-input-control" value="${editProduct != null ? editProduct.price : ''}"
+                   required placeholder="Ví dụ: 65000" min="0" step="1000">
+          </div>
+
+          <!-- Số lượng tồn kho -->
+          <div>
+            <label class="product-input-label">Số lượng nhập kho <span style="color:#ef4444;">*</span></label>
+            <input type="number" name="count" class="product-input-control" value="${editProduct != null ? editProduct.count : '100'}"
+                   required placeholder="100" min="0">
+          </div>
+
+          <!-- Link ảnh URL -->
+          <div>
+            <label class="product-input-label">Đường dẫn hình ảnh (URL)</label>
+            <input type="url" name="image" id="productImageInput" class="product-input-control"
+                   value="${editProduct != null ? editProduct.image : ''}"
+                   placeholder="https://images.unsplash.com/..."
+                   oninput="document.getElementById('productImagePreview').src = this.value || 'https://images.unsplash.com/photo-1542838132-92c53300491e?w=300';">
+          </div>
+
+          <!-- Preview ảnh trực tiếp -->
+          <div class="form-full-width" style="display:flex; gap:16px; align-items:center; background:#f8fafc; padding:12px; border-radius:10px; border:1px solid #e2e8f0;">
+            <div style="width:70px; height:70px; border-radius:8px; overflow:hidden; border:1px solid #cbd5e1; flex-shrink:0;">
+              <img id="productImagePreview"
+                   src="${editProduct != null && not empty editProduct.image ? editProduct.image : 'https://images.unsplash.com/photo-1542838132-92c53300491e?w=300'}"
+                   style="width:100%; height:100%; object-fit:cover;"
+                   onerror="this.src='https://images.unsplash.com/photo-1542838132-92c53300491e?w=300';"
+                   alt="Xem trước ảnh">
+            </div>
+            <div style="font-size:12.5px; color:#64748b; line-height:1.4;">
+              <strong style="color:#334155;">Xem trước hình ảnh đại diện:</strong><br>
+              Hình ảnh sẽ hiển thị trên lưới sản phẩm trang chủ và giỏ hàng của khách. Hỗ trợ định dạng ảnh từ Unsplash, Imgur, Cloudinary...
+            </div>
+          </div>
+
+          <!-- Mô tả sản phẩm -->
+          <div class="form-full-width">
+            <label class="product-input-label">Mô tả chi tiết sản phẩm</label>
+            <textarea name="description" rows="3" class="product-input-control"
+                      placeholder="Mô tả tiêu chuẩn chất lượng, nguồn gốc xuất xứ, hạn sử dụng...">${editProduct != null ? editProduct.description : ''}</textarea>
+          </div>
         </div>
-        <div class="form-group">
-          <label>Danh mục</label>
-          <select name="category">
-            <option value="Rau củ & Trái cây" ${editProduct.category == 'Rau củ & Trái cây' ? 'selected' : ''}>Rau củ & Trái cây</option>
-            <option value="Thịt, Cá & Trứng" ${editProduct.category == 'Thịt, Cá & Trứng' ? 'selected' : ''}>Thịt, Cá & Trứng</option>
-            <option value="Đồ uống & Sữa" ${editProduct.category == 'Đồ uống & Sữa' ? 'selected' : ''}>Đồ uống & Sữa</option>
-            <option value="Bánh kẹo" ${editProduct.category == 'Bánh kẹo' ? 'selected' : ''}>Bánh kẹo & Ăn vặt</option>
-            <option value="Thực phẩm khô" ${editProduct.category == 'Thực phẩm khô' ? 'selected' : ''}>Thực phẩm khô</option>
-          </select>
+
+        <!-- Buttons -->
+        <div style="display:flex; justify-content:flex-end; gap:12px; margin-top:24px; border-top:1px solid #e2e8f0; padding-top:18px;">
+          <a href="admin?tab=products" style="padding:10px 20px; border:1px solid #cbd5e1; background:white; color:#475569; border-radius:8px; font-weight:600; font-size:14px; text-decoration:none; display:inline-flex; align-items:center; gap:6px;">
+            Hủy bỏ
+          </a>
+          <button type="submit" class="btn-create-product" style="padding:10px 26px; border-radius:8px; font-size:14px;">
+            <i class="fa-solid fa-floppy-disk"></i>
+            <c:choose>
+              <c:when test="${not empty editProduct}">Cập Nhật Sản Phẩm</c:when>
+              <c:otherwise>Lưu & Đăng Bán</c:otherwise>
+            </c:choose>
+          </button>
         </div>
-        <div class="form-group">
-          <label>Giá bán (VNĐ) <span style="color:red;">*</span></label>
-          <input type="number" name="price" value="${editProduct != null ? editProduct.price : ''}" required placeholder="25000">
-        </div>
-        <div class="form-group">
-          <label>Số lượng kho <span style="color:red;">*</span></label>
-          <input type="number" name="count" value="${editProduct != null ? editProduct.count : '100'}" required placeholder="100">
-        </div>
-        <div class="form-group">
-          <label>Link ảnh (URL)</label>
-          <input type="url" name="image" value="${editProduct != null ? editProduct.image : ''}" placeholder="https://images.unsplash.com/...">
-        </div>
-        <div class="form-group">
-          <label>Mô tả sản phẩm</label>
-          <textarea name="description" rows="3" placeholder="Mô tả ngắn gọn về sản phẩm..."
-            style="width:100%;padding:8px 12px;border:1px solid var(--border-color);border-radius:5px;font-size:14px;resize:vertical;">${editProduct != null ? editProduct.description : ''}</textarea>
-        </div>
-        <button type="submit" class="btn-primary" style="width: 100%; padding: 12px; font-size: 15px;">
-          <i class="fa-solid fa-floppy-disk"></i> Lưu sản phẩm
-        </button>
       </form>
     </div>
   </div>
@@ -1681,5 +2460,75 @@
   </div>
 </c:if>
 
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Client-side Instant Filter for Products
+  const filterChips = document.querySelectorAll('.prod-filter-chip');
+  const productRows = document.querySelectorAll('.product-item-row');
+  const emptyRow = document.getElementById('productsEmptyRow');
+
+  if (filterChips.length > 0 && productRows.length > 0) {
+    const urlParams = new URLSearchParams(window.location.search);
+    const stockParam = urlParams.get('stockFilter');
+    const catParam = urlParams.get('categoryFilter');
+
+    function applyFilter(filterType, filterVal) {
+      let visibleCount = 0;
+      productRows.forEach(function(row) {
+        let match = false;
+        if (filterType === 'all' || !filterVal || filterVal === 'all') {
+          match = true;
+        } else if (filterType === 'stock') {
+          match = (row.getAttribute('data-stock-status') === filterVal);
+        } else if (filterType === 'category') {
+          const rowCat = row.getAttribute('data-cat-slug');
+          match = (rowCat === filterVal);
+        }
+
+        if (match) {
+          row.style.display = '';
+          visibleCount++;
+        } else {
+          row.style.display = 'none';
+        }
+      });
+
+      if (emptyRow) {
+        emptyRow.style.display = (visibleCount === 0) ? '' : 'none';
+      }
+    }
+
+    filterChips.forEach(function(chip) {
+      chip.addEventListener('click', function(e) {
+        e.preventDefault();
+        
+        filterChips.forEach(function(c) { c.classList.remove('active'); });
+        this.classList.add('active');
+
+        const filterType = this.getAttribute('data-filter-type') || 'all';
+        const filterVal = this.getAttribute('data-filter-val');
+
+        applyFilter(filterType, filterVal);
+
+        const url = new URL(window.location);
+        url.searchParams.delete('stockFilter');
+        url.searchParams.delete('categoryFilter');
+        if (filterType === 'stock' && filterVal && filterVal !== 'all') {
+          url.searchParams.set('stockFilter', filterVal);
+        } else if (filterType === 'category' && filterVal && filterVal !== 'all') {
+          url.searchParams.set('categoryFilter', filterVal);
+        }
+        window.history.replaceState({}, '', url);
+      });
+    });
+
+    if (stockParam) {
+      applyFilter('stock', stockParam);
+    } else if (catParam) {
+      applyFilter('category', catParam);
+    }
+  }
+});
+</script>
 </body>
 </html>

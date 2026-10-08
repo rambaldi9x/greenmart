@@ -121,6 +121,49 @@ public class AdminServlet extends HttpServlet {
                 .filter(v -> "Approved".equalsIgnoreCase(v.getStatus()))
                 .count();
 
+        // Product stats
+        long inStockCount = 0;
+        long lowStockCount = 0;
+        long outOfStockCount = 0;
+        long totalStockUnits = 0;
+        long rauCuCount = 0;
+        long thitCaCount = 0;
+        long doUongCount = 0;
+        long banhKeoCount = 0;
+        long thucPhamKhoCount = 0;
+        java.util.Set<String> distinctCategories = new java.util.LinkedHashSet<>();
+
+        for (Product p : products) {
+            int cnt = p.getCount() != null ? p.getCount() : 0;
+            totalStockUnits += cnt;
+            String cat = p.getCategory() != null ? p.getCategory().trim() : "";
+            String catLower = cat.toLowerCase();
+
+            if (!cat.isEmpty()) {
+                distinctCategories.add(cat);
+            }
+
+            if (catLower.contains("rau") || catLower.contains("trái") || catLower.contains("trai")) {
+                rauCuCount++;
+            } else if (catLower.contains("thịt") || catLower.contains("cá") || catLower.contains("thit") || catLower.contains("ca")) {
+                thitCaCount++;
+            } else if (catLower.contains("uống") || catLower.contains("sữa") || catLower.contains("uong") || catLower.contains("sua")) {
+                doUongCount++;
+            } else if (catLower.contains("bánh") || catLower.contains("kẹo") || catLower.contains("banh") || catLower.contains("keo")) {
+                banhKeoCount++;
+            } else if (catLower.contains("khô") || catLower.contains("kho")) {
+                thucPhamKhoCount++;
+            }
+
+            if (cnt <= 0) {
+                outOfStockCount++;
+            } else if (cnt <= 15) {
+                lowStockCount++;
+            } else {
+                inStockCount++;
+            }
+        }
+
         request.setAttribute("totalRevenue", totalRevenue);
         request.setAttribute("totalOrders", orders.size());
         request.setAttribute("waitingOrdersCount", waitingOrdersCount);
@@ -130,14 +173,57 @@ public class AdminServlet extends HttpServlet {
         request.setAttribute("canceledOrdersCount", canceledOrdersCount);
         request.setAttribute("totalProducts", products.size());
         request.setAttribute("totalVendors", approvedVendorsCount);
+        request.setAttribute("inStockCount", inStockCount);
+        request.setAttribute("lowStockCount", lowStockCount);
+        request.setAttribute("outOfStockCount", outOfStockCount);
+        request.setAttribute("totalStockUnits", totalStockUnits);
+        request.setAttribute("distinctCategories", distinctCategories);
+        request.setAttribute("categoriesCount", distinctCategories.size());
+        request.setAttribute("rauCuCount", rauCuCount);
+        request.setAttribute("thitCaCount", thitCaCount);
+        request.setAttribute("doUongCount", doUongCount);
+        request.setAttribute("banhKeoCount", banhKeoCount);
+        request.setAttribute("thucPhamKhoCount", thucPhamKhoCount);
 
         if ("products".equalsIgnoreCase(tab)) {
+            String categoryFilter = request.getParameter("categoryFilter");
+            if (categoryFilter != null && !categoryFilter.trim().isEmpty() && !"all".equalsIgnoreCase(categoryFilter)) {
+                String cf = categoryFilter.trim().toLowerCase();
+                products = products.stream()
+                        .filter(p -> {
+                            if (p.getCategory() == null) return false;
+                            String c = p.getCategory().trim().toLowerCase();
+                            if ("rau-cu".equals(cf) || cf.contains("rau")) return c.contains("rau") || c.contains("trái") || c.contains("trai");
+                            if ("thit-ca".equals(cf) || cf.contains("thịt") || cf.contains("thit")) return c.contains("thịt") || c.contains("cá") || c.contains("thit") || c.contains("ca");
+                            if ("do-uong".equals(cf) || cf.contains("uống") || cf.contains("uong") || cf.contains("sữa") || cf.contains("sua")) return c.contains("uống") || c.contains("sữa") || c.contains("uong") || c.contains("sua");
+                            if ("banh-keo".equals(cf) || cf.contains("bánh") || cf.contains("banh")) return c.contains("bánh") || c.contains("kẹo") || c.contains("banh") || c.contains("keo");
+                            if ("thuc-pham-kho".equals(cf) || cf.contains("khô") || cf.contains("kho")) return c.contains("khô") || c.contains("kho");
+                            return c.contains(cf) || cf.contains(c);
+                        })
+                        .collect(Collectors.toList());
+                request.setAttribute("categoryFilter", categoryFilter.trim());
+            }
+
+            String stockFilter = request.getParameter("stockFilter");
+            if (stockFilter != null && !stockFilter.trim().isEmpty() && !"all".equalsIgnoreCase(stockFilter)) {
+                String sf = stockFilter.trim();
+                if ("out".equalsIgnoreCase(sf)) {
+                    products = products.stream().filter(p -> p.getCount() == null || p.getCount() <= 0).collect(Collectors.toList());
+                } else if ("low".equalsIgnoreCase(sf)) {
+                    products = products.stream().filter(p -> p.getCount() != null && p.getCount() > 0 && p.getCount() <= 15).collect(Collectors.toList());
+                } else if ("available".equalsIgnoreCase(sf)) {
+                    products = products.stream().filter(p -> p.getCount() != null && p.getCount() > 15).collect(Collectors.toList());
+                }
+                request.setAttribute("stockFilter", sf);
+            }
+
             String search = request.getParameter("search");
             if (search != null && !search.trim().isEmpty()) {
                 String kw = search.trim().toLowerCase();
                 products = products.stream()
                         .filter(p -> (p.getName() != null && p.getName().toLowerCase().contains(kw))
-                                || (p.getCategory() != null && p.getCategory().toLowerCase().contains(kw)))
+                                || (p.getCategory() != null && p.getCategory().toLowerCase().contains(kw))
+                                || (p.getId() != null && String.valueOf(p.getId()).contains(kw)))
                         .collect(Collectors.toList());
                 request.setAttribute("search", search.trim());
             }
