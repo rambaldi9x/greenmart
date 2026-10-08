@@ -476,9 +476,9 @@
       </div>
       <div>
         <h3>Hỗ trợ kỹ thuật</h3>
-        <p>Đồ án môn: Lập trình Web</p>
+        <p>Bài tập lớn môn: Lập trình Web</p>
         <p>GVHD: ThS. Phạm Quang Hiếu</p>
-        <p>Nhóm thực hiện: Nhóm 8 thành viên</p>
+        <p>Nhóm thực hiện: Nhóm 5 thành viên</p>
       </div>
     </div>
   </footer>
