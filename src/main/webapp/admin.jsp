@@ -1238,6 +1238,292 @@
       height: 100%;
       object-fit: cover;
     }
+
+    /* =========================================================
+       MODERN VENDORS MANAGEMENT STYLES
+       ========================================================= */
+    .admin-vendors-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 22px;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .admin-vendors-title h2 {
+      font-size: 22px;
+      font-weight: 800;
+      color: #0f172a;
+      margin: 0 0 5px 0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .admin-vendors-title p {
+      font-size: 13.5px;
+      color: #64748b;
+      margin: 0;
+    }
+
+    /* Vendors 4-Stat Cards */
+    .vendors-stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 22px;
+    }
+    .vendors-stat-card {
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 16px 20px;
+      border: 1px solid #e2e8f0;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .vendors-stat-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.06);
+    }
+    .v-stat-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+    .v-stat-icon.blue { background: #eff6ff; color: #2563eb; }
+    .v-stat-icon.emerald { background: #ecfdf5; color: #059669; }
+    .v-stat-icon.amber { background: #fffbeb; color: #d97706; }
+    .v-stat-icon.rose { background: #fff1f2; color: #e11d48; }
+
+    .vendors-stat-card .v-stat-info h5 {
+      font-size: 12.5px;
+      color: #64748b;
+      font-weight: 600;
+      margin: 0 0 4px 0;
+    }
+    .vendors-stat-card .v-stat-info .stat-val {
+      font-size: 21px;
+      font-weight: 800;
+      color: #0f172a;
+      line-height: 1.2;
+    }
+    .vendors-stat-card .v-stat-info .stat-sub {
+      font-size: 11px;
+      color: #94a3b8;
+      margin-top: 2px;
+    }
+
+    /* Toolbar: Filters & Actions */
+    .admin-vendors-toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 18px;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .search-vendors-form {
+      display: flex;
+      align-items: center;
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      border-radius: 30px;
+      padding: 4px 6px 4px 16px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+      width: 380px;
+      max-width: 100%;
+      transition: all 0.2s;
+    }
+    .search-vendors-form:focus-within {
+      border-color: #3bb77e;
+      box-shadow: 0 0 0 3px rgba(59, 183, 126, 0.2);
+    }
+    .search-vendors-form input {
+      border: none;
+      outline: none;
+      font-size: 13.5px;
+      color: #0f172a;
+      width: 100%;
+      background: transparent;
+    }
+    .search-vendors-form button {
+      background: #3bb77e;
+      color: white;
+      border: none;
+      border-radius: 25px;
+      padding: 8px 18px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: background 0.2s;
+    }
+    .search-vendors-form button:hover {
+      background: #2ea16d;
+    }
+
+    .btn-create-vendor {
+      background: linear-gradient(135deg, #3bb77e 0%, #059669 100%);
+      color: #ffffff !important;
+      padding: 10px 22px;
+      border-radius: 25px;
+      font-size: 14px;
+      font-weight: 700;
+      text-decoration: none !important;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 4px 12px rgba(59, 183, 126, 0.35);
+      transition: all 0.2s;
+      border: none;
+      cursor: pointer;
+    }
+    .btn-create-vendor:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(59, 183, 126, 0.45);
+    }
+
+    /* Vendor Filter Chips */
+    .admin-vendor-filters {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+      background: #ffffff;
+      padding: 10px 14px;
+      border-radius: 12px;
+      border: 1px solid #e2e8f0;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.03);
+    }
+    .vendor-filter-chip {
+      padding: 7px 15px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #475569;
+      text-decoration: none !important;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+    .vendor-filter-chip:hover {
+      background: #f1f5f9;
+      color: #0f172a;
+      border-color: #cbd5e1;
+    }
+    .vendor-filter-chip.active {
+      background: #3bb77e !important;
+      color: #ffffff !important;
+      border-color: #3bb77e !important;
+      box-shadow: 0 2px 8px rgba(59, 183, 126, 0.35);
+    }
+    .vendor-filter-chip .chip-counter {
+      background: rgba(0, 0, 0, 0.06);
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-size: 11px;
+      font-weight: 700;
+    }
+    .vendor-filter-chip.active .chip-counter {
+      background: rgba(255, 255, 255, 0.25);
+      color: #ffffff;
+    }
+
+    /* Modern Vendors Table */
+    .admin-vendors-table-wrap {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+      margin-bottom: 30px;
+    }
+    .admin-vendors-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+    }
+    .admin-vendors-table thead th {
+      background: #f8fafc;
+      color: #475569;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 14px 18px;
+      border-bottom: 2px solid #e2e8f0;
+      white-space: nowrap;
+    }
+    .admin-vendors-table tbody tr {
+      border-bottom: 1px solid #f1f5f9;
+      transition: background 0.15s;
+    }
+    .admin-vendors-table tbody tr:hover {
+      background: #f8fafc;
+    }
+    .admin-vendors-table td {
+      padding: 14px 18px;
+      font-size: 13.5px;
+      color: #334155;
+      vertical-align: middle;
+    }
+
+    /* Vendor Cell */
+    .vendor-cell {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .vendor-avatar-circle {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      font-weight: 800;
+      flex-shrink: 0;
+      box-shadow: 0 2px 6px rgba(14, 165, 233, 0.25);
+    }
+    .vendor-name {
+      font-weight: 700;
+      color: #0f172a;
+      font-size: 14px;
+      margin-bottom: 2px;
+    }
+    .vendor-rep {
+      font-size: 12px;
+      color: #64748b;
+    }
+    .cert-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: #ecfdf5;
+      color: #047857;
+      border: 1px solid #a7f3d0;
+      padding: 3px 8px;
+      border-radius: 12px;
+      font-size: 11.5px;
+      font-weight: 600;
+    }
   </style>
 </head>
 <body>
@@ -1984,66 +2270,269 @@
       </div>
     </c:if>
 
-    <!-- Tab 4: Quản lý nhà cung cấp -->
+    <!-- Tab 4: Quản lý nhà cung cấp (Vendors) -->
     <c:if test="${currentTab == 'vendors'}">
       <div>
-        <h2 style="margin-bottom:6px;color:var(--text-heading);">Danh sách Nhà Bán Hàng (Vendor)</h2>
-        <p style="color:var(--text-body);font-size:13px;margin-bottom:16px;">
-          Duyệt hoặc từ chối đăng ký của các cửa hàng muốn bán hàng trên GreenMart.
-        </p>
-        <table class="admin-table">
-          <thead>
-            <tr>
-              <th>Mã Shop</th>
-              <th>Tên Cửa hàng</th>
-              <th>Email</th>
-              <th>Số điện thoại</th>
-              <th>Trạng thái</th>
-              <th>Thao tác</th>
-            </tr>
-          </thead>
-          <tbody>
-            <c:choose>
-              <c:when test="${empty vendors}">
-                <tr><td colspan="6" style="text-align:center;padding:30px;color:#888;">Chưa có nhà bán hàng nào.</td></tr>
-              </c:when>
-              <c:otherwise>
-                <c:forEach var="v" items="${vendors}">
-                  <tr>
-                    <td><strong>${v.shopCode}</strong></td>
-                    <td>${v.shopName}</td>
-                    <td>${v.email}</td>
-                    <td>${v.phone}</td>
-                    <td>
-                      <c:choose>
-                        <c:when test="${v.status == 'Approved'}"><span style="color:#16a34a;font-weight:bold;">Đã duyệt</span></c:when>
-                        <c:when test="${v.status == 'Rejected'}"><span style="color:#dc2626;font-weight:bold;">Từ chối</span></c:when>
-                        <c:otherwise><span style="color:#d97706;font-weight:bold;">Chờ duyệt</span></c:otherwise>
-                      </c:choose>
-                    </td>
-                    <td style="white-space:nowrap;">
-                      <c:choose>
-                        <c:when test="${v.status == 'Approved' || v.status == 'Rejected'}">
-                          <a href="admin?action=vendorStatus&id=${v.id}&status=Waiting" class="btn-action btn-edit">
-                            <i class="fa fa-rotate-left"></i> Đặt lại
-                          </a>
-                        </c:when>
-                        <c:otherwise>
-                          <a href="admin?action=vendorStatus&id=${v.id}&status=Approved" class="btn-action btn-edit" style="background:#16a34a;">
-                            <i class="fa-solid fa-check"></i> Duyệt
-                          </a>
-                          <a href="admin?action=vendorStatus&id=${v.id}&status=Rejected" class="btn-action btn-delete">
-                            <i class="fa-solid fa-xmark"></i> Từ chối
-                          </a>
-                        </c:otherwise>
-                      </c:choose>
+        <div class="admin-vendors-header">
+          <div class="admin-vendors-title">
+            <h2><i class="fa-solid fa-store" style="color:var(--primary-color);"></i> Quản lý Đối Tác & Nhà Bán Hàng (Vendors)</h2>
+            <p>Hệ thống xét duyệt, quản lý hồ sơ đối tác cung ứng nông sản và giám sát chất lượng thực phẩm GreenMart PTIT.</p>
+          </div>
+          <div style="display:flex; gap:10px; align-items:center;">
+            <a href="admin?tab=vendors&action=newVendor" class="btn-create-vendor">
+              <i class="fa-solid fa-plus"></i> Thêm Đối Tác Mới
+            </a>
+          </div>
+        </div>
+
+        <!-- 4 Stat Cards -->
+        <div class="vendors-stats-grid">
+          <div class="vendors-stat-card">
+            <div class="v-stat-icon blue">
+              <i class="fa-solid fa-handshake"></i>
+            </div>
+            <div class="v-stat-info">
+              <h5>TỔNG ĐỐI TÁC</h5>
+              <div class="stat-val">${allVendorsCount}</div>
+              <div class="stat-sub">Đã đăng ký hệ thống</div>
+            </div>
+          </div>
+          <div class="vendors-stat-card">
+            <div class="v-stat-icon emerald">
+              <i class="fa-solid fa-circle-check"></i>
+            </div>
+            <div class="v-stat-info">
+              <h5>ĐANG HOẠT ĐỘNG</h5>
+              <div class="stat-val" style="color:#059669;">${approvedVendorsCount}</div>
+              <div class="stat-sub">Đã phê duyệt chính thức</div>
+            </div>
+          </div>
+          <div class="vendors-stat-card">
+            <div class="v-stat-icon amber">
+              <i class="fa-solid fa-clock-rotate-left"></i>
+            </div>
+            <div class="v-stat-info">
+              <h5>CHỜ XÉT DUYỆT</h5>
+              <div class="stat-val" style="color:#d97706;">${waitingVendorsCount}</div>
+              <div class="stat-sub">Hồ sơ mới gửi yêu cầu</div>
+            </div>
+          </div>
+          <div class="vendors-stat-card">
+            <div class="v-stat-icon rose">
+              <i class="fa-solid fa-ban"></i>
+            </div>
+            <div class="v-stat-info">
+              <h5>TẠM NGƯNG / TỪ CHỐI</h5>
+              <div class="stat-val" style="color:#e11d48;">${rejectedVendorsCount}</div>
+              <div class="stat-sub">Cần bổ sung hồ sơ / vi phạm</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Toolbar: Search & Action -->
+        <div class="admin-vendors-toolbar">
+          <div class="admin-vendor-filters" style="margin-bottom:0; flex:1;">
+            <a href="admin?tab=vendors&statusFilter=all" 
+               class="vendor-filter-chip ${empty statusFilter || statusFilter == 'all' ? 'active' : ''}" 
+               data-filter-val="all">
+              <i class="fa-solid fa-border-all"></i> Tất cả 
+              <span class="chip-counter">${allVendorsCount}</span>
+            </a>
+            <a href="admin?tab=vendors&statusFilter=Approved" 
+               class="vendor-filter-chip ${statusFilter == 'Approved' ? 'active' : ''}" 
+               data-filter-val="Approved">
+              <i class="fa-solid fa-circle-check" style="color:#10b981;"></i> Đang hoạt động 
+              <span class="chip-counter">${approvedVendorsCount}</span>
+            </a>
+            <a href="admin?tab=vendors&statusFilter=Waiting" 
+               class="vendor-filter-chip ${statusFilter == 'Waiting' ? 'active' : ''}" 
+               data-filter-val="Waiting">
+              <i class="fa-solid fa-clock" style="color:#f59e0b;"></i> Chờ xét duyệt 
+              <span class="chip-counter">${waitingVendorsCount}</span>
+            </a>
+            <a href="admin?tab=vendors&statusFilter=Rejected" 
+               class="vendor-filter-chip ${statusFilter == 'Rejected' ? 'active' : ''}" 
+               data-filter-val="Rejected">
+              <i class="fa-solid fa-ban" style="color:#ef4444;"></i> Tạm ngưng 
+              <span class="chip-counter">${rejectedVendorsCount}</span>
+            </a>
+          </div>
+
+          <form action="admin" method="GET" class="search-vendors-form" id="vendorSearchForm">
+            <input type="hidden" name="tab" value="vendors">
+            <c:if test="${not empty statusFilter}"><input type="hidden" name="statusFilter" value="${statusFilter}"></c:if>
+            <input type="text" name="search" id="vendorSearchInput" value="${search}" placeholder="Tìm theo tên shop, mã, SĐT, địa chỉ, ngành hàng...">
+            <button type="submit"><i class="fa-solid fa-magnifying-glass"></i> Tìm</button>
+          </form>
+        </div>
+
+        <!-- Modern Vendors Table -->
+        <div class="admin-vendors-table-wrap">
+          <table class="admin-vendors-table">
+            <thead>
+              <tr>
+                <th>Đối Tác / Nhà Bán Hàng</th>
+                <th>Mã Shop</th>
+                <th>Đại Diện & Liên Hệ</th>
+                <th>Địa Chỉ Nông Trại / Kho</th>
+                <th>Chứng Nhận Năng Lực</th>
+                <th style="text-align:center;">Trạng Thái</th>
+                <th style="text-align:center; min-width:180px;">Thao Tác</th>
+              </tr>
+            </thead>
+            <tbody id="vendorTableBody">
+              <c:choose>
+                <c:when test="${empty vendors}">
+                  <tr id="vendorsEmptyRow">
+                    <td colspan="7" style="text-align:center; padding:40px; color:#64748b;">
+                      <i class="fa-solid fa-store-slash" style="font-size:36px; color:#cbd5e1; display:block; margin-bottom:10px;"></i>
+                      Không tìm thấy nhà bán hàng nào phù hợp với điều kiện tìm kiếm.
                     </td>
                   </tr>
-                </c:forEach>
-              </c:otherwise>
-            </c:choose>
-          </tbody>
-        </table>
+                </c:when>
+                <c:otherwise>
+                  <c:forEach var="v" items="${vendors}">
+                    <tr class="vendor-item-row" data-status="${v.status}" data-keyword="${v.shopName} ${v.shopCode} ${v.contactPerson} ${v.phone} ${v.email} ${v.address} ${v.category}">
+                      <td>
+                        <div class="vendor-cell">
+                          <div class="vendor-avatar-circle" style="${v.status == 'Approved' ? 'background:linear-gradient(135deg, #10b981 0%, #059669 100%);' : (v.status == 'Rejected' ? 'background:linear-gradient(135deg, #f43f5e 0%, #e11d48 100%);' : 'background:linear-gradient(135deg, #f59e0b 0%, #d97706 100%);')}">
+                            ${fn:substring(v.shopName, 0, 1)}
+                          </div>
+                          <div>
+                            <div class="vendor-name">${v.shopName}</div>
+                            <div class="vendor-rep">
+                              <span style="display:inline-block; margin-right:6px; color:#0284c7; font-weight:600;"><i class="fa-solid fa-tag"></i> ${empty v.category ? 'Nông sản sạch' : v.category}</span>
+                              <span style="color:#eab308; font-weight:700;"><i class="fa-solid fa-star"></i> ${v.rating != null ? v.rating : '5.0'}</span>
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                      <td>
+                        <span style="font-family:monospace; font-weight:700; color:#1e293b; background:#f1f5f9; padding:4px 8px; border-radius:6px; font-size:12.5px;">
+                          #${v.shopCode}
+                        </span>
+                      </td>
+                      <td>
+                        <div style="font-weight:600; color:#334155; font-size:13px; margin-bottom:2px;">
+                          <i class="fa-solid fa-user-tie" style="color:#64748b; font-size:11px; margin-right:4px;"></i>${empty v.contactPerson ? 'Chưa cập nhật' : v.contactPerson}
+                        </div>
+                        <div style="font-size:12px; color:#64748b; display:flex; flex-direction:column; gap:2px;">
+                          <a href="tel:${v.phone}" style="color:var(--primary-color); text-decoration:none;">
+                            <i class="fa-solid fa-phone" style="font-size:11px;"></i> ${v.phone}
+                          </a>
+                          <span><i class="fa-solid fa-envelope" style="font-size:11px;"></i> ${v.email}</span>
+                        </div>
+                      </td>
+                      <td style="max-width:220px;">
+                        <div style="font-size:12.5px; color:#475569; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; line-height:1.4;" title="${v.address}">
+                          <i class="fa-solid fa-location-dot" style="color:#ef4444; margin-right:4px;"></i>${empty v.address ? 'Toàn quốc' : v.address}
+                        </div>
+                      </td>
+                      <td style="max-width:200px;">
+                        <c:choose>
+                          <c:when test="${fn:contains(v.description, 'VietGAP') || fn:contains(v.description, 'GlobalGAP') || fn:contains(v.description, 'OCOP') || fn:contains(v.description, 'Organic')}">
+                            <span class="cert-badge">
+                              <i class="fa-solid fa-certificate"></i>
+                              <c:choose>
+                                <c:when test="${fn:contains(v.description, 'GlobalGAP')}">GlobalGAP</c:when>
+                                <c:when test="${fn:contains(v.description, 'VietGAP')}">VietGAP</c:when>
+                                <c:when test="${fn:contains(v.description, 'OCOP')}">OCOP 4 Sao</c:when>
+                                <c:otherwise>Hữu Cơ</c:otherwise>
+                              </c:choose>
+                            </span>
+                          </c:when>
+                          <c:otherwise>
+                            <span style="font-size:12px; color:#94a3b8; font-style:italic;">Đang cập nhật hồ sơ</span>
+                          </c:otherwise>
+                        </c:choose>
+                        <div style="font-size:11.5px; color:#64748b; margin-top:4px; display:-webkit-box; -webkit-line-clamp:1; -webkit-box-orient:vertical; overflow:hidden;" title="${v.description}">
+                          ${v.description}
+                        </div>
+                      </td>
+                      <td style="text-align:center; white-space:nowrap;">
+                        <c:choose>
+                          <c:when test="${v.status == 'Approved'}">
+                            <span class="status-pill pill-completed" style="font-size:12px; padding:4px 10px;">
+                              <i class="fa-solid fa-circle-check"></i> Đang hoạt động
+                            </span>
+                          </c:when>
+                          <c:when test="${v.status == 'Rejected'}">
+                            <span class="status-pill pill-canceled" style="font-size:12px; padding:4px 10px;">
+                              <i class="fa-solid fa-circle-xmark"></i> Tạm ngưng
+                            </span>
+                          </c:when>
+                          <c:otherwise>
+                            <span class="status-pill pill-waiting" style="font-size:12px; padding:4px 10px;">
+                              <i class="fa-solid fa-hourglass-half"></i> Chờ duyệt
+                            </span>
+                          </c:otherwise>
+                        </c:choose>
+                      </td>
+                      <td style="text-align:center; white-space:nowrap;">
+                        <div style="display:inline-flex; align-items:center; gap:6px;">
+                          <!-- View Profile Modal -->
+                          <a href="admin?tab=vendors&viewVendor=${v.id}<c:if test="${not empty statusFilter}">&statusFilter=${statusFilter}</c:if>" 
+                             class="btn-order-action btn-view-invoice" title="Xem hồ sơ đối tác" style="padding:5px 9px;">
+                            <i class="fa-solid fa-eye"></i>
+                          </a>
+
+                          <!-- Quick Approve / Reject / Reset -->
+                          <c:choose>
+                            <c:when test="${v.status == 'Waiting'}">
+                              <a href="admin?action=vendorStatus&id=${v.id}&status=Approved" 
+                                 class="btn-order-action" style="background:#ecfdf5; color:#059669; border-color:#a7f3d0; padding:5px 9px;" 
+                                 title="Phê duyệt đối tác">
+                                <i class="fa-solid fa-check"></i>
+                              </a>
+                              <a href="admin?action=vendorStatus&id=${v.id}&status=Rejected" 
+                                 class="btn-order-action btn-order-cancel" style="padding:5px 9px;" 
+                                 title="Từ chối đăng ký">
+                                <i class="fa-solid fa-xmark"></i>
+                              </a>
+                            </c:when>
+                            <c:when test="${v.status == 'Approved'}">
+                              <a href="admin?action=vendorStatus&id=${v.id}&status=Rejected" 
+                                 class="btn-order-action btn-order-cancel" style="padding:5px 9px;" 
+                                 title="Tạm ngưng đối tác">
+                                <i class="fa-solid fa-ban"></i>
+                              </a>
+                            </c:when>
+                            <c:otherwise>
+                              <a href="admin?action=vendorStatus&id=${v.id}&status=Approved" 
+                                 class="btn-order-action" style="background:#ecfdf5; color:#059669; border-color:#a7f3d0; padding:5px 9px;" 
+                                 title="Kích hoạt lại đối tác">
+                                <i class="fa-solid fa-rotate-left"></i>
+                              </a>
+                            </c:otherwise>
+                          </c:choose>
+
+                          <!-- Edit Button -->
+                          <a href="admin?tab=vendors&action=editVendor&id=${v.id}" 
+                             class="btn-prod-action btn-prod-edit" title="Sửa thông tin" style="padding:5px 9px;">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                          </a>
+
+                          <!-- Delete Button -->
+                          <a href="admin?action=deleteVendor&id=${v.id}" 
+                             class="btn-prod-action btn-prod-del" title="Xóa đối tác" style="padding:5px 9px;" 
+                             onclick="return confirm('Bạn có chắc chắn muốn xóa đối tác ${v.shopName}? Toàn bộ dữ liệu liên kết sẽ bị xóa.');">
+                            <i class="fa-solid fa-trash-can"></i>
+                          </a>
+                        </div>
+                      </td>
+                    </tr>
+                  </c:forEach>
+                  <tr id="vendorsClientEmptyRow" style="display:none;">
+                    <td colspan="7" style="text-align:center; padding:40px; color:#64748b;">
+                      <i class="fa-solid fa-filter-circle-xmark" style="font-size:36px; color:#cbd5e1; display:block; margin-bottom:10px;"></i>
+                      Không tìm thấy nhà bán hàng nào phù hợp với bộ lọc này.
+                    </td>
+                  </tr>
+                </c:otherwise>
+              </c:choose>
+            </tbody>
+          </table>
+        </div>
       </div>
     </c:if>
 
@@ -2460,6 +2949,244 @@
   </div>
 </c:if>
 
+<!-- ==========================================
+     MODAL: XEM HỒ SƠ CHI TIẾT ĐỐI TÁC VENDOR
+     ========================================== -->
+<c:if test="${not empty viewVendorObj}">
+  <div class="modal" id="vendorProfileModal" style="display:flex;">
+    <div class="invoice-modal-container" style="max-width:760px;">
+      <div class="invoice-modal-top" style="background:linear-gradient(135deg, #064e3b 0%, #065f46 100%); border-bottom:3px solid #10b981;">
+        <h3>
+          <i class="fa-solid fa-store" style="color:#6ee7b7;"></i> Hồ sơ Đối Tác: ${viewVendorObj.shopName}
+        </h3>
+        <div style="display:flex; align-items:center; gap:12px;">
+          <a href="admin?tab=vendors<c:if test="${not empty statusFilter}">&statusFilter=${statusFilter}</c:if>" class="close-btn" style="text-decoration:none; font-size:24px; color:#ffffff; opacity:0.85;">&times;</a>
+        </div>
+      </div>
+
+      <div class="invoice-modal-body" style="padding:24px;">
+        <!-- Banner Tóm tắt Vendor -->
+        <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:12px; padding:18px; margin-bottom:20px; display:flex; align-items:center; gap:18px;">
+          <div class="vendor-avatar-circle" style="width:64px; height:64px; font-size:24px; ${viewVendorObj.status == 'Approved' ? 'background:linear-gradient(135deg, #10b981 0%, #059669 100%);' : (viewVendorObj.status == 'Rejected' ? 'background:linear-gradient(135deg, #f43f5e 0%, #e11d48 100%);' : 'background:linear-gradient(135deg, #f59e0b 0%, #d97706 100%);')}">
+            ${fn:substring(viewVendorObj.shopName, 0, 1)}
+          </div>
+          <div style="flex:1;">
+            <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:4px;">
+              <h3 style="margin:0; font-size:18px; color:#0f172a; font-weight:800;">${viewVendorObj.shopName}</h3>
+              <span style="font-family:monospace; font-weight:700; background:#e2e8f0; color:#334155; padding:2px 8px; border-radius:6px; font-size:12px;">#${viewVendorObj.shopCode}</span>
+              <c:choose>
+                <c:when test="${viewVendorObj.status == 'Approved'}">
+                  <span class="status-pill pill-completed" style="font-size:12px; padding:3px 10px;"><i class="fa-solid fa-circle-check"></i> Đang hoạt động</span>
+                </c:when>
+                <c:when test="${viewVendorObj.status == 'Rejected'}">
+                  <span class="status-pill pill-canceled" style="font-size:12px; padding:3px 10px;"><i class="fa-solid fa-ban"></i> Tạm ngưng</span>
+                </c:when>
+                <c:otherwise>
+                  <span class="status-pill pill-waiting" style="font-size:12px; padding:3px 10px;"><i class="fa-solid fa-hourglass-half"></i> Chờ duyệt</span>
+                </c:otherwise>
+              </c:choose>
+            </div>
+            <div style="font-size:13px; color:#64748b; display:flex; align-items:center; gap:16px; flex-wrap:wrap;">
+              <span><i class="fa-solid fa-tag" style="color:#0ea5e9;"></i> ${empty viewVendorObj.category ? 'Nông sản an toàn' : viewVendorObj.category}</span>
+              <span><i class="fa-solid fa-star" style="color:#eab308;"></i> Đánh giá: <strong>${viewVendorObj.rating != null ? viewVendorObj.rating : '5.0'} / 5.0</strong></span>
+              <span><i class="fa-solid fa-calendar-check" style="color:#10b981;"></i> Ngày tham gia: <strong>${empty viewVendorObj.registeredAt ? '01/01/2026' : viewVendorObj.registeredAt}</strong></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2 Cột thông tin chi tiết -->
+        <div class="invoice-grid">
+          <div class="invoice-info-card">
+            <h4><i class="fa-solid fa-id-card"></i> Thông tin pháp lý & Liên hệ</h4>
+            <div class="invoice-info-row">
+              <strong>Đại diện pháp lý:</strong> ${empty viewVendorObj.contactPerson ? 'Chưa cập nhật' : viewVendorObj.contactPerson}
+            </div>
+            <div class="invoice-info-row">
+              <strong>Hotline hỗ trợ:</strong> 
+              <a href="tel:${viewVendorObj.phone}" style="color:var(--primary-color); text-decoration:none; font-weight:600;">
+                <i class="fa-solid fa-phone" style="font-size:11px;"></i> ${viewVendorObj.phone}
+              </a>
+            </div>
+            <div class="invoice-info-row">
+              <strong>Email liên hệ:</strong> 
+              <a href="mailto:${viewVendorObj.email}" style="color:#2563eb; text-decoration:none;">
+                <i class="fa-solid fa-envelope" style="font-size:11px;"></i> ${viewVendorObj.email}
+              </a>
+            </div>
+            <div class="invoice-info-row">
+              <strong>Mã số doanh nghiệp/Shop:</strong> 
+              <span style="font-family:monospace; font-weight:700;">${viewVendorObj.shopCode}</span>
+            </div>
+          </div>
+
+          <div class="invoice-info-card">
+            <h4><i class="fa-solid fa-warehouse"></i> Năng lực cung ứng & Cơ sở</h4>
+            <div class="invoice-info-row">
+              <strong>Địa chỉ nông trại / Kho:</strong> 
+              <span><i class="fa-solid fa-location-dot" style="color:#ef4444; font-size:11px;"></i> ${empty viewVendorObj.address ? 'Toàn quốc' : viewVendorObj.address}</span>
+            </div>
+            <div class="invoice-info-row">
+              <strong>Nhóm ngành sản phẩm:</strong> 
+              <span style="font-weight:600; color:#0f172a;">${empty viewVendorObj.category ? 'Nông sản, thực phẩm tươi sống' : viewVendorObj.category}</span>
+            </div>
+            <div class="invoice-info-row" style="flex-direction:column; align-items:flex-start; gap:4px;">
+              <strong>Mô tả hồ sơ / Tiêu chuẩn:</strong>
+              <div style="background:#f1f5f9; padding:8px 12px; border-radius:8px; font-size:12.5px; color:#334155; line-height:1.5; width:100%; box-sizing:border-box;">
+                ${empty viewVendorObj.description ? 'Hồ sơ năng lực đang được cập nhật.' : viewVendorObj.description}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Thanh thao tác nhanh trong Profile Modal -->
+        <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; padding:14px 18px; margin-top:20px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+          <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+            <span style="font-size:13px; font-weight:700; color:#334155;">Thao tác phê duyệt:</span>
+            <a href="admin?action=vendorStatus&id=${viewVendorObj.id}&status=Approved" class="btn-primary" style="background:#10b981; text-decoration:none; padding:7px 16px; font-size:13px; border-radius:6px; display:inline-flex; align-items:center; gap:6px;">
+              <i class="fa-solid fa-check"></i> Duyệt hoạt động
+            </a>
+            <a href="admin?action=vendorStatus&id=${viewVendorObj.id}&status=Waiting" class="btn-order-action" style="text-decoration:none; padding:7px 14px; font-size:13px; border-radius:6px; display:inline-flex; align-items:center; gap:6px;">
+              <i class="fa-solid fa-rotate-left"></i> Chờ duyệt
+            </a>
+            <a href="admin?action=vendorStatus&id=${viewVendorObj.id}&status=Rejected" class="btn-order-action btn-order-cancel" style="text-decoration:none; padding:7px 14px; font-size:13px; border-radius:6px; display:inline-flex; align-items:center; gap:6px;">
+              <i class="fa-solid fa-ban"></i> Tạm ngưng
+            </a>
+          </div>
+
+          <div style="display:flex; gap:10px;">
+            <a href="admin?tab=vendors&action=editVendor&id=${viewVendorObj.id}" class="btn-primary" style="background:#3b82f6; text-decoration:none; padding:7px 16px; font-size:13px; border-radius:6px; display:inline-flex; align-items:center; gap:6px;">
+              <i class="fa-solid fa-pen-to-square"></i> Sửa thông tin
+            </a>
+            <a href="admin?tab=vendors" class="btn-secondary" style="text-decoration:none; padding:7px 16px; font-size:13px; border-radius:6px;">
+              Đóng
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</c:if>
+
+<!-- ==========================================
+     MODAL: THÊM / SỬA NHÀ BÁN HÀNG (VENDOR)
+     ========================================== -->
+<c:if test="${param.action == 'newVendor' || not empty editVendorObj}">
+  <div class="modal" id="vendorFormModal" style="display:flex;">
+    <div class="product-modal-container" style="max-width:720px;">
+      <div class="product-modal-top" style="background:linear-gradient(135deg, #064e3b 0%, #065f46 100%);">
+        <h3>
+          <i class="fa-solid fa-store"></i>
+          <c:choose>
+            <c:when test="${not empty editVendorObj}">Chỉnh Sửa Đối Tác: ${editVendorObj.shopName}</c:when>
+            <c:otherwise>Thêm Đối Tác Nhà Bán Hàng Mới</c:otherwise>
+          </c:choose>
+        </h3>
+        <a href="admin?tab=vendors" class="close-btn" style="text-decoration:none; font-size:24px; color:#ffffff; opacity:0.8;">&times;</a>
+      </div>
+
+      <div class="product-modal-body">
+        <form action="admin" method="POST">
+          <input type="hidden" name="action" value="saveVendor">
+          <c:if test="${not empty editVendorObj}">
+            <input type="hidden" name="id" value="${editVendorObj.id}">
+          </c:if>
+
+          <div class="product-form-grid">
+            <!-- Tên Cửa Hàng -->
+            <div>
+              <label class="product-input-label">Tên Shop / Nhà Cung Cấp <span style="color:#ef4444;">*</span></label>
+              <input type="text" name="shopName" class="product-input-control" required 
+                     placeholder="VD: Dalat Fresh Farm..." 
+                     value="${editVendorObj.shopName}">
+            </div>
+
+            <!-- Mã Shop -->
+            <div>
+              <label class="product-input-label">Mã Shop (Vendor Code) <span style="color:#ef4444;">*</span></label>
+              <input type="text" name="shopCode" class="product-input-control" required 
+                     placeholder="VD: VND-DALAT-01" 
+                     value="${empty editVendorObj.shopCode ? 'VND-NEW' : editVendorObj.shopCode}">
+            </div>
+
+            <!-- Người Đại Diện -->
+            <div>
+              <label class="product-input-label">Người Đại Diện Pháp Lý <span style="color:#ef4444;">*</span></label>
+              <input type="text" name="contactPerson" class="product-input-control" required 
+                     placeholder="Họ và tên người phụ trách" 
+                     value="${editVendorObj.contactPerson}">
+            </div>
+
+            <!-- Số Điện Thoại -->
+            <div>
+              <label class="product-input-label">Số Điện Thoại Hotline <span style="color:#ef4444;">*</span></label>
+              <input type="tel" name="phone" class="product-input-control" required 
+                     placeholder="VD: 0988123456" 
+                     value="${editVendorObj.phone}">
+            </div>
+
+            <!-- Email Đối Tác -->
+            <div>
+              <label class="product-input-label">Email Đối Tác <span style="color:#ef4444;">*</span></label>
+              <input type="email" name="email" class="product-input-control" required 
+                     placeholder="VD: contact@vendor.vn" 
+                     value="${editVendorObj.email}">
+            </div>
+
+            <!-- Ngành Hàng / Nhóm Sản Phẩm -->
+            <div>
+              <label class="product-input-label">Ngành Hàng / Nhóm Nông Sản</label>
+              <input type="text" name="category" class="product-input-control" 
+                     placeholder="VD: Rau củ Đà Lạt, Trái cây nhiệt đới..." 
+                     value="${editVendorObj.category}">
+            </div>
+
+            <!-- Địa Chỉ Nông Trại / Kho Hàng (Full Width) -->
+            <div class="form-full-width">
+              <label class="product-input-label">Địa Chỉ Cơ Sở / Nông Trại / Kho Hàng <span style="color:#ef4444;">*</span></label>
+              <input type="text" name="address" class="product-input-control" required 
+                     placeholder="VD: Thung lũng Đa Thiện, Phường 8, TP. Đà Lạt, Lâm Đồng" 
+                     value="${editVendorObj.address}">
+            </div>
+
+            <!-- Chứng Nhận Chất Lượng & Mô Tả Năng Lực (Full Width) -->
+            <div class="form-full-width">
+              <label class="product-input-label">Chứng Nhận Chất Lượng & Mô Tả Năng Lực Cung Ứng</label>
+              <textarea name="description" class="product-input-control" rows="3" 
+                        placeholder="VD: Đạt chuẩn VietGAP 2026, chứng nhận GlobalGAP, năng lực 5 tấn/ngày...">${editVendorObj.description}</textarea>
+            </div>
+
+            <!-- Đánh Giá Sao -->
+            <div>
+              <label class="product-input-label">Đánh Giá Uy Tín (Rating 1.0 - 5.0)</label>
+              <input type="number" step="0.1" min="1" max="5" name="rating" class="product-input-control" 
+                     value="${empty editVendorObj.rating ? 5.0 : editVendorObj.rating}">
+            </div>
+
+            <!-- Trạng Thái Phê Duyệt -->
+            <div>
+              <label class="product-input-label">Trạng Thái Hợp Tác</label>
+              <select name="status" class="product-input-control">
+                <option value="Approved" ${editVendorObj.status == 'Approved' ? 'selected' : ''}>Đang hoạt động (Approved)</option>
+                <option value="Waiting" ${editVendorObj.status == 'Waiting' || empty editVendorObj ? 'selected' : ''}>Chờ xét duyệt (Waiting)</option>
+                <option value="Rejected" ${editVendorObj.status == 'Rejected' ? 'selected' : ''}>Tạm ngưng / Từ chối (Rejected)</option>
+              </select>
+            </div>
+
+          </div>
+
+          <div style="display:flex; justify-content:flex-end; gap:12px; margin-top:24px; padding-top:16px; border-top:1px solid #e2e8f0;">
+            <a href="admin?tab=vendors" class="btn-secondary" style="text-decoration:none; padding:10px 20px; font-size:13.5px; border-radius:8px;">Hủy bỏ</a>
+            <button type="submit" class="btn-create-vendor" style="border:none; cursor:pointer;">
+              <i class="fa-solid fa-floppy-disk"></i> Lưu Thông Tin Đối Tác
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</c:if>
+
 <script>
 document.addEventListener('DOMContentLoaded', function() {
   // Client-side Instant Filter for Products
@@ -2526,6 +3253,67 @@ document.addEventListener('DOMContentLoaded', function() {
       applyFilter('stock', stockParam);
     } else if (catParam) {
       applyFilter('category', catParam);
+    }
+  }
+
+  // Client-side Instant Filter & Instant Search for Vendors
+  const vendorChips = document.querySelectorAll('.vendor-filter-chip');
+  const vendorRows = document.querySelectorAll('.vendor-item-row');
+  const vendorEmptyRow = document.getElementById('vendorsClientEmptyRow');
+  const vendorSearchInput = document.getElementById('vendorSearchInput');
+
+  if (vendorRows.length > 0) {
+    let currentVendorFilter = 'all';
+    let currentVendorKeyword = '';
+
+    function filterVendors() {
+      let visibleCount = 0;
+      vendorRows.forEach(function(row) {
+        const rowStatus = row.getAttribute('data-status') || '';
+        const rowKeyword = (row.getAttribute('data-keyword') || '').toLowerCase();
+
+        let statusMatch = (currentVendorFilter === 'all' || !currentVendorFilter || rowStatus.toLowerCase() === currentVendorFilter.toLowerCase());
+        let keywordMatch = (!currentVendorKeyword || rowKeyword.indexOf(currentVendorKeyword) !== -1);
+
+        if (statusMatch && keywordMatch) {
+          row.style.display = '';
+          visibleCount++;
+        } else {
+          row.style.display = 'none';
+        }
+      });
+
+      if (vendorEmptyRow) {
+        vendorEmptyRow.style.display = (visibleCount === 0) ? '' : 'none';
+      }
+    }
+
+    if (vendorChips.length > 0) {
+      vendorChips.forEach(function(chip) {
+        chip.addEventListener('click', function(e) {
+          e.preventDefault();
+          vendorChips.forEach(function(c) { c.classList.remove('active'); });
+          this.classList.add('active');
+
+          currentVendorFilter = this.getAttribute('data-filter-val') || 'all';
+          filterVendors();
+
+          const url = new URL(window.location);
+          if (currentVendorFilter && currentVendorFilter !== 'all') {
+            url.searchParams.set('statusFilter', currentVendorFilter);
+          } else {
+            url.searchParams.delete('statusFilter');
+          }
+          window.history.replaceState({}, '', url);
+        });
+      });
+    }
+
+    if (vendorSearchInput) {
+      vendorSearchInput.addEventListener('input', function() {
+        currentVendorKeyword = this.value.trim().toLowerCase();
+        filterVendors();
+      });
     }
   }
 });

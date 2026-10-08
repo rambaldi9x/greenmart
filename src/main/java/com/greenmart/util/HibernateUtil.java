@@ -14,7 +14,7 @@ import com.greenmart.entity.*;
 public class HibernateUtil {
     private static SessionFactory sessionFactory;
 
-    static {
+    private static synchronized void buildSessionFactory() {
         try {
             Configuration configuration = new Configuration();
             Properties settings = new Properties();
@@ -60,12 +60,19 @@ public class HibernateUtil {
         }
     }
 
-    public static SessionFactory getSessionFactory() {
+    static {
+        buildSessionFactory();
+    }
+
+    public static synchronized SessionFactory getSessionFactory() {
+        if (sessionFactory == null || sessionFactory.isClosed()) {
+            buildSessionFactory();
+        }
         return sessionFactory;
     }
 
-    public static void shutdown() {
-        if (sessionFactory != null) {
+    public static synchronized void shutdown() {
+        if (sessionFactory != null && !sessionFactory.isClosed()) {
             sessionFactory.close();
         }
     }

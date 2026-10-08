@@ -87,6 +87,13 @@ public class AdminServlet extends HttpServlet {
             } catch (Exception ignored) {}
             response.sendRedirect(request.getContextPath() + "/admin?tab=vendors");
             return;
+        } else if ("deleteVendor".equalsIgnoreCase(action)) {
+            try {
+                Long id = Long.parseLong(request.getParameter("id"));
+                vendorService.deleteVendor(id);
+            } catch (Exception ignored) {}
+            response.sendRedirect(request.getContextPath() + "/admin?tab=vendors");
+            return;
         }
 
         // Tab data preparation
@@ -117,9 +124,22 @@ public class AdminServlet extends HttpServlet {
                 canceledOrdersCount++;
             }
         }
-        long approvedVendorsCount = vendors.stream()
-                .filter(v -> "Approved".equalsIgnoreCase(v.getStatus()))
-                .count();
+
+        // Vendor stats
+        long approvedVendorsCount = 0;
+        long waitingVendorsCount = 0;
+        long rejectedVendorsCount = 0;
+
+        for (Vendor v : vendors) {
+            String vst = v.getStatus() != null ? v.getStatus().trim() : "";
+            if ("Approved".equalsIgnoreCase(vst)) {
+                approvedVendorsCount++;
+            } else if ("Waiting".equalsIgnoreCase(vst)) {
+                waitingVendorsCount++;
+            } else if ("Rejected".equalsIgnoreCase(vst) || "Suspended".equalsIgnoreCase(vst)) {
+                rejectedVendorsCount++;
+            }
+        }
 
         // Product stats
         long inStockCount = 0;
@@ -173,6 +193,10 @@ public class AdminServlet extends HttpServlet {
         request.setAttribute("canceledOrdersCount", canceledOrdersCount);
         request.setAttribute("totalProducts", products.size());
         request.setAttribute("totalVendors", approvedVendorsCount);
+        request.setAttribute("allVendorsCount", vendors.size());
+        request.setAttribute("approvedVendorsCount", approvedVendorsCount);
+        request.setAttribute("waitingVendorsCount", waitingVendorsCount);
+        request.setAttribute("rejectedVendorsCount", rejectedVendorsCount);
         request.setAttribute("inStockCount", inStockCount);
         request.setAttribute("lowStockCount", lowStockCount);
         request.setAttribute("outOfStockCount", outOfStockCount);
@@ -266,6 +290,29 @@ public class AdminServlet extends HttpServlet {
                     request.setAttribute("viewOrderObj", viewOrderObj);
                 } catch (Exception ignored) {}
             }
+        } else if ("vendors".equalsIgnoreCase(tab)) {
+            String statusFilter = request.getParameter("statusFilter");
+            String search = request.getParameter("search");
+            vendors = vendorService.filterVendors(statusFilter, search);
+            request.setAttribute("statusFilter", statusFilter);
+            request.setAttribute("search", search);
+
+            String viewVendorIdStr = request.getParameter("viewVendor");
+            if (viewVendorIdStr != null && !viewVendorIdStr.trim().isEmpty()) {
+                try {
+                    Long vId = Long.parseLong(viewVendorIdStr.trim());
+                    Vendor viewVendorObj = vendorService.getVendorById(vId);
+                    request.setAttribute("viewVendorObj", viewVendorObj);
+                } catch (Exception ignored) {}
+            }
+
+            if ("editVendor".equalsIgnoreCase(action)) {
+                try {
+                    Long editId = Long.parseLong(request.getParameter("id"));
+                    Vendor editVendorObj = vendorService.getVendorById(editId);
+                    request.setAttribute("editVendorObj", editVendorObj);
+                } catch (Exception ignored) {}
+            }
         }
 
         request.setAttribute("orders", orders);
@@ -325,6 +372,58 @@ public class AdminServlet extends HttpServlet {
                 productService.saveProduct(newProd);
             }
             response.sendRedirect(request.getContextPath() + "/admin?tab=products");
+
+        } else if ("saveVendor".equalsIgnoreCase(action)) {
+            String idStr = request.getParameter("id");
+            String shopCode = request.getParameter("shopCode");
+            String shopName = request.getParameter("shopName");
+            String contactPerson = request.getParameter("contactPerson");
+            String email = request.getParameter("email");
+            String phone = request.getParameter("phone");
+            String address = request.getParameter("address");
+            String category = request.getParameter("category");
+            String description = request.getParameter("description");
+            String ratingStr = request.getParameter("rating");
+            String status = request.getParameter("status");
+
+            double rating = 4.8;
+            try {
+                if (ratingStr != null && !ratingStr.trim().isEmpty()) {
+                    rating = Double.parseDouble(ratingStr.trim());
+                }
+            } catch (Exception ignored) {}
+
+            if (status == null || status.trim().isEmpty()) {
+                status = "Approved";
+            }
+
+            if (idStr != null && !idStr.trim().isEmpty()) {
+                try {
+                    Long id = Long.parseLong(idStr.trim());
+                    Vendor existing = vendorService.getVendorById(id);
+                    if (existing != null) {
+                        existing.setShopCode(shopCode);
+                        existing.setShopName(shopName);
+                        existing.setContactPerson(contactPerson);
+                        existing.setEmail(email);
+                        existing.setPhone(phone);
+                        existing.setAddress(address);
+                        existing.setCategory(category);
+                        existing.setDescription(description);
+                        existing.setRating(rating);
+                        existing.setStatus(status);
+                        vendorService.updateVendor(existing);
+                    }
+                } catch (Exception ignored) {}
+            } else {
+                if (shopCode == null || shopCode.trim().isEmpty()) {
+                    shopCode = "VND-" + (System.currentTimeMillis() % 10000);
+                }
+                Vendor newV = new Vendor(shopCode, shopName, contactPerson, email, phone, 
+                        address, category, description, rating, status, null);
+                vendorService.saveVendor(newV);
+            }
+            response.sendRedirect(request.getContextPath() + "/admin?tab=vendors");
 
         } else if ("updateOrderStatus".equalsIgnoreCase(action)) {
             String redirectUrl = request.getParameter("redirect");
