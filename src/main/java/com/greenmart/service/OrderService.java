@@ -75,8 +75,26 @@ public class OrderService {
         return orderRepository.findAll();
     }
 
+    public List<Order> getOrdersByUserId(Long userId) {
+        return orderRepository.findByUserId(userId);
+    }
+
     public Order getOrderById(Long id) {
         return orderRepository.findById(id);
+    }
+
+    public Order getOrderByCode(String orderCode) {
+        return orderRepository.findByOrderCode(orderCode);
+    }
+
+    public List<Order> getOrdersByPhone(String phone) {
+        return orderRepository.findByPhone(phone);
+    }
+
+    public boolean isOrderCompleted(String status) {
+        if (status == null) return false;
+        String s = status.trim().toLowerCase();
+        return "completed".equals(s) || "delivered".equals(s) || "hoàn tất".equals(s) || "hoàn thành".equals(s);
     }
 
     public void updateOrderStatus(Long orderId, String status) {

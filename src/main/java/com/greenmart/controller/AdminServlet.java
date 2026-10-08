@@ -96,8 +96,26 @@ public class AdminServlet extends HttpServlet {
         List<User> users = userService.getAllUsers();
 
         double totalRevenue = 0.0;
+        int completedOrdersCount = 0;
+        long waitingOrdersCount = 0;
+        long confirmedOrdersCount = 0;
+        long shippingOrdersCount = 0;
+        long canceledOrdersCount = 0;
+
         for (Order o : orders) {
-            if (o.getTotal() != null) totalRevenue += o.getTotal();
+            String st = o.getStatus() != null ? o.getStatus().trim() : "";
+            if (o.getTotal() != null && orderService.isOrderCompleted(st)) {
+                totalRevenue += o.getTotal();
+                completedOrdersCount++;
+            } else if ("Waiting".equalsIgnoreCase(st)) {
+                waitingOrdersCount++;
+            } else if ("Confirmed".equalsIgnoreCase(st)) {
+                confirmedOrdersCount++;
+            } else if ("Shipping".equalsIgnoreCase(st)) {
+                shippingOrdersCount++;
+            } else if ("Canceled".equalsIgnoreCase(st) || "Cancelled".equalsIgnoreCase(st)) {
+                canceledOrdersCount++;
+            }
         }
         long approvedVendorsCount = vendors.stream()
                 .filter(v -> "Approved".equalsIgnoreCase(v.getStatus()))
@@ -105,6 +123,11 @@ public class AdminServlet extends HttpServlet {
 
         request.setAttribute("totalRevenue", totalRevenue);
         request.setAttribute("totalOrders", orders.size());
+        request.setAttribute("waitingOrdersCount", waitingOrdersCount);
+        request.setAttribute("confirmedOrdersCount", confirmedOrdersCount);
+        request.setAttribute("shippingOrdersCount", shippingOrdersCount);
+        request.setAttribute("completedOrdersCount", completedOrdersCount);
+        request.setAttribute("canceledOrdersCount", canceledOrdersCount);
         request.setAttribute("totalProducts", products.size());
         request.setAttribute("totalVendors", approvedVendorsCount);
 
@@ -126,6 +149,19 @@ public class AdminServlet extends HttpServlet {
                 } catch (Exception ignored) {}
             }
         } else if ("orders".equalsIgnoreCase(tab)) {
+            String statusFilter = request.getParameter("statusFilter");
+            if (statusFilter != null && !statusFilter.trim().isEmpty() && !"all".equalsIgnoreCase(statusFilter)) {
+                String sf = statusFilter.trim();
+                if ("completed".equalsIgnoreCase(sf)) {
+                    orders = orders.stream().filter(o -> orderService.isOrderCompleted(o.getStatus())).collect(Collectors.toList());
+                } else if ("canceled".equalsIgnoreCase(sf) || "cancelled".equalsIgnoreCase(sf)) {
+                    orders = orders.stream().filter(o -> "Canceled".equalsIgnoreCase(o.getStatus()) || "Cancelled".equalsIgnoreCase(o.getStatus())).collect(Collectors.toList());
+                } else {
+                    orders = orders.stream().filter(o -> sf.equalsIgnoreCase(o.getStatus())).collect(Collectors.toList());
+                }
+                request.setAttribute("statusFilter", sf);
+            }
+
             String search = request.getParameter("search");
             if (search != null && !search.trim().isEmpty()) {
                 String kw = search.trim().toLowerCase();
@@ -205,12 +241,17 @@ public class AdminServlet extends HttpServlet {
             response.sendRedirect(request.getContextPath() + "/admin?tab=products");
 
         } else if ("updateOrderStatus".equalsIgnoreCase(action)) {
+            String redirectUrl = request.getParameter("redirect");
             try {
                 Long id = Long.parseLong(request.getParameter("id"));
                 String status = request.getParameter("status");
                 orderService.updateOrderStatus(id, status);
             } catch (Exception ignored) {}
-            response.sendRedirect(request.getContextPath() + "/admin?tab=orders");
+            if (redirectUrl != null && !redirectUrl.trim().isEmpty()) {
+                response.sendRedirect(request.getContextPath() + "/" + redirectUrl);
+            } else {
+                response.sendRedirect(request.getContextPath() + "/admin?tab=orders");
+            }
 
         } else {
             response.sendRedirect(request.getContextPath() + "/admin");

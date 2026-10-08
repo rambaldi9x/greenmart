@@ -148,7 +148,15 @@
           <i class="fa-solid fa-users"></i> Quản lý người dùng
         </a>
       </li>
+      <li>
+        <a href="chat">
+          <i class="fa-solid fa-comments"></i> Tin nhắn & Chat KH
+        </a>
+      </li>
       <li style="margin-top:25px;border-top:1px solid rgba(255,255,255,0.1);padding-top:15px;">
+        <a href="profile"><i class="fa-solid fa-circle-user"></i> Thông tin User</a>
+      </li>
+      <li>
         <a href="home"><i class="fa fa-arrow-left"></i> Xem Website</a>
       </li>
       <li>
@@ -168,9 +176,12 @@
         <h2 style="margin-bottom: 20px; color: var(--text-heading);">Báo Cáo Hoạt Động Hệ Thống</h2>
         <div class="stats-cards">
           <div class="card-stat">
-            <h4>Tổng doanh thu</h4>
+            <h4>Doanh thu thực tế (Hoàn tất)</h4>
             <div class="val">
               <fmt:formatNumber value="${totalRevenue}" type="currency" currencySymbol="₫" maxFractionDigits="0"/>
+            </div>
+            <div style="font-size: 12px; color: #16a34a; margin-top: 5px; font-weight: 500;">
+              <i class="fa-solid fa-circle-check"></i> ${completedOrdersCount} đơn hoàn thành
             </div>
           </div>
           <div class="card-stat">
@@ -298,76 +309,214 @@
       </div>
     </c:if>
 
-    <!-- Tab 3: Quản lý đơn hàng -->
+    <!-- Tab 3: Quản lý đơn hàng (Redesigned Modern UI) -->
     <c:if test="${currentTab == 'orders'}">
       <div>
-        <h2 style="margin-bottom: 16px; color: var(--text-heading);">Quản lý đơn đặt hàng</h2>
-        <div style="margin-bottom: 16px;">
-          <form action="admin" method="GET" style="display:flex; gap:10px;">
-            <input type="hidden" name="tab" value="orders">
-            <input type="text" name="search" value="${search}" placeholder="🔍 Tìm theo mã đơn, tên khách hoặc SĐT..."
-              style="padding:10px 14px;border:1px solid var(--border-color);border-radius:6px;width:380px;font-size:14px;outline:none;">
-            <button type="submit" class="btn-primary" style="padding:10px 18px;">Tìm</button>
-            <c:if test="${not empty search}">
-              <a href="admin?tab=orders" style="padding:10px 14px;border:1px solid #ccc;background:white;border-radius:6px;text-decoration:none;color:#555;">✕ Xóa tìm</a>
-            </c:if>
-          </form>
+        <!-- Header -->
+        <div class="admin-orders-header">
+          <div class="admin-orders-title">
+            <h2><i class="fa-solid fa-boxes-packing" style="color:var(--primary-color);"></i> Quản Lý Đơn Hàng & Vận Chuyển</h2>
+            <p>Theo dõi tiến độ xử lý đơn hàng, điều phối giao nhận và đối soát doanh thu toàn hệ thống.</p>
+          </div>
+          <div>
+            <span style="font-size:13px; color:#64748b;">
+              Tổng: <strong>${totalOrders}</strong> đơn hàng | Doanh thu hoàn tất: 
+              <strong style="color:var(--primary-color);">
+                <fmt:formatNumber value="${totalRevenue}" type="currency" currencySymbol="₫" maxFractionDigits="0"/>
+              </strong>
+            </span>
+          </div>
         </div>
-        <table class="admin-table">
-          <thead>
-            <tr>
-              <th>Mã đơn</th>
-              <th>Khách hàng</th>
-              <th>Điện thoại</th>
-              <th>Địa chỉ</th>
-              <th>Tổng tiền</th>
-              <th>Trạng thái</th>
-              <th>Thao tác</th>
-            </tr>
-          </thead>
-          <tbody>
-            <c:choose>
-              <c:when test="${empty orders}">
-                <tr><td colspan="7" style="text-align:center;padding:30px;color:#888;">Chưa có đơn hàng nào.</td></tr>
-              </c:when>
-              <c:otherwise>
-                <c:forEach var="o" items="${orders}">
+
+        <!-- Status Filter Tabs / Chips Bar -->
+        <div class="admin-order-filters">
+          <a href="admin?tab=orders" class="filter-tab-chip ${empty statusFilter || statusFilter == 'all' ? 'active' : ''}">
+            <i class="fa-solid fa-list-check"></i> Tất cả <span class="chip-counter">${totalOrders}</span>
+          </a>
+          <a href="admin?tab=orders&statusFilter=Waiting" class="filter-tab-chip ${statusFilter == 'Waiting' ? 'active' : ''}">
+            <i class="fa-solid fa-hourglass-half" style="color:#d97706;"></i> Chờ duyệt 
+            <span class="chip-counter">${waitingOrdersCount}</span>
+          </a>
+          <a href="admin?tab=orders&statusFilter=Confirmed" class="filter-tab-chip ${statusFilter == 'Confirmed' ? 'active' : ''}">
+            <i class="fa-solid fa-clipboard-check" style="color:#7c3aed;"></i> Đã xác nhận 
+            <span class="chip-counter">${confirmedOrdersCount}</span>
+          </a>
+          <a href="admin?tab=orders&statusFilter=Shipping" class="filter-tab-chip ${statusFilter == 'Shipping' ? 'active' : ''}">
+            <i class="fa-solid fa-truck-fast" style="color:#0284c7;"></i> Đang giao 
+            <span class="chip-counter">${shippingOrdersCount}</span>
+          </a>
+          <a href="admin?tab=orders&statusFilter=Completed" class="filter-tab-chip ${statusFilter == 'Completed' ? 'active' : ''}">
+            <i class="fa-solid fa-circle-check" style="color:#16a34a;"></i> Hoàn tất 
+            <span class="chip-counter">${completedOrdersCount}</span>
+          </a>
+          <a href="admin?tab=orders&statusFilter=Canceled" class="filter-tab-chip ${statusFilter == 'Canceled' ? 'active' : ''}">
+            <i class="fa-solid fa-ban" style="color:#dc2626;"></i> Đã hủy 
+            <span class="chip-counter">${canceledOrdersCount}</span>
+          </a>
+        </div>
+
+        <!-- Search input bar -->
+        <form action="admin" method="GET" class="admin-search-bar">
+          <input type="hidden" name="tab" value="orders">
+          <c:if test="${not empty statusFilter}">
+            <input type="hidden" name="statusFilter" value="${statusFilter}">
+          </c:if>
+          <div class="admin-search-input-wrap">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" name="search" value="${search}" placeholder="Tìm theo mã đơn (#GM...), tên khách hoặc SĐT...">
+          </div>
+          <button type="submit" class="btn-admin-search">
+            <i class="fa-solid fa-filter"></i> Lọc
+          </button>
+          <c:if test="${not empty search || not empty statusFilter}">
+            <a href="admin?tab=orders" class="btn-admin-reset" title="Đặt lại bộ lọc">
+              <i class="fa-solid fa-rotate-left"></i> Đặt lại
+            </a>
+          </c:if>
+        </form>
+
+        <!-- Orders Table -->
+        <div style="background:white; border-radius:12px; border:1px solid var(--border-color); overflow:hidden; box-shadow:0 2px 8px rgba(0,0,0,0.03);">
+          <table class="admin-table" style="margin-top:0;">
+            <thead>
+              <tr>
+                <th style="width:130px;">Mã đơn hàng</th>
+                <th>Khách hàng</th>
+                <th style="width:110px;">Sản phẩm</th>
+                <th style="width:130px;">Tổng tiền</th>
+                <th style="width:230px;">Trạng thái</th>
+                <th style="width:180px; text-align:center;">Thao tác</th>
+              </tr>
+            </thead>
+            <tbody>
+              <c:choose>
+                <c:when test="${empty orders}">
                   <tr>
-                    <td><strong>${o.orderCode}</strong></td>
-                    <td>${o.name}</td>
-                    <td>${o.phone}</td>
-                    <td>${o.address}</td>
-                    <td style="color:var(--primary-color);font-weight:bold;">
-                      <fmt:formatNumber value="${o.total}" type="currency" currencySymbol="₫" maxFractionDigits="0"/>
-                    </td>
-                    <td>
-                      <form action="admin" method="POST" style="display:flex; align-items:center; gap:6px;">
-                        <input type="hidden" name="action" value="updateOrderStatus">
-                        <input type="hidden" name="id" value="${o.id}">
-                        <select name="status" style="padding:5px 8px;border-radius:4px;border:1px solid #ccc;font-size:13px;">
-                          <option value="Waiting" ${o.status == 'Waiting' ? 'selected' : ''}>Chờ duyệt</option>
-                          <option value="Confirmed" ${o.status == 'Confirmed' ? 'selected' : ''}>Đã xác nhận</option>
-                          <option value="Shipping" ${o.status == 'Shipping' ? 'selected' : ''}>Đang giao hàng</option>
-                          <option value="Completed" ${o.status == 'Completed' ? 'selected' : ''}>Hoàn tất</option>
-                          <option value="Canceled" ${o.status == 'Canceled' ? 'selected' : ''}>Hủy đơn</option>
-                        </select>
-                        <button type="submit" class="btn-action btn-edit" style="padding:4px 8px;font-size:12px;">Lưu</button>
-                      </form>
-                    </td>
-                    <td style="white-space:nowrap;">
-                      <a href="admin?tab=orders&viewOrder=${o.id}" class="btn-action btn-edit">
-                        <i class="fa-solid fa-eye"></i> Chi tiết
-                      </a>
-                      <a href="admin?action=deleteOrder&id=${o.id}" class="btn-action btn-delete">
-                        <i class="fa fa-trash"></i> Xóa
-                      </a>
+                    <td colspan="6" style="text-align:center; padding:50px 20px; color:#888;">
+                      <i class="fa-regular fa-folder-open" style="font-size:36px; color:#cbd5e1; margin-bottom:12px; display:block;"></i>
+                      Không tìm thấy đơn hàng nào phù hợp với bộ lọc hiện tại.
                     </td>
                   </tr>
-                </c:forEach>
-              </c:otherwise>
-            </c:choose>
-          </tbody>
-        </table>
+                </c:when>
+                <c:otherwise>
+                  <c:forEach var="o" items="${orders}">
+                    <tr>
+                      <!-- Mã đơn & Ngày giờ -->
+                      <td>
+                        <strong style="color:var(--text-heading); font-size:14px;">#${o.orderCode}</strong>
+                        <div style="font-size:11.5px; color:#64748b; margin-top:3px;">
+                          ${fn:substring(o.createdAt, 0, 16)}
+                        </div>
+                        <c:choose>
+                          <c:when test="${o.paymentMethod == 'BANK'}">
+                            <span class="payment-tag tag-bank"><i class="fa-solid fa-qrcode"></i> VietQR</span>
+                          </c:when>
+                          <c:otherwise>
+                            <span class="payment-tag tag-cod"><i class="fa-solid fa-money-bill-wave"></i> COD</span>
+                          </c:otherwise>
+                        </c:choose>
+                      </td>
+
+                      <!-- Khách hàng -->
+                      <td>
+                        <div class="customer-cell">
+                          <div class="customer-avatar-sm">
+                            ${fn:toUpperCase(fn:substring(o.name, 0, 1))}
+                          </div>
+                          <div>
+                            <div style="font-weight:700; color:var(--text-heading); font-size:13.5px;">${o.name}</div>
+                            <div style="font-size:12.5px; color:#64748b; margin-top:2px;">
+                              <a href="tel:${o.phone}" style="color:#475569; text-decoration:none;">
+                                <i class="fa-solid fa-phone" style="font-size:10px;"></i> ${o.phone}
+                              </a>
+                            </div>
+                            <div style="font-size:11.5px; color:#94a3b8; max-width:240px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;" title="${o.address}">
+                              <i class="fa-solid fa-location-dot" style="font-size:10px;"></i> ${o.address}
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+
+                      <!-- Số món -->
+                      <td>
+                        <span style="display:inline-flex; align-items:center; gap:5px; background:#f1f5f9; padding:4px 10px; border-radius:12px; font-size:12px; font-weight:600; color:#475569;">
+                          <i class="fa-solid fa-box"></i> ${not empty o.items ? fn:length(o.items) : 1} món
+                        </span>
+                      </td>
+
+                      <!-- Tổng tiền -->
+                      <td>
+                        <div style="color:var(--primary-color); font-weight:800; font-size:15px;">
+                          <fmt:formatNumber value="${o.total}" type="currency" currencySymbol="₫" maxFractionDigits="0"/>
+                        </div>
+                        <c:if test="${not empty o.couponCode}">
+                          <div style="font-size:11px; color:#16a34a; margin-top:2px;">
+                            <i class="fa-solid fa-ticket"></i> ${o.couponCode}
+                          </div>
+                        </c:if>
+                      </td>
+
+                      <!-- Trạng thái & Quick Update Form -->
+                      <td>
+                        <div style="margin-bottom:6px;">
+                          <c:choose>
+                            <c:when test="${o.status == 'Completed' || o.status == 'Delivered'}">
+                              <span class="status-pill pill-completed"><i class="fa-solid fa-circle-check"></i> Hoàn tất</span>
+                            </c:when>
+                            <c:when test="${o.status == 'Shipping'}">
+                              <span class="status-pill pill-shipping"><i class="fa-solid fa-truck-fast"></i> Đang giao</span>
+                            </c:when>
+                            <c:when test="${o.status == 'Confirmed'}">
+                              <span class="status-pill pill-confirmed"><i class="fa-solid fa-boxes-packing"></i> Đã xác nhận</span>
+                            </c:when>
+                            <c:when test="${o.status == 'Canceled' || o.status == 'Cancelled'}">
+                              <span class="status-pill pill-canceled"><i class="fa-solid fa-ban"></i> Đã hủy</span>
+                            </c:when>
+                            <c:otherwise>
+                              <span class="status-pill pill-waiting"><i class="fa-solid fa-hourglass-half"></i> Chờ duyệt</span>
+                            </c:otherwise>
+                          </c:choose>
+                        </div>
+                        <form action="admin" method="POST" style="display:flex; align-items:center; gap:6px;">
+                          <input type="hidden" name="action" value="updateOrderStatus">
+                          <input type="hidden" name="id" value="${o.id}">
+                          <c:if test="${not empty statusFilter}">
+                            <input type="hidden" name="redirect" value="admin?tab=orders&statusFilter=${statusFilter}">
+                          </c:if>
+                          <select name="status" style="padding:4px 8px; border-radius:6px; border:1px solid #cbd5e1; font-size:12.5px; background:#fff; outline:none; cursor:pointer;">
+                            <option value="Waiting" ${o.status == 'Waiting' ? 'selected' : ''}>Chờ duyệt</option>
+                            <option value="Confirmed" ${o.status == 'Confirmed' ? 'selected' : ''}>Xác nhận</option>
+                            <option value="Shipping" ${o.status == 'Shipping' ? 'selected' : ''}>Đang giao</option>
+                            <option value="Completed" ${o.status == 'Completed' ? 'selected' : ''}>Hoàn tất</option>
+                            <option value="Canceled" ${o.status == 'Canceled' ? 'selected' : ''}>Hủy đơn</option>
+                          </select>
+                          <button type="submit" class="btn-primary" style="padding:4px 10px; font-size:12px; border-radius:6px;" title="Cập nhật trạng thái">
+                            Lưu
+                          </button>
+                        </form>
+                      </td>
+
+                      <!-- Thao tác -->
+                      <td style="white-space:nowrap; text-align:center;">
+                        <a href="admin?tab=orders&viewOrder=${o.id}" class="btn-action btn-edit" title="Xem chi tiết hóa đơn">
+                          <i class="fa-solid fa-eye"></i> Chi tiết
+                        </a>
+                        <c:if test="${not empty o.userId}">
+                          <a href="chat?with=${o.userId}&orderCode=${o.orderCode}" class="btn-action" style="background:#eff6ff; color:#1d4ed8; border:1px solid #bfdbfe;" title="Nhắn tin với khách hàng">
+                            <i class="fa-solid fa-comments"></i> Chat
+                          </a>
+                        </c:if>
+                        <a href="admin?action=deleteOrder&id=${o.id}" class="btn-action btn-delete" onclick="return confirm('Bạn có chắc chắn muốn xóa đơn hàng #${o.orderCode}?');" title="Xóa đơn hàng">
+                          <i class="fa fa-trash"></i>
+                        </a>
+                      </td>
+                    </tr>
+                  </c:forEach>
+                </c:otherwise>
+              </c:choose>
+            </tbody>
+          </table>
+        </div>
       </div>
     </c:if>
 
@@ -555,86 +704,243 @@
   </div>
 </c:if>
 
-<!-- Modal Chi tiết đơn hàng (Điều hướng bằng Java Servlet) -->
+<!-- Modal Chi tiết đơn hàng (Redesigned Invoice / Fulfillment Modal) -->
 <c:if test="${not empty viewOrderObj}">
   <div class="modal" id="orderDetailModal" style="display: flex;">
-    <div class="modal-content" style="width: 620px; max-width: 96%;">
-      <div class="modal-header">
-        <h3 style="font-size: 17px; color: var(--text-heading);">
-          Chi tiết đơn hàng — <strong>${viewOrderObj.orderCode}</strong>
+    <div class="invoice-modal-content">
+      <div class="invoice-modal-header">
+        <h3>
+          <i class="fa-solid fa-file-invoice-dollar"></i>
+          Chi Tiết Hóa Đơn — <strong>#${viewOrderObj.orderCode}</strong>
         </h3>
-        <a href="admin?tab=orders" class="close-btn" style="text-decoration: none; font-size: 24px; color: #888;">&times;</a>
-      </div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;padding:16px;background:#f8f9fa;border-radius:8px;">
-        <div>
-          <div style="font-size:12px;color:#888;margin-bottom:4px;">Khách hàng</div>
-          <div style="font-weight:bold;">${viewOrderObj.name}</div>
-          <div style="font-size:13px;color:var(--text-body);">${viewOrderObj.phone}</div>
-        </div>
-        <div>
-          <div style="font-size:12px;color:#888;margin-bottom:4px;">Trạng thái</div>
-          <span style="background:#f0f9ff;color:#0284c7;padding:4px 12px;border-radius:4px;font-weight:600;font-size:13px;">
-            ${viewOrderObj.status}
-          </span>
-        </div>
-        <div>
-          <div style="font-size:12px;color:#888;margin-bottom:4px;">Địa chỉ giao hàng</div>
-          <div style="font-size:13px;">${viewOrderObj.address}</div>
-        </div>
-        <div>
-          <div style="font-size:12px;color:#888;margin-bottom:4px;">Thời gian đặt</div>
-          <div style="font-size:13px;">${viewOrderObj.createdAt}</div>
+        <div style="display:flex; align-items:center; gap:10px;">
+          <button type="button" onclick="window.print()" style="background:rgba(255,255,255,0.18); border:none; color:white; padding:6px 12px; border-radius:6px; font-size:12.5px; cursor:pointer;" title="In hóa đơn">
+            <i class="fa-solid fa-print"></i> In
+          </button>
+          <a href="admin?tab=orders${not empty statusFilter ? '&statusFilter=' += statusFilter : ''}" class="close-btn" style="text-decoration: none; font-size: 24px; color: #ffffff; opacity:0.8;">&times;</a>
         </div>
       </div>
-      <table style="width:100%;border-collapse:collapse;margin-bottom:12px;">
-        <thead style="background:#f1f3f6;">
-          <tr>
-            <th style="padding:10px 14px;text-align:left;font-size:13px;">Sản phẩm</th>
-            <th style="padding:10px 14px;text-align:left;font-size:13px;">Đơn giá</th>
-            <th style="padding:10px 14px;text-align:center;font-size:13px;">SL</th>
-            <th style="padding:10px 14px;text-align:left;font-size:13px;">Thành tiền</th>
-          </tr>
-        </thead>
-        <tbody>
-          <c:choose>
-            <c:when test="${empty viewOrderObj.items}">
-              <tr><td colspan="4" style="text-align:center;padding:20px;color:#888;">Không có chi tiết sản phẩm.</td></tr>
-            </c:when>
-            <c:otherwise>
-              <c:forEach var="it" items="${viewOrderObj.items}">
-                <tr>
-                  <td style="padding:10px 14px;"><strong>${it.productName}</strong></td>
-                  <td style="padding:10px 14px;color:var(--primary-color);font-weight:bold;">
-                    <fmt:formatNumber value="${it.productPrice}" type="currency" currencySymbol="₫" maxFractionDigits="0"/>
-                  </td>
-                  <td style="padding:10px 14px;text-align:center;">${it.quantity}</td>
-                  <td style="padding:10px 14px;font-weight:bold;">
-                    <fmt:formatNumber value="${it.productPrice * it.quantity}" type="currency" currencySymbol="₫" maxFractionDigits="0"/>
-                  </td>
-                </tr>
-              </c:forEach>
-            </c:otherwise>
-          </c:choose>
-        </tbody>
-      </table>
-      <div style="border-top:1px solid var(--border-color);padding-top:12px;">
-        <div style="display:flex;justify-content:space-between;padding:6px 0;">
-          <span>Tạm tính:</span>
-          <span><fmt:formatNumber value="${viewOrderObj.subtotal}" type="currency" currencySymbol="₫" maxFractionDigits="0"/></span>
-        </div>
-        <c:if test="${viewOrderObj.discount != null && viewOrderObj.discount > 0}">
-          <div style="display:flex;justify-content:space-between;padding:6px 0;color:#16a34a;">
-            <span>Giảm giá (${viewOrderObj.couponCode}):</span>
-            <span>- <fmt:formatNumber value="${viewOrderObj.discount}" type="currency" currencySymbol="₫" maxFractionDigits="0"/></span>
+
+      <div class="invoice-modal-body">
+        <!-- Progress Stepper Track -->
+        <c:choose>
+          <c:when test="${viewOrderObj.status == 'Canceled' || viewOrderObj.status == 'Cancelled'}">
+            <div style="background:#fef2f2; border:1px solid #fecaca; border-radius:10px; padding:12px 18px; margin-bottom:20px; color:#991b1b; display:flex; align-items:center; gap:12px;">
+              <i class="fa-solid fa-circle-exclamation" style="font-size:20px;"></i>
+              <div>
+                <strong>Đơn hàng này đã bị hủy</strong>
+                <div style="font-size:12px; color:#b91c1c; margin-top:2px;">Đơn hàng không tiếp tục giao nhận. Số lượng hàng tồn kho đã được khôi phục.</div>
+              </div>
+            </div>
+          </c:when>
+          <c:otherwise>
+            <div class="mini-stepper-track">
+              <!-- Step 1: Chờ duyệt -->
+              <div class="mini-step-item done">
+                <div class="mini-step-icon"><i class="fa-solid fa-check"></i></div>
+                <div class="mini-step-label">Đặt hàng</div>
+              </div>
+              <!-- Step 2: Đã xác nhận -->
+              <div class="mini-step-item ${viewOrderObj.status == 'Confirmed' || viewOrderObj.status == 'Shipping' || viewOrderObj.status == 'Completed' || viewOrderObj.status == 'Delivered' ? 'done' : (viewOrderObj.status == 'Waiting' ? 'active' : '')}">
+                <div class="mini-step-icon">
+                  <c:choose>
+                    <c:when test="${viewOrderObj.status == 'Confirmed' || viewOrderObj.status == 'Shipping' || viewOrderObj.status == 'Completed' || viewOrderObj.status == 'Delivered'}">
+                      <i class="fa-solid fa-check"></i>
+                    </c:when>
+                    <c:otherwise>
+                      <i class="fa-solid fa-boxes-packing"></i>
+                    </c:otherwise>
+                  </c:choose>
+                </div>
+                <div class="mini-step-label">Xác nhận</div>
+              </div>
+              <!-- Step 3: Đang giao hàng -->
+              <div class="mini-step-item ${viewOrderObj.status == 'Shipping' || viewOrderObj.status == 'Completed' || viewOrderObj.status == 'Delivered' ? 'done' : (viewOrderObj.status == 'Confirmed' ? 'active' : '')}">
+                <div class="mini-step-icon">
+                  <c:choose>
+                    <c:when test="${viewOrderObj.status == 'Completed' || viewOrderObj.status == 'Delivered'}">
+                      <i class="fa-solid fa-check"></i>
+                    </c:when>
+                    <c:otherwise>
+                      <i class="fa-solid fa-truck"></i>
+                    </c:otherwise>
+                  </c:choose>
+                </div>
+                <div class="mini-step-label">Đang giao</div>
+              </div>
+              <!-- Step 4: Hoàn tất -->
+              <div class="mini-step-item ${viewOrderObj.status == 'Completed' || viewOrderObj.status == 'Delivered' ? 'done' : (viewOrderObj.status == 'Shipping' ? 'active' : '')}">
+                <div class="mini-step-icon">
+                  <c:choose>
+                    <c:when test="${viewOrderObj.status == 'Completed' || viewOrderObj.status == 'Delivered'}">
+                      <i class="fa-solid fa-circle-check"></i>
+                    </c:when>
+                    <c:otherwise>
+                      <i class="fa-solid fa-flag-checkered"></i>
+                    </c:otherwise>
+                  </c:choose>
+                </div>
+                <div class="mini-step-label">Hoàn tất</div>
+              </div>
+            </div>
+          </c:otherwise>
+        </c:choose>
+
+        <!-- 2-Column Info Grid -->
+        <div class="invoice-grid">
+          <div class="invoice-info-card">
+            <h4><i class="fa-solid fa-user"></i> Thông tin khách hàng</h4>
+            <div class="invoice-info-row">
+              <strong>Họ và tên:</strong> ${viewOrderObj.name}
+            </div>
+            <div class="invoice-info-row">
+              <strong>Điện thoại:</strong> 
+              <a href="tel:${viewOrderObj.phone}" style="color:var(--primary-color); text-decoration:none; font-weight:600;">
+                <i class="fa-solid fa-phone" style="font-size:11px;"></i> ${viewOrderObj.phone}
+              </a>
+            </div>
+            <div class="invoice-info-row">
+              <strong>Địa chỉ nhận hàng:</strong> ${viewOrderObj.address}
+            </div>
           </div>
-        </c:if>
-        <div style="display:flex;justify-content:space-between;padding:8px 0;font-size:17px;font-weight:bold;color:var(--primary-color);">
-          <span>Tổng thanh toán:</span>
-          <span><fmt:formatNumber value="${viewOrderObj.total}" type="currency" currencySymbol="₫" maxFractionDigits="0"/></span>
+
+          <div class="invoice-info-card">
+            <h4><i class="fa-solid fa-receipt"></i> Thông tin đơn & Thanh toán</h4>
+            <div class="invoice-info-row">
+              <strong>Mã đơn hàng:</strong> <span style="font-family:monospace; font-weight:700;">#${viewOrderObj.orderCode}</span>
+            </div>
+            <div class="invoice-info-row">
+              <strong>Thời gian đặt:</strong> ${viewOrderObj.createdAt}
+            </div>
+            <div class="invoice-info-row">
+              <strong>Hình thức thanh toán:</strong>
+              <c:choose>
+                <c:when test="${viewOrderObj.paymentMethod == 'BANK'}">
+                  <span class="payment-tag tag-bank"><i class="fa-solid fa-qrcode"></i> Chuyển khoản VietQR</span>
+                </c:when>
+                <c:otherwise>
+                  <span class="payment-tag tag-cod"><i class="fa-solid fa-money-bill-wave"></i> Thu tiền khi giao (COD)</span>
+                </c:otherwise>
+              </c:choose>
+            </div>
+            <div class="invoice-info-row" style="margin-top:6px;">
+              <strong>Trạng thái:</strong>
+              <c:choose>
+                <c:when test="${viewOrderObj.status == 'Completed' || viewOrderObj.status == 'Delivered'}">
+                  <span class="status-pill pill-completed"><i class="fa-solid fa-circle-check"></i> Hoàn tất</span>
+                </c:when>
+                <c:when test="${viewOrderObj.status == 'Shipping'}">
+                  <span class="status-pill pill-shipping"><i class="fa-solid fa-truck-fast"></i> Đang giao</span>
+                </c:when>
+                <c:when test="${viewOrderObj.status == 'Confirmed'}">
+                  <span class="status-pill pill-confirmed"><i class="fa-solid fa-boxes-packing"></i> Đã xác nhận</span>
+                </c:when>
+                <c:when test="${viewOrderObj.status == 'Canceled' || viewOrderObj.status == 'Cancelled'}">
+                  <span class="status-pill pill-canceled"><i class="fa-solid fa-ban"></i> Đã hủy</span>
+                </c:when>
+                <c:otherwise>
+                  <span class="status-pill pill-waiting"><i class="fa-solid fa-hourglass-half"></i> Chờ duyệt</span>
+                </c:otherwise>
+              </c:choose>
+            </div>
+          </div>
         </div>
-        <div style="font-size:12px;color:#888;margin-top:4px;">
-          Phương thức thanh toán: ${viewOrderObj.paymentMethod}
+
+        <!-- Order Items Table -->
+        <table style="width:100%; border-collapse:collapse; margin-bottom:12px; background:white; border:1px solid #e2e8f0; border-radius:8px; overflow:hidden;">
+          <thead style="background:#f8fafc;">
+            <tr>
+              <th style="padding:10px 14px; text-align:left; font-size:13px; color:#475569;">Sản phẩm</th>
+              <th style="padding:10px 14px; text-align:right; font-size:13px; color:#475569;">Đơn giá</th>
+              <th style="padding:10px 14px; text-align:center; font-size:13px; color:#475569;">Số lượng</th>
+              <th style="padding:10px 14px; text-align:right; font-size:13px; color:#475569;">Thành tiền</th>
+            </tr>
+          </thead>
+          <tbody>
+            <c:choose>
+              <c:when test="${empty viewOrderObj.items}">
+                <tr><td colspan="4" style="text-align:center; padding:20px; color:#888;">Không có chi tiết sản phẩm.</td></tr>
+              </c:when>
+              <c:otherwise>
+                <c:forEach var="it" items="${viewOrderObj.items}">
+                  <tr style="border-bottom:1px solid #f1f5f9;">
+                    <td style="padding:10px 14px; font-weight:600; color:var(--text-heading);">
+                      ${it.productName}
+                    </td>
+                    <td style="padding:10px 14px; text-align:right; color:#475569;">
+                      <fmt:formatNumber value="${it.productPrice}" type="currency" currencySymbol="₫" maxFractionDigits="0"/>
+                    </td>
+                    <td style="padding:10px 14px; text-align:center;">
+                      <span style="background:#f1f5f9; padding:2px 8px; border-radius:12px; font-weight:700; font-size:12px;">
+                        &times; ${it.quantity}
+                      </span>
+                    </td>
+                    <td style="padding:10px 14px; text-align:right; font-weight:700; color:var(--primary-color);">
+                      <fmt:formatNumber value="${it.productPrice * it.quantity}" type="currency" currencySymbol="₫" maxFractionDigits="0"/>
+                    </td>
+                  </tr>
+                </c:forEach>
+              </c:otherwise>
+            </c:choose>
+          </tbody>
+        </table>
+
+        <!-- Invoice Summary Box -->
+        <div class="invoice-summary-card">
+          <div class="summary-line">
+            <span>Tạm tính tiền hàng:</span>
+            <span><fmt:formatNumber value="${viewOrderObj.subtotal}" type="currency" currencySymbol="₫" maxFractionDigits="0"/></span>
+          </div>
+          <c:if test="${viewOrderObj.discount != null && viewOrderObj.discount > 0}">
+            <div class="summary-line" style="color:#16a34a;">
+              <span>Giảm giá khuyến mãi (${viewOrderObj.couponCode}):</span>
+              <span>- <fmt:formatNumber value="${viewOrderObj.discount}" type="currency" currencySymbol="₫" maxFractionDigits="0"/></span>
+            </div>
+          </c:if>
+          <div class="summary-line" style="color:#64748b;">
+            <span>Phí giao hàng:</span>
+            <span>Miễn phí (Freeship)</span>
+          </div>
+          <div class="summary-total">
+            <span>Tổng thanh toán:</span>
+            <span><fmt:formatNumber value="${viewOrderObj.total}" type="currency" currencySymbol="₫" maxFractionDigits="0"/></span>
+          </div>
         </div>
+
+        <!-- Direct Status Update form in modal -->
+        <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; padding:14px 18px; margin-top:16px;">
+          <form action="admin" method="POST" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+            <input type="hidden" name="action" value="updateOrderStatus">
+            <input type="hidden" name="id" value="${viewOrderObj.id}">
+            <input type="hidden" name="redirect" value="admin?tab=orders&viewOrder=${viewOrderObj.id}${not empty statusFilter ? '&statusFilter=' += statusFilter : ''}">
+            
+            <div style="display:flex; align-items:center; gap:8px;">
+              <label style="font-size:13px; font-weight:700; color:var(--text-heading);">Cập nhật trạng thái:</label>
+              <select name="status" style="padding:6px 12px; border-radius:6px; border:1px solid #cbd5e1; font-size:13.5px; background:white; cursor:pointer;">
+                <option value="Waiting" ${viewOrderObj.status == 'Waiting' ? 'selected' : ''}>Chờ duyệt</option>
+                <option value="Confirmed" ${viewOrderObj.status == 'Confirmed' ? 'selected' : ''}>Đã xác nhận</option>
+                <option value="Shipping" ${viewOrderObj.status == 'Shipping' ? 'selected' : ''}>Đang giao hàng</option>
+                <option value="Completed" ${viewOrderObj.status == 'Completed' ? 'selected' : ''}>Hoàn tất</option>
+                <option value="Canceled" ${viewOrderObj.status == 'Canceled' ? 'selected' : ''}>Hủy đơn hàng</option>
+              </select>
+              <button type="submit" class="btn-primary" style="padding:6px 14px; font-size:13px; border-radius:6px;">
+                <i class="fa-solid fa-floppy-disk"></i> Lưu thay đổi
+              </button>
+            </div>
+
+            <div style="display:flex; gap:10px;">
+              <c:if test="${not empty viewOrderObj.userId}">
+                <a href="chat?with=${viewOrderObj.userId}&orderCode=${viewOrderObj.orderCode}" class="btn-chat-order-pill" style="font-size:12.5px; padding:6px 14px;">
+                  <i class="fa-solid fa-comments"></i> Chat với khách
+                </a>
+              </c:if>
+              <a href="track-order?code=${viewOrderObj.orderCode}" target="_blank" class="btn-track-pill" style="font-size:12.5px; padding:6px 14px;">
+                <i class="fa-solid fa-truck-fast"></i> Trang tra cứu
+              </a>
+            </div>
+          </form>
+        </div>
+
       </div>
     </div>
   </div>

@@ -22,7 +22,31 @@ public class DatabaseSeeder {
         try (Session session = sessionFactory.openSession()) {
             tx = session.beginTransaction();
 
+            session.doWork(conn -> {
+                try (java.sql.Statement stmt = conn.createStatement()) {
+                    try { stmt.execute("ALTER TABLE user ADD COLUMN IF NOT EXISTS phone VARCHAR(20)"); } catch (Exception ignored) {}
+                    try { stmt.execute("ALTER TABLE user ADD COLUMN IF NOT EXISTS address VARCHAR(500)"); } catch (Exception ignored) {}
+                    try {
+                        stmt.execute("CREATE TABLE IF NOT EXISTS chat_message (" +
+                                "id BIGINT AUTO_INCREMENT PRIMARY KEY, " +
+                                "sender_id BIGINT, " +
+                                "receiver_id BIGINT, " +
+                                "sender_name VARCHAR(100), " +
+                                "receiver_name VARCHAR(100), " +
+                                "content TEXT, " +
+                                "created_at VARCHAR(50), " +
+                                "is_read BOOLEAN DEFAULT FALSE" +
+                                ")");
+                    } catch (Exception ex) {
+                        System.out.println("Notice creating chat_message table: " + ex.getMessage());
+                    }
+                } catch (Exception ex) {
+                    System.out.println("Notice in doWork: " + ex.getMessage());
+                }
+            });
+
             System.out.println("Cleaning existing data before seeding...");
+            try { session.createQuery("DELETE FROM ChatMessage").executeUpdate(); } catch (Exception ignored) {}
             session.createQuery("DELETE FROM OrderItem").executeUpdate();
             session.createQuery("DELETE FROM Order").executeUpdate();
             session.createQuery("DELETE FROM Product").executeUpdate();
@@ -56,10 +80,10 @@ public class DatabaseSeeder {
 
             // 3. Users
             System.out.println("Seeding Users...");
-            User userAdmin = new User("admin@greenmart.vn", "Admin GreenMart", "123456", "admin", "2026-09-01 08:00:00");
-            User userAn = new User("an.nguyen@gmail.com", "Nguyễn Văn An", "123456", "user", "2026-09-10 09:30:00");
-            User userMai = new User("mai.tran@gmail.com", "Trần Thị Mai", "123456", "user", "2026-09-12 14:15:00");
-            User userNam = new User("nam.le@gmail.com", "Lê Hoàng Nam", "123456", "user", "2026-09-15 11:20:00");
+            User userAdmin = new User("admin@greenmart.vn", "Admin GreenMart", "123456", "admin", "0901234567", "PTIT Km10 Nguyễn Trãi, Hà Đông, Hà Nội", "2026-09-01 08:00:00");
+            User userAn = new User("an.nguyen@gmail.com", "Nguyễn Văn An", "123456", "user", "0987112233", "Số 12 Chùa Bộc, Đống Đa, Hà Nội", "2026-09-10 09:30:00");
+            User userMai = new User("mai.tran@gmail.com", "Trần Thị Mai", "123456", "user", "0912445566", "Số 96A Trần Phú, Hà Đông, Hà Nội", "2026-09-12 14:15:00");
+            User userNam = new User("nam.le@gmail.com", "Lê Hoàng Nam", "123456", "user", "0933557799", "Số 25 Cầu Giấy, Cầu Giấy, Hà Nội", "2026-09-15 11:20:00");
 
             session.save(userAdmin);
             session.save(userAn);
@@ -199,6 +223,30 @@ public class DatabaseSeeder {
             session.save(createOrderItem(o3.getId(), p5.getId(), p5.getName(), p5.getPrice(), 2));
             session.save(createOrderItem(o3.getId(), p2.getId(), p2.getName(), p2.getPrice(), 1));
             session.save(createOrderItem(o3.getId(), p11.getId(), p11.getName(), p11.getPrice(), 1));
+
+            // 8. Seed Chat Messages
+            System.out.println("Seeding Sample Chat Messages...");
+            ChatMessage m1 = new ChatMessage(userAn.getId(), userAn.getUsername(), userAdmin.getId(), userAdmin.getUsername(),
+                    "Chào shop! Cho mình hỏi rau xà lách mỡ và cà chua bi đợt này còn tươi ngon không ạ?", "2026-09-18 09:30:00");
+            ChatMessage m2 = new ChatMessage(userAdmin.getId(), userAdmin.getUsername(), userAn.getId(), userAn.getUsername(),
+                    "Dạ chào anh An! Toàn bộ rau củ hữu cơ VietGAP bên em vừa thu hoạch sáng nay, cực kỳ tươi ngon anh nhé!", "2026-09-18 09:32:00");
+            ChatMessage m3 = new ChatMessage(userAn.getId(), userAn.getUsername(), userAdmin.getId(), userAdmin.getUsername(),
+                    "Tuyệt quá, mình vừa lên đơn rồi, shop đóng gói kỹ giúp mình nha.", "2026-09-18 09:35:00");
+            ChatMessage m4 = new ChatMessage(userAdmin.getId(), userAdmin.getUsername(), userAn.getId(), userAn.getUsername(),
+                    "Dạ vâng ạ, nhân viên GreenMart đang đóng gói bảo quản mát và giao ngay cho anh trong 2h ạ!", "2026-09-18 09:36:00");
+
+            ChatMessage m5 = new ChatMessage(userMai.getId(), userMai.getUsername(), userAdmin.getId(), userAdmin.getUsername(),
+                    "Shop ơi, cửa hàng mình có hỗ trợ xuất hoá đơn điện tử cho công ty không ạ?", "2026-09-20 14:10:00");
+            ChatMessage m6 = new ChatMessage(userAdmin.getId(), userAdmin.getUsername(), userMai.getId(), userMai.getUsername(),
+                    "Dạ chào chị Mai, bên em có hỗ trợ xuất hoá đơn đỏ VAT đầy đủ ạ. Chị chỉ cần để lại thông tin MST và email công ty ở ghi chú đơn hàng là được nhé!", "2026-09-20 14:15:00");
+
+            session.save(m1);
+            session.save(m2);
+            session.save(m3);
+            session.save(m4);
+            session.save(m5);
+            session.save(m6);
+
             session.flush();
             tx.commit();
 
@@ -231,7 +279,7 @@ public class DatabaseSeeder {
             System.err.println("Error while seeding database: " + e.getMessage());
             e.printStackTrace();
         } finally {
-
+            HibernateUtil.shutdown();
         }
     }
 

@@ -1,0 +1,2 @@
+1. them tinh nang thong tin user
+2. chinh sua khi click gio hang -> so luong

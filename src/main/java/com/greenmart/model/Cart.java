@@ -37,6 +37,15 @@ public class Cart implements Serializable {
         }
     }
 
+    public void setQuantity(Long productId, int quantity) {
+        if (productId == null || !items.containsKey(productId)) return;
+        if (quantity <= 0) {
+            items.remove(productId);
+        } else {
+            items.get(productId).setQuantity(quantity);
+        }
+    }
+
     public void removeItem(Long productId) {
         if (productId != null) {
             items.remove(productId);
@@ -50,6 +59,17 @@ public class Cart implements Serializable {
 
     public List<CartItem> getItems() {
         return new ArrayList<>(items.values());
+    }
+
+    public Map<Long, CartItem> getItemsMap() {
+        return items;
+    }
+
+    public int getItemQuantity(Long productId) {
+        if (productId != null && items.containsKey(productId)) {
+            return items.get(productId).getQuantity();
+        }
+        return 0;
     }
 
     public int getTotalQuantity() {

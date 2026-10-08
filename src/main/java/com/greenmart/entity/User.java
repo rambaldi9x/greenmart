@@ -16,6 +16,9 @@ public class User {
     @Column(name = "created_at")
     private String createdAt;
 
+    private String phone;
+    private String address;
+
     public User() {}
 
     public User(String email, String username, String password, String role, String createdAt) {
@@ -23,6 +26,16 @@ public class User {
         this.username = username;
         this.password = password;
         this.role = role;
+        this.createdAt = createdAt;
+    }
+
+    public User(String email, String username, String password, String role, String phone, String address, String createdAt) {
+        this.email = email;
+        this.username = username;
+        this.password = password;
+        this.role = role;
+        this.phone = phone;
+        this.address = address;
         this.createdAt = createdAt;
     }
 
@@ -38,4 +51,8 @@ public class User {
     public void setRole(String role) { this.role = role; }
     public String getCreatedAt() { return createdAt; }
     public void setCreatedAt(String createdAt) { this.createdAt = createdAt; }
+    public String getPhone() { return phone; }
+    public void setPhone(String phone) { this.phone = phone; }
+    public String getAddress() { return address; }
+    public void setAddress(String address) { this.address = address; }
 }

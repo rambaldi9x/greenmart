@@ -37,6 +37,8 @@ CREATE TABLE `users` (
   `email` VARCHAR(150) NOT NULL UNIQUE,
   `password` VARCHAR(255) NOT NULL,
   `role` VARCHAR(20) DEFAULT 'user',
+  `phone` VARCHAR(20) DEFAULT NULL,
+  `address` TEXT DEFAULT NULL,
   `created_at` VARCHAR(50) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -138,6 +140,21 @@ CREATE TABLE `order_items` (
   CONSTRAINT `fk_order_items_products` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+-- ---------------------------------------------------------------------
+-- 9. Bảng Tin nhắn trò chuyện (chat_message)
+-- ---------------------------------------------------------------------
+DROP TABLE IF EXISTS `chat_message`;
+CREATE TABLE `chat_message` (
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
+  `sender_id` BIGINT DEFAULT NULL,
+  `receiver_id` BIGINT DEFAULT NULL,
+  `sender_name` VARCHAR(100) DEFAULT NULL,
+  `receiver_name` VARCHAR(100) DEFAULT NULL,
+  `content` TEXT NOT NULL,
+  `created_at` VARCHAR(50) DEFAULT NULL,
+  `is_read` BOOLEAN DEFAULT FALSE,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- =====================================================================
 --  PHẦN 2: DML (DATA MANIPULATION LANGUAGE) - IMPORT DỮ LIỆU MẪU
@@ -153,11 +170,11 @@ INSERT INTO `user_roles` (`id`, `role_name`) VALUES
 -- ---------------------------------------------------------------------
 -- 2. Dữ liệu tài khoản người dùng
 -- ---------------------------------------------------------------------
-INSERT INTO `users` (`id`, `username`, `email`, `password`, `role`, `created_at`) VALUES
-(1, 'Admin GreenMart', 'admin@greenmart.vn', '123456', 'admin', '2026-09-01 08:00:00'),
-(2, 'Nguyễn Văn An', 'an.nguyen@gmail.com', '123456', 'user', '2026-09-10 09:30:00'),
-(3, 'Trần Thị Mai', 'mai.tran@gmail.com', '123456', 'user', '2026-09-12 14:15:00'),
-(4, 'Lê Hoàng Nam', 'nam.le@gmail.com', '123456', 'user', '2026-09-15 11:20:00');
+INSERT INTO `users` (`id`, `username`, `email`, `password`, `role`, `phone`, `address`, `created_at`) VALUES
+(1, 'Admin GreenMart', 'admin@greenmart.vn', '123456', 'admin', '0901234567', 'PTIT Km10 Nguyễn Trãi, Hà Đông, Hà Nội', '2026-09-01 08:00:00'),
+(2, 'Nguyễn Văn An', 'an.nguyen@gmail.com', '123456', 'user', '0987112233', 'Số 12 Chùa Bộc, Đống Đa, Hà Nội', '2026-09-10 09:30:00'),
+(3, 'Trần Thị Mai', 'mai.tran@gmail.com', '123456', 'user', '0912445566', 'Số 96A Trần Phú, Hà Đông, Hà Nội', '2026-09-12 14:15:00'),
+(4, 'Lê Hoàng Nam', 'nam.le@gmail.com', '123456', 'user', '0933557799', 'Số 25 Cầu Giấy, Cầu Giấy, Hà Nội', '2026-09-15 11:20:00');
 
 -- ---------------------------------------------------------------------
 -- 3. Dữ liệu danh mục sản phẩm
@@ -228,6 +245,17 @@ INSERT INTO `order_items` (`id`, `order_id`, `product_id`, `product_name`, `prod
 (5, 3, 5, 'Trứng gà ta thảo mộc hộp 10 quả', 39000, 2),
 (6, 3, 2, 'Xà lách mỡ Đà Lạt thủy canh túi 400g', 24000, 1),
 (7, 3, 11, 'Khô mực xé sợi Pichi cay ngọt gói 50g', 33000, 1);
+
+-- ---------------------------------------------------------------------
+-- 9. Dữ liệu tin nhắn mẫu (chat_message)
+-- ---------------------------------------------------------------------
+INSERT INTO `chat_message` (`id`, `sender_id`, `receiver_id`, `sender_name`, `receiver_name`, `content`, `created_at`, `is_read`) VALUES
+(1, 2, 1, 'Nguyễn Văn An', 'Admin GreenMart', 'Chào shop! Cho mình hỏi rau xà lách mỡ và cà chua bi đợt này còn tươi ngon không ạ?', '2026-09-18 09:30:00', 1),
+(2, 1, 2, 'Admin GreenMart', 'Nguyễn Văn An', 'Dạ chào anh An! Toàn bộ rau củ hữu cơ VietGAP bên em vừa thu hoạch sáng nay, cực kỳ tươi ngon anh nhé!', '2026-09-18 09:32:00', 1),
+(3, 2, 1, 'Nguyễn Văn An', 'Admin GreenMart', 'Tuyệt quá, mình vừa lên đơn rồi, shop đóng gói kỹ giúp mình nha.', '2026-09-18 09:35:00', 1),
+(4, 1, 2, 'Admin GreenMart', 'Nguyễn Văn An', 'Dạ vâng ạ, nhân viên GreenMart đang đóng gói bảo quản mát và giao ngay cho anh trong 2h ạ!', '2026-09-18 09:36:00', 1),
+(5, 3, 1, 'Trần Thị Mai', 'Admin GreenMart', 'Shop ơi, cửa hàng mình có hỗ trợ xuất hoá đơn điện tử cho công ty không ạ?', '2026-09-20 14:10:00', 1),
+(6, 1, 3, 'Admin GreenMart', 'Trần Thị Mai', 'Dạ chào chị Mai, bên em có hỗ trợ xuất hoá đơn đỏ VAT đầy đủ ạ. Chị chỉ cần để lại thông tin MST và email công ty ở ghi chú đơn hàng là được nhé!', '2026-09-20 14:15:00', 1);
 
 SET FOREIGN_KEY_CHECKS = 1;
 

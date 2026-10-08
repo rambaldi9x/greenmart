@@ -46,6 +46,7 @@ public class CartServlet extends HttpServlet {
         HttpSession session = request.getSession();
         Cart cart = getCart(session);
         request.setAttribute("cart", cart);
+        request.setAttribute("availableCoupons", couponService.getAllCoupons());
         request.getRequestDispatcher("/cart.jsp").forward(request, response);
     }
 
@@ -55,21 +56,38 @@ public class CartServlet extends HttpServlet {
         HttpSession session = request.getSession();
         Cart cart = getCart(session);
 
+        boolean isAjax = "1".equals(request.getParameter("ajax"))
+                || "XMLHttpRequest".equalsIgnoreCase(request.getHeader("X-Requested-With"));
+
         if ("add".equalsIgnoreCase(action)) {
             String prodIdStr = request.getParameter("productId");
             String qtyStr = request.getParameter("quantity");
             int qty = 1;
             try {
-                if (qtyStr != null) qty = Math.max(1, Integer.parseInt(qtyStr));
+                if (qtyStr != null && !qtyStr.trim().isEmpty()) {
+                    qty = Math.max(1, Integer.parseInt(qtyStr.trim()));
+                }
             } catch (Exception ignored) {}
 
+            Long prodId = null;
             try {
-                Long prodId = Long.parseLong(prodIdStr);
+                prodId = Long.parseLong(prodIdStr);
                 Product product = productService.getProductById(prodId);
                 if (product != null) {
                     cart.addItem(product, qty);
+                    session.setAttribute("cartSuccess", "Đã thêm " + qty + " sản phẩm \"" + product.getName() + "\" vào giỏ hàng thành công!");
                 }
             } catch (Exception ignored) {}
+
+            if (isAjax) {
+                int itemQty = (prodId != null) ? cart.getItemQuantity(prodId) : 0;
+                response.setContentType("application/json;charset=UTF-8");
+                response.getWriter().write(String.format(
+                    "{\"status\":\"success\",\"action\":\"add\",\"productId\":%s,\"quantity\":%d,\"totalQuantity\":%d,\"subtotal\":%.0f}",
+                    prodId != null ? prodId : "null", itemQty, cart.getTotalQuantity(), cart.getSubtotal()
+                ));
+                return;
+            }
 
             String redirect = request.getParameter("redirect");
             if ("home".equalsIgnoreCase(redirect)) {
@@ -78,22 +96,57 @@ public class CartServlet extends HttpServlet {
                 response.sendRedirect(request.getContextPath() + "/cart");
             }
 
-        } else if ("update".equalsIgnoreCase(action)) {
+        } else if ("update".equalsIgnoreCase(action) || "setQuantity".equalsIgnoreCase(action)) {
             String prodIdStr = request.getParameter("productId");
             String deltaStr = request.getParameter("delta");
+            String qtyStr = request.getParameter("quantity");
+            Long prodId = null;
             try {
-                Long prodId = Long.parseLong(prodIdStr);
-                int delta = Integer.parseInt(deltaStr);
-                cart.updateQuantity(prodId, delta);
+                prodId = Long.parseLong(prodIdStr);
+                if (qtyStr != null && !qtyStr.trim().isEmpty()) {
+                    int qty = Integer.parseInt(qtyStr.trim());
+                    cart.setQuantity(prodId, qty);
+                } else if (deltaStr != null && !deltaStr.trim().isEmpty()) {
+                    int delta = Integer.parseInt(deltaStr.trim());
+                    cart.updateQuantity(prodId, delta);
+                }
             } catch (Exception ignored) {}
+
+            if (isAjax) {
+                int itemQty = (prodId != null) ? cart.getItemQuantity(prodId) : 0;
+                response.setContentType("application/json;charset=UTF-8");
+                response.getWriter().write(String.format(
+                    "{\"status\":\"success\",\"action\":\"update\",\"productId\":%s,\"quantity\":%d,\"totalQuantity\":%d,\"subtotal\":%.0f}",
+                    prodId != null ? prodId : "null", itemQty, cart.getTotalQuantity(), cart.getSubtotal()
+                ));
+                return;
+            }
+
             response.sendRedirect(request.getContextPath() + "/cart");
 
         } else if ("remove".equalsIgnoreCase(action)) {
             String prodIdStr = request.getParameter("productId");
+            Long prodId = null;
             try {
-                Long prodId = Long.parseLong(prodIdStr);
+                prodId = Long.parseLong(prodIdStr);
                 cart.removeItem(prodId);
             } catch (Exception ignored) {}
+
+            if (isAjax) {
+                response.setContentType("application/json;charset=UTF-8");
+                response.getWriter().write(String.format(
+                    "{\"status\":\"success\",\"action\":\"remove\",\"productId\":%s,\"quantity\":0,\"totalQuantity\":%d,\"subtotal\":%.0f}",
+                    prodId != null ? prodId : "null", cart.getTotalQuantity(), cart.getSubtotal()
+                ));
+                return;
+            }
+
+            response.sendRedirect(request.getContextPath() + "/cart");
+
+        } else if ("clear".equalsIgnoreCase(action)) {
+            cart.clear();
+            session.removeAttribute("couponSuccess");
+            session.removeAttribute("couponError");
             response.sendRedirect(request.getContextPath() + "/cart");
 
         } else if ("applyCoupon".equalsIgnoreCase(action)) {

@@ -48,6 +48,36 @@ public class UserService {
         return userRepository.findById(id);
     }
 
+    public void updateUser(User user) {
+        userRepository.update(user);
+    }
+
+    public boolean updateProfile(Long userId, String username, String phone, String address) {
+        if (userId == null) return false;
+        User user = userRepository.findById(userId);
+        if (user != null) {
+            if (username != null && !username.trim().isEmpty()) {
+                user.setUsername(username.trim());
+            }
+            user.setPhone(phone != null ? phone.trim() : null);
+            user.setAddress(address != null ? address.trim() : null);
+            userRepository.update(user);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean changePassword(Long userId, String oldPassword, String newPassword) {
+        if (userId == null || oldPassword == null || newPassword == null) return false;
+        User user = userRepository.findById(userId);
+        if (user != null && oldPassword.equals(user.getPassword())) {
+            user.setPassword(newPassword);
+            userRepository.update(user);
+            return true;
+        }
+        return false;
+    }
+
     public void deleteUser(Long id) {
         userRepository.delete(id);
     }

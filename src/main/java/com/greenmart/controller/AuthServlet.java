@@ -60,11 +60,18 @@ public class AuthServlet extends HttpServlet {
             User user = userService.login(email, password);
             if (user != null) {
                 session.setAttribute("user", user);
+                String redirect = request.getParameter("redirect");
+                if (redirect != null && !redirect.trim().isEmpty()) {
+                    String cleanRedirect = redirect.trim().replaceFirst("^/+", "");
+                    response.sendRedirect(request.getContextPath() + "/" + cleanRedirect);
+                    return;
+                }
                 if ("admin".equalsIgnoreCase(user.getRole())) {
                     response.sendRedirect(request.getContextPath() + "/admin");
                 } else {
                     response.sendRedirect(request.getContextPath() + "/home");
                 }
+                return;
             } else {
                 request.setAttribute("error", "Email hoặc mật khẩu không chính xác!");
                 request.setAttribute("mode", "login");

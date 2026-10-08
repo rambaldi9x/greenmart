@@ -114,6 +114,9 @@
         <!-- Login Form -->
         <form action="auth" method="POST">
           <input type="hidden" name="action" value="login">
+          <c:if test="${not empty param.redirect}">
+            <input type="hidden" name="redirect" value="${param.redirect}">
+          </c:if>
           <div class="form-group">
             <label>Email đăng nhập <span style="color:red;">*</span></label>
             <input type="email" name="email" value="${email}" required placeholder="admin@greenmart.vn hoặc email của bạn">
