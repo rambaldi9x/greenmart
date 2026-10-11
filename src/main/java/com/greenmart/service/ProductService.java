@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class ProductService {
-    private ProductRepository productRepository;
+    private final ProductRepository productRepository;
 
     public ProductService() {
         this.productRepository = new ProductRepository();
@@ -98,6 +98,16 @@ public class ProductService {
 
     public Product getProductById(Long id) {
         return productRepository.findById(id);
+    }
+
+    public Product getProductByIdSafe(String idStr) {
+        if (idStr == null || idStr.trim().isEmpty()) return null;
+        try {
+            Long id = Long.parseLong(idStr.trim());
+            return getProductById(id);
+        } catch (Exception ignored) {
+            return null;
+        }
     }
 
     public void saveProduct(Product product) {

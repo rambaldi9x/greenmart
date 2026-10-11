@@ -1,0 +1,165 @@
+/* ===================================================
+       BOTTOM STICKY ACTION TABS (Thanh tab tiện ích dính đáy màn hình)
+       Luôn luôn cố định ở đáy màn hình (bottom: 0) kể cả khi cuộn trang
+       =================================================== */
+    .gm-floating-dock {
+      position: fixed !important;
+      bottom: 0 !important;
+      right: 24px !important;
+      z-index: 99999 !important;
+      display: flex !important;
+      flex-direction: row !important;
+      align-items: flex-end !important;
+      gap: 10px !important;
+      pointer-events: none !important;
+      line-height: normal !important;
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+
+    .dock-btn {
+      pointer-events: auto !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      gap: 7px !important;
+      height: 42px !important;
+      padding: 0 16px !important;
+      border-radius: 8px 8px 0 0 !important;
+      text-decoration: none !important;
+      font-weight: 600 !important;
+      font-size: 13.5px !important;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
+      box-shadow: 0 -3px 12px rgba(0, 0, 0, 0.16) !important;
+      transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s ease, background-color 0.2s ease !important;
+      cursor: pointer !important;
+      user-select: none !important;
+      border: none !important;
+      outline: none !important;
+      position: relative !important;
+      box-sizing: border-box !important;
+      white-space: nowrap !important;
+    }
+
+    .dock-btn:hover {
+      transform: translateY(-4px) !important;
+      box-shadow: 0 -6px 18px rgba(0, 0, 0, 0.24) !important;
+    }
+
+    .dock-btn:active {
+      transform: translateY(0) !important;
+    }
+
+    /* Tab 1: Theo dõi tiến trình đơn hàng */
+    .dock-btn-track {
+      background: #0284c7 !important;
+      color: #ffffff !important;
+    }
+
+    .dock-btn-track:hover {
+      background: #0369a1 !important;
+      color: #ffffff !important;
+    }
+
+    .dock-btn-track i {
+      color: #ffffff !important;
+      font-size: 15px !important;
+    }
+
+    /* Tab 2: Giỏ hàng GreenMart */
+    .dock-btn-cart {
+      background: #3bb77e !important;
+      color: #ffffff !important;
+    }
+
+    .dock-btn-cart:hover {
+      background: #2ea06c !important;
+      color: #ffffff !important;
+    }
+
+    .dock-btn-cart i {
+      color: #ffffff !important;
+      font-size: 15px !important;
+    }
+
+    /* Tab 3: Chat Shopee-style (Đỏ cam #ee4d2d chuẩn 100% theo mẫu) */
+    .dock-btn-chat {
+      background: #ee4d2d !important;
+      color: #ffffff !important;
+    }
+
+    .dock-btn-chat:hover {
+      background: #d73211 !important;
+      color: #ffffff !important;
+    }
+
+    .dock-chat-icon-wrap {
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+    }
+
+    .dock-chat-caret {
+      font-size: 10px !important;
+      margin-left: 2px !important;
+      opacity: 0.85 !important;
+      color: #ffffff !important;
+    }
+
+    /* Badge số 1 góc trên bên phải của tab Chat (Chuẩn như ảnh mẫu pasted-image-1.png) */
+    .dock-badge-tab {
+      position: absolute !important;
+      top: -7px !important;
+      right: -5px !important;
+      background-color: #ee4d2d !important;
+      color: #ffffff !important;
+      border-radius: 50% !important;
+      min-width: 18px !important;
+      height: 18px !important;
+      padding: 0 4px !important;
+      font-size: 11px !important;
+      font-weight: 700 !important;
+      line-height: 14px !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      border: 2px solid #ffffff !important;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25) !important;
+    }
+
+    .live-chat-widget {
+      position: fixed !important;
+      bottom: 50px !important;
+      right: 24px !important;
+      width: 380px !important;
+      max-width: calc(100vw - 32px) !important;
+      height: 520px !important;
+      max-height: calc(100vh - 80px) !important;
+      background: #ffffff !important;
+      border-radius: 14px !important;
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.22) !important;
+      border: 1px solid #e2e8f0 !important;
+      z-index: 100000 !important;
+      display: none;
+      flex-direction: column !important;
+      overflow: hidden !important;
+    }
+
+    .live-chat-widget.active {
+      display: flex !important;
+    }
+
+    @media (max-width: 600px) {
+      .gm-floating-dock {
+        right: 12px !important;
+        gap: 6px !important;
+      }
+      .dock-btn {
+        height: 38px !important;
+        padding: 0 12px !important;
+        font-size: 12px !important;
+      }
+      .dock-subtotal {
+        display: none !important;
+      }
+    }

@@ -4,10 +4,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.greenmart.entity.ChatMessage;
 import com.greenmart.entity.Order;
 import com.greenmart.entity.User;
+import com.greenmart.model.ServiceResult;
 import com.greenmart.model.UserContactDTO;
 import com.greenmart.service.ChatService;
 import com.greenmart.service.OrderService;
-import com.greenmart.service.UserService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -21,14 +21,12 @@ import java.util.*;
 @WebServlet(name = "ChatServlet", urlPatterns = {"/chat"})
 public class ChatServlet extends HttpServlet {
     private ChatService chatService;
-    private UserService userService;
     private OrderService orderService;
     private ObjectMapper objectMapper;
 
     @Override
     public void init() throws ServletException {
         chatService = new ChatService();
-        userService = new UserService();
         orderService = new OrderService();
         objectMapper = new ObjectMapper();
     }
@@ -54,7 +52,6 @@ public class ChatServlet extends HttpServlet {
         String action = request.getParameter("action");
 
         if ("poll".equalsIgnoreCase(action)) {
-            // Long polling or interval polling for new messages
             String withUserStr = request.getParameter("withUserId");
             String afterIdStr = request.getParameter("afterId");
 
@@ -65,24 +62,7 @@ public class ChatServlet extends HttpServlet {
                 if (afterIdStr != null) afterId = Long.parseLong(afterIdStr.trim());
             } catch (Exception ignored) {}
 
-            List<ChatMessage> newMessages = Collections.emptyList();
-            if (withUserId != null) {
-                newMessages = chatService.getNewMessages(currentUser.getId(), withUserId, afterId);
-                chatService.markAsRead(withUserId, currentUser.getId());
-            }
-
-            int unreadTotal = chatService.getTotalUnread(currentUser.getId());
-
-            List<Map<String, Object>> listJson = new ArrayList<>();
-            for (ChatMessage m : newMessages) {
-                listJson.add(messageToMap(m, currentUser.getId()));
-            }
-
-            Map<String, Object> respMap = new HashMap<>();
-            respMap.put("status", "success");
-            respMap.put("messages", listJson);
-            respMap.put("totalUnread", unreadTotal);
-
+            Map<String, Object> respMap = chatService.pollMessagesPayload(currentUser.getId(), withUserId, afterId);
             response.setContentType("application/json;charset=UTF-8");
             response.getWriter().write(objectMapper.writeValueAsString(respMap));
             return;
@@ -94,21 +74,7 @@ public class ChatServlet extends HttpServlet {
                 if (withUserStr != null) withUserId = Long.parseLong(withUserStr.trim());
             } catch (Exception ignored) {}
 
-            List<ChatMessage> messages = Collections.emptyList();
-            if (withUserId != null) {
-                messages = chatService.getConversation(currentUser.getId(), withUserId);
-                chatService.markAsRead(withUserId, currentUser.getId());
-            }
-
-            List<Map<String, Object>> listJson = new ArrayList<>();
-            for (ChatMessage m : messages) {
-                listJson.add(messageToMap(m, currentUser.getId()));
-            }
-
-            Map<String, Object> respMap = new HashMap<>();
-            respMap.put("status", "success");
-            respMap.put("messages", listJson);
-
+            Map<String, Object> respMap = chatService.getConversationPayload(currentUser.getId(), withUserId);
             response.setContentType("application/json;charset=UTF-8");
             response.getWriter().write(objectMapper.writeValueAsString(respMap));
             return;
@@ -126,35 +92,10 @@ public class ChatServlet extends HttpServlet {
 
         // Standard GET: Render chat.jsp
         List<UserContactDTO> contacts = chatService.getContactsForUser(currentUser.getId());
-
-        User activeContact = null;
         String withParam = request.getParameter("with");
-        if ("admin".equalsIgnoreCase(withParam) || "1".equals(request.getParameter("withAdmin"))) {
-            for (UserContactDTO c : contacts) {
-                if ("admin".equalsIgnoreCase(c.getUser().getRole())) {
-                    activeContact = c.getUser();
-                    break;
-                }
-            }
-        } else if (withParam != null && !withParam.trim().isEmpty()) {
-            try {
-                Long targetId = Long.parseLong(withParam.trim());
-                activeContact = userService.getUserById(targetId);
-            } catch (Exception ignored) {}
-        }
+        boolean withAdmin = "admin".equalsIgnoreCase(withParam) || "1".equals(request.getParameter("withAdmin"));
 
-        if (activeContact == null && !"admin".equalsIgnoreCase(currentUser.getRole())) {
-            for (UserContactDTO c : contacts) {
-                if ("admin".equalsIgnoreCase(c.getUser().getRole())) {
-                    activeContact = c.getUser();
-                    break;
-                }
-            }
-        }
-
-        if (activeContact == null && !contacts.isEmpty()) {
-            activeContact = contacts.get(0).getUser();
-        }
+        User activeContact = chatService.resolveActiveContact(currentUser.getId(), currentUser.getRole(), contacts, withParam, withAdmin);
 
         List<ChatMessage> conversation = Collections.emptyList();
         if (activeContact != null) {
@@ -199,38 +140,30 @@ public class ChatServlet extends HttpServlet {
             String receiverIdStr = request.getParameter("receiverId");
             String content = request.getParameter("content");
 
-            if (content == null || content.trim().isEmpty()) {
-                response.setContentType("application/json;charset=UTF-8");
-                response.getWriter().write("{\"status\":\"error\",\"message\":\"Nội dung tin nhắn không được để trống\"}");
-                return;
-            }
-
             Long receiverId = null;
             try {
-                receiverId = Long.parseLong(receiverIdStr.trim());
+                if (receiverIdStr != null) receiverId = Long.parseLong(receiverIdStr.trim());
             } catch (Exception ignored) {}
 
-            User receiver = (receiverId != null) ? userService.getUserById(receiverId) : null;
-            if (receiver == null) {
-                response.setContentType("application/json;charset=UTF-8");
-                response.getWriter().write("{\"status\":\"error\",\"message\":\"Người nhận không tồn tại\"}");
-                return;
-            }
-
-            ChatMessage msg = chatService.sendMessage(
-                currentUser.getId(),
-                currentUser.getUsername(),
-                receiver.getId(),
-                receiver.getUsername(),
-                content.trim()
+            ServiceResult<Map<String, Object>> result = chatService.sendMessageWithResult(
+                    currentUser.getId(),
+                    currentUser.getUsername(),
+                    receiverId,
+                    content
             );
 
-            Map<String, Object> respMap = new HashMap<>();
-            respMap.put("status", "success");
-            respMap.put("message", messageToMap(msg, currentUser.getId()));
-
             response.setContentType("application/json;charset=UTF-8");
-            response.getWriter().write(objectMapper.writeValueAsString(respMap));
+            if (result.isSuccess()) {
+                Map<String, Object> respMap = new HashMap<>();
+                respMap.put("status", "success");
+                respMap.put("message", result.getData());
+                response.getWriter().write(objectMapper.writeValueAsString(respMap));
+            } else {
+                Map<String, Object> respMap = new HashMap<>();
+                respMap.put("status", "error");
+                respMap.put("message", result.getMessage());
+                response.getWriter().write(objectMapper.writeValueAsString(respMap));
+            }
             return;
 
         } else if ("markRead".equalsIgnoreCase(action)) {
@@ -248,20 +181,5 @@ public class ChatServlet extends HttpServlet {
         }
 
         response.sendRedirect(request.getContextPath() + "/chat");
-    }
-
-    private Map<String, Object> messageToMap(ChatMessage m, Long currentUserId) {
-        Map<String, Object> map = new HashMap<>();
-        if (m == null) return map;
-        map.put("id", m.getId());
-        map.put("senderId", m.getSenderId());
-        map.put("senderName", m.getSenderName());
-        map.put("receiverId", m.getReceiverId());
-        map.put("receiverName", m.getReceiverName());
-        map.put("content", m.getContent());
-        map.put("createdAt", m.getCreatedAt());
-        map.put("isMine", m.getSenderId().equals(currentUserId));
-        map.put("isRead", Boolean.TRUE.equals(m.getIsRead()));
-        return map;
     }
 }

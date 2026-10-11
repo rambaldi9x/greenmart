@@ -2,6 +2,7 @@ package com.greenmart.service;
 
 import com.greenmart.entity.ChatMessage;
 import com.greenmart.entity.User;
+import com.greenmart.model.ServiceResult;
 import com.greenmart.model.UserContactDTO;
 import com.greenmart.repository.ChatMessageRepository;
 import com.greenmart.repository.UserRepository;
@@ -26,6 +27,27 @@ public class ChatService {
         ChatMessage msg = new ChatMessage(senderId, senderName, receiverId, receiverName, content.trim(), now);
         chatRepo.save(msg);
         return msg;
+    }
+
+    public ServiceResult<Map<String, Object>> sendMessageWithResult(Long senderId, String senderName, Long receiverId, String content) {
+        if (content == null || content.trim().isEmpty()) {
+            return ServiceResult.error("Nội dung tin nhắn không được để trống");
+        }
+        if (senderId == null || receiverId == null) {
+            return ServiceResult.error("Thông tin người gửi hoặc người nhận không hợp lệ");
+        }
+
+        User receiver = userRepo.findById(receiverId);
+        if (receiver == null) {
+            return ServiceResult.error("Người nhận không tồn tại");
+        }
+
+        ChatMessage msg = sendMessage(senderId, senderName, receiver.getId(), receiver.getUsername(), content.trim());
+        if (msg == null) {
+            return ServiceResult.error("Không thể gửi tin nhắn. Vui lòng thử lại");
+        }
+
+        return ServiceResult.ok(messageToMap(msg, senderId));
     }
 
     public List<ChatMessage> getConversation(Long user1Id, Long user2Id) {
@@ -62,12 +84,6 @@ public class ChatService {
             contacts.add(new UserContactDTO(u, lastMsg, unread));
         }
 
-        // Sort contacts:
-        // 1. If currentUser is customer and one is admin, admin comes first (CSKH 24/7)
-        // 2. Unread messages come next
-        // 3. Contacts with recent messages next
-        // 4. Alphabetical by name
-        // 5. Fallback ID
         contacts.sort((a, b) -> {
             boolean aIsAdmin = "admin".equalsIgnoreCase(a.getUser().getRole());
             boolean bIsAdmin = "admin".equalsIgnoreCase(b.getUser().getRole());
@@ -101,5 +117,90 @@ public class ChatService {
         });
 
         return contacts;
+    }
+
+    public User resolveActiveContact(Long currentUserId, String userRole, List<UserContactDTO> contacts, String withParam, boolean withAdmin) {
+        User activeContact = null;
+        if ("admin".equalsIgnoreCase(withParam) || withAdmin) {
+            for (UserContactDTO c : contacts) {
+                if ("admin".equalsIgnoreCase(c.getUser().getRole())) {
+                    activeContact = c.getUser();
+                    break;
+                }
+            }
+        } else if (withParam != null && !withParam.trim().isEmpty()) {
+            try {
+                Long targetId = Long.parseLong(withParam.trim());
+                activeContact = userRepo.findById(targetId);
+            } catch (Exception ignored) {}
+        }
+
+        if (activeContact == null && !"admin".equalsIgnoreCase(userRole)) {
+            for (UserContactDTO c : contacts) {
+                if ("admin".equalsIgnoreCase(c.getUser().getRole())) {
+                    activeContact = c.getUser();
+                    break;
+                }
+            }
+        }
+
+        if (activeContact == null && !contacts.isEmpty()) {
+            activeContact = contacts.get(0).getUser();
+        }
+
+        return activeContact;
+    }
+
+    public Map<String, Object> messageToMap(ChatMessage m, Long currentUserId) {
+        Map<String, Object> map = new HashMap<>();
+        if (m == null) return map;
+        map.put("id", m.getId());
+        map.put("senderId", m.getSenderId());
+        map.put("senderName", m.getSenderName());
+        map.put("receiverId", m.getReceiverId());
+        map.put("receiverName", m.getReceiverName());
+        map.put("content", m.getContent());
+        map.put("createdAt", m.getCreatedAt());
+        map.put("isMine", m.getSenderId().equals(currentUserId));
+        map.put("isRead", Boolean.TRUE.equals(m.getIsRead()));
+        return map;
+    }
+
+    public Map<String, Object> pollMessagesPayload(Long currentUserId, Long withUserId, Long afterId) {
+        List<ChatMessage> newMessages = Collections.emptyList();
+        if (withUserId != null) {
+            newMessages = getNewMessages(currentUserId, withUserId, afterId);
+            markAsRead(withUserId, currentUserId);
+        }
+
+        int unreadTotal = getTotalUnread(currentUserId);
+        List<Map<String, Object>> listJson = new ArrayList<>();
+        for (ChatMessage m : newMessages) {
+            listJson.add(messageToMap(m, currentUserId));
+        }
+
+        Map<String, Object> respMap = new HashMap<>();
+        respMap.put("status", "success");
+        respMap.put("messages", listJson);
+        respMap.put("totalUnread", unreadTotal);
+        return respMap;
+    }
+
+    public Map<String, Object> getConversationPayload(Long currentUserId, Long withUserId) {
+        List<ChatMessage> messages = Collections.emptyList();
+        if (withUserId != null) {
+            messages = getConversation(currentUserId, withUserId);
+            markAsRead(withUserId, currentUserId);
+        }
+
+        List<Map<String, Object>> listJson = new ArrayList<>();
+        for (ChatMessage m : messages) {
+            listJson.add(messageToMap(m, currentUserId));
+        }
+
+        Map<String, Object> respMap = new HashMap<>();
+        respMap.put("status", "success");
+        respMap.put("messages", listJson);
+        return respMap;
     }
 }

@@ -1,6 +1,7 @@
 package com.greenmart.controller;
 
 import com.greenmart.entity.User;
+import com.greenmart.model.ServiceResult;
 import com.greenmart.service.UserService;
 
 import javax.servlet.ServletException;
@@ -84,30 +85,12 @@ public class AuthServlet extends HttpServlet {
             String password = request.getParameter("password");
             String confirmPassword = request.getParameter("confirmPassword");
 
-            if (password == null || password.length() < 6) {
-                request.setAttribute("error", "Mật khẩu phải có ít nhất 6 ký tự!");
-                request.setAttribute("mode", "register");
-                request.setAttribute("username", username);
-                request.setAttribute("email", email);
-                request.getRequestDispatcher("/login.jsp").forward(request, response);
-                return;
-            }
-
-            if (!password.equals(confirmPassword)) {
-                request.setAttribute("error", "Mật khẩu xác nhận không khớp!");
-                request.setAttribute("mode", "register");
-                request.setAttribute("username", username);
-                request.setAttribute("email", email);
-                request.getRequestDispatcher("/login.jsp").forward(request, response);
-                return;
-            }
-
-            User newUser = userService.register(email, username, password);
-            if (newUser != null) {
-                session.setAttribute("user", newUser);
+            ServiceResult<User> result = userService.registerUser(email, username, password, confirmPassword);
+            if (result.isSuccess()) {
+                session.setAttribute("user", result.getData());
                 response.sendRedirect(request.getContextPath() + "/home");
             } else {
-                request.setAttribute("error", "Email đã tồn tại trên hệ thống!");
+                request.setAttribute("error", result.getMessage());
                 request.setAttribute("mode", "register");
                 request.setAttribute("username", username);
                 request.setAttribute("email", email);

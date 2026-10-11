@@ -1,0 +1,539 @@
+.cart-page-bg {
+      background: #f6f8fb;
+      min-height: 100vh;
+      padding-bottom: 70px;
+    }
+
+    /* Stepper Header */
+    .cart-steps-header {
+      background: white;
+      border-bottom: 1px solid #e2e8f0;
+      padding: 18px 20px;
+      margin-bottom: 25px;
+    }
+    .cart-steps-wrap {
+      max-width: 900px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: relative;
+    }
+    .cart-step-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+      font-weight: 600;
+      color: #94a3b8;
+    }
+    .cart-step-item.active {
+      color: var(--primary-color);
+    }
+    .cart-step-num {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: #f1f5f9;
+      color: #64748b;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+    }
+    .cart-step-item.active .cart-step-num {
+      background: var(--primary-color);
+      color: white;
+    }
+    .cart-step-divider {
+      flex: 1;
+      height: 2px;
+      background: #e2e8f0;
+      margin: 0 16px;
+    }
+
+    /* Container Grid */
+    .cart-layout {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+      display: grid;
+      grid-template-columns: 1fr 390px;
+      gap: 25px;
+      align-items: start;
+    }
+
+    /* Free Shipping Progress */
+    .freeship-meter-card {
+      background: #ecfdf5;
+      border: 1px solid #a7f3d0;
+      border-radius: 10px;
+      padding: 14px 18px;
+      margin-bottom: 20px;
+    }
+    .freeship-text {
+      font-size: 13px;
+      color: #065f46;
+      font-weight: 600;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .freeship-bar-bg {
+      height: 7px;
+      background: #d1fae5;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    .freeship-bar-fill {
+      height: 100%;
+      background: var(--primary-color);
+      border-radius: 10px;
+      transition: width 0.4s ease;
+    }
+
+    /* Left Card: Items */
+    .cart-main-card {
+      background: white;
+      border-radius: 12px;
+      border: 1px solid #e2e8f0;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+      overflow: hidden;
+    }
+    .cart-main-header {
+      padding: 16px 22px;
+      border-bottom: 1px solid #f1f5f9;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #ffffff;
+    }
+    .cart-main-header h2 {
+      font-size: 17px;
+      color: var(--text-heading);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-clear-cart {
+      background: none;
+      border: none;
+      color: #ef4444;
+      font-size: 13px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-weight: 500;
+    }
+    .btn-clear-cart:hover {
+      text-decoration: underline;
+    }
+
+    /* Cart Item Row */
+    .cart-item-row {
+      display: grid;
+      grid-template-columns: 80px 1fr 140px 120px 40px;
+      align-items: center;
+      gap: 15px;
+      padding: 16px 22px;
+      border-bottom: 1px solid #f1f5f9;
+      transition: background 0.15s;
+    }
+    .cart-item-row:last-child {
+      border-bottom: none;
+    }
+    .cart-item-row:hover {
+      background: #fafcff;
+    }
+    .cart-item-img {
+      width: 75px;
+      height: 75px;
+      border-radius: 8px;
+      object-fit: cover;
+      border: 1px solid #e2e8f0;
+    }
+    .cart-item-info h4 {
+      font-size: 15px;
+      color: var(--text-heading);
+      margin-bottom: 4px;
+      line-height: 1.35;
+    }
+    .cart-item-unit-price {
+      font-size: 13px;
+      color: #64748b;
+    }
+
+    /* Quantity Controls */
+    .qty-stepper {
+      display: inline-flex;
+      align-items: center;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      overflow: hidden;
+      background: #ffffff;
+    }
+    .qty-step-btn {
+      width: 32px;
+      height: 32px;
+      background: #f8fafc;
+      border: none;
+      color: #334155;
+      cursor: pointer;
+      font-size: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.15s;
+    }
+    .qty-step-btn:hover {
+      background: #e2e8f0;
+      color: #0f172a;
+    }
+    .qty-input {
+      width: 44px;
+      height: 32px;
+      border: none;
+      text-align: center;
+      font-size: 14px;
+      font-weight: 700;
+      color: #0f172a;
+      outline: none;
+      background: white;
+    }
+    .cart-item-subtotal {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--primary-color);
+      text-align: right;
+    }
+    .btn-item-delete {
+      background: none;
+      border: none;
+      color: #94a3b8;
+      cursor: pointer;
+      font-size: 16px;
+      padding: 6px;
+      border-radius: 4px;
+      transition: all 0.2s;
+    }
+    .btn-item-delete:hover {
+      color: #ef4444;
+      background: #fee2e2;
+    }
+
+    /* Right Checkout Box */
+    .checkout-sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .checkout-card {
+      background: white;
+      border-radius: 12px;
+      border: 1px solid #e2e8f0;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+      padding: 22px;
+    }
+    .card-heading {
+      font-size: 16px;
+      color: var(--text-heading);
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Coupon Pills */
+    .coupon-chips-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-top: 10px;
+    }
+    .coupon-chip {
+      background: #f1f5f9;
+      border: 1px dashed #cbd5e1;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 12px;
+      color: #334155;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.2s;
+    }
+    .coupon-chip:hover {
+      background: #ecfdf5;
+      border-color: #10b981;
+      color: #065f46;
+    }
+
+    /* Summary Breakdown */
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 12px;
+      font-size: 14px;
+      color: #64748b;
+    }
+    .summary-row.total {
+      border-top: 1px solid #e2e8f0;
+      padding-top: 14px;
+      margin-top: 14px;
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--primary-color);
+    }
+
+    /* Payment Radio Cards */
+    .payment-options-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+    .payment-option-card {
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      padding: 12px 14px;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      cursor: pointer;
+      transition: all 0.2s;
+      background: #ffffff;
+    }
+    .payment-option-card:hover {
+      border-color: var(--primary-color);
+      background: #f0fdf4;
+    }
+    .payment-option-card.selected {
+      border-color: var(--primary-color);
+      background: #ecfdf5;
+      box-shadow: 0 0 0 1px var(--primary-color);
+    }
+    .payment-option-card input[type="radio"] {
+      margin-top: 3px;
+      accent-color: var(--primary-color);
+    }
+    .payment-option-info h5 {
+      font-size: 14px;
+      margin: 0 0 2px;
+      color: var(--text-heading);
+    }
+    .payment-option-info p {
+      font-size: 12px;
+      margin: 0;
+      color: #64748b;
+    }
+
+    /* Bank QR Box */
+    .bank-qr-preview-box {
+      background: #f8fafc;
+      border: 1px dashed #94a3b8;
+      border-radius: 8px;
+      padding: 14px;
+      margin-bottom: 16px;
+      font-size: 12px;
+      color: #334155;
+    }
+
+    /* Trust badges */
+    .trust-badges-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 15px;
+      font-size: 11px;
+      color: #64748b;
+    }
+    .trust-badge-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Order confirmation banner */
+    .order-success-card {
+      max-width: 800px;
+      margin: 20px auto 40px;
+      background: white;
+      border-radius: 14px;
+      border: 1px solid #a7f3d0;
+      padding: 35px 30px;
+      box-shadow: 0 10px 35px rgba(16, 185, 129, 0.1);
+      text-align: center;
+    }
+    .success-icon-bubble {
+      width: 72px;
+      height: 72px;
+      background: #ecfdf5;
+      color: #10b981;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 36px;
+      margin: 0 auto 18px;
+      box-shadow: 0 4px 15px rgba(16, 185, 129, 0.25);
+    }
+
+    @media (max-width: 950px) {
+      .cart-layout {
+        grid-template-columns: 1fr;
+      }
+      .cart-item-row {
+        grid-template-columns: 65px 1fr 110px 30px;
+      }
+      .cart-item-unit-price {
+        display: none;
+      }
+    }
+
+    /* ===================================================
+       BOTTOM STICKY ACTION TABS (Thanh tab tiện ích dính đáy màn hình)
+       Luôn luôn cố định ở đáy màn hình (bottom: 0) kể cả khi cuộn trang
+       =================================================== */
+    .gm-floating-dock {
+      position: fixed !important;
+      bottom: 0 !important;
+      right: 24px !important;
+      z-index: 99999 !important;
+      display: flex !important;
+      flex-direction: row !important;
+      align-items: flex-end !important;
+      gap: 10px !important;
+      pointer-events: none !important;
+      line-height: normal !important;
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+
+    .dock-btn {
+      pointer-events: auto !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      gap: 7px !important;
+      height: 42px !important;
+      padding: 0 16px !important;
+      border-radius: 8px 8px 0 0 !important;
+      text-decoration: none !important;
+      font-weight: 600 !important;
+      font-size: 13.5px !important;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
+      box-shadow: 0 -3px 12px rgba(0, 0, 0, 0.16) !important;
+      transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s ease, background-color 0.2s ease !important;
+      cursor: pointer !important;
+      user-select: none !important;
+      border: none !important;
+      outline: none !important;
+      position: relative !important;
+      box-sizing: border-box !important;
+      white-space: nowrap !important;
+    }
+
+    .dock-btn:hover {
+      transform: translateY(-4px) !important;
+      box-shadow: 0 -6px 18px rgba(0, 0, 0, 0.24) !important;
+    }
+
+    .dock-btn:active {
+      transform: translateY(0) !important;
+    }
+
+    /* Tab 1: Theo dõi tiến trình đơn hàng */
+    .dock-btn-track {
+      background: #0284c7 !important;
+      color: #ffffff !important;
+    }
+
+    .dock-btn-track:hover {
+      background: #0369a1 !important;
+      color: #ffffff !important;
+    }
+
+    .dock-btn-track i {
+      color: #ffffff !important;
+      font-size: 15px !important;
+    }
+
+    /* Tab 2: Chat Shopee-style (Đỏ cam #ee4d2d chuẩn 100% theo mẫu) */
+    .dock-btn-chat {
+      background: #ee4d2d !important;
+      color: #ffffff !important;
+    }
+
+    .dock-btn-chat:hover {
+      background: #d73211 !important;
+      color: #ffffff !important;
+    }
+
+    .dock-chat-icon-wrap {
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+    }
+
+    .dock-chat-caret {
+      font-size: 10px !important;
+      margin-left: 2px !important;
+      opacity: 0.85 !important;
+      color: #ffffff !important;
+    }
+
+    /* Badge số 1 góc trên bên phải của tab Chat (Chuẩn như ảnh mẫu pasted-image-1.png) */
+    .dock-badge-tab {
+      position: absolute !important;
+      top: -7px !important;
+      right: -5px !important;
+      background-color: #ee4d2d !important;
+      color: #ffffff !important;
+      border-radius: 50% !important;
+      min-width: 18px !important;
+      height: 18px !important;
+      padding: 0 4px !important;
+      font-size: 11px !important;
+      font-weight: 700 !important;
+      line-height: 14px !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      border: 2px solid #ffffff !important;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25) !important;
+    }
+
+    .live-chat-widget {
+      position: fixed !important;
+      bottom: 50px !important;
+      right: 24px !important;
+      width: 380px !important;
+      max-width: calc(100vw - 32px) !important;
+      height: 520px !important;
+      max-height: calc(100vh - 80px) !important;
+      background: #ffffff !important;
+      border-radius: 14px !important;
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.22) !important;
+      border: 1px solid #e2e8f0 !important;
+      z-index: 100000 !important;
+      display: none;
+      flex-direction: column !important;
+      overflow: hidden !important;
+    }
+
+    .live-chat-widget.active {
+      display: flex !important;
+    }
+
+    @media (max-width: 600px) {
+      .gm-floating-dock {
+        right: 12px !important;
+        gap: 6px !important;
+      }
+      .dock-btn {
+        height: 38px !important;
+        padding: 0 12px !important;
+        font-size: 12px !important;
+      }
+    }

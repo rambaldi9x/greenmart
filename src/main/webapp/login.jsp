@@ -8,52 +8,7 @@
   <title>Đăng nhập & Đăng ký - GreenMart</title>
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <style>
-    .auth-page {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      background: #f4f6f8;
-    }
-    .auth-container {
-      max-width: 440px;
-      width: 92%;
-      margin: 50px auto;
-      background: white;
-      padding: 35px 30px;
-      border-radius: 12px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-    }
-    .auth-tabs {
-      display: flex;
-      border-bottom: 2px solid #edf2f7;
-      margin-bottom: 25px;
-    }
-    .auth-tab {
-      flex: 1;
-      text-align: center;
-      padding: 12px;
-      font-weight: 600;
-      color: var(--text-body);
-      text-decoration: none;
-      border-bottom: 2px solid transparent;
-      margin-bottom: -2px;
-      transition: all 0.2s;
-    }
-    .auth-tab.active {
-      color: var(--primary-color);
-      border-color: var(--primary-color);
-    }
-    .alert-error {
-      background: #fef2f2;
-      border-left: 4px solid #ef4444;
-      color: #b91c1c;
-      padding: 12px 14px;
-      border-radius: 4px;
-      margin-bottom: 20px;
-      font-size: 14px;
-    }
-  </style>
+  <link rel="stylesheet" href="css/login.css">
 </head>
 <body class="auth-page">
 

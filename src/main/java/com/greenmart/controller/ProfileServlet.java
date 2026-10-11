@@ -2,6 +2,8 @@ package com.greenmart.controller;
 
 import com.greenmart.entity.Order;
 import com.greenmart.entity.User;
+import com.greenmart.model.ServiceResult;
+import com.greenmart.model.UserOrderStats;
 import com.greenmart.service.OrderService;
 import com.greenmart.service.UserService;
 
@@ -43,16 +45,8 @@ public class ProfileServlet extends HttpServlet {
         session.setAttribute("user", freshUser);
 
         List<Order> orders = orderService.getOrdersByUserId(freshUser.getId());
-        double totalSpent = 0.0;
-        int completedOrders = 0;
-        for (Order o : orders) {
-            if ("Completed".equalsIgnoreCase(o.getStatus()) || "Delivered".equalsIgnoreCase(o.getStatus())) {
-                completedOrders++;
-                if (o.getTotal() != null) {
-                    totalSpent += o.getTotal();
-                }
-            }
-        }
+        UserOrderStats stats = orderService.getUserOrderStats(freshUser.getId());
+        stats.applyToRequest(request);
 
         String tab = request.getParameter("tab");
         if (tab == null || tab.trim().isEmpty()) {
@@ -61,9 +55,6 @@ public class ProfileServlet extends HttpServlet {
 
         request.setAttribute("currentUser", freshUser);
         request.setAttribute("orders", orders);
-        request.setAttribute("totalOrders", orders.size());
-        request.setAttribute("completedOrders", completedOrders);
-        request.setAttribute("totalSpent", totalSpent);
         request.setAttribute("activeTab", tab);
 
         request.getRequestDispatcher("/profile.jsp").forward(request, response);
@@ -92,20 +83,14 @@ public class ProfileServlet extends HttpServlet {
             String phone = request.getParameter("phone");
             String address = request.getParameter("address");
 
-            if (username == null || username.trim().isEmpty()) {
-                session.setAttribute("profileError", "Họ và tên không được để trống!");
-                session.removeAttribute("profileSuccess");
+            ServiceResult<User> result = userService.updateProfileWithValidation(currentUser.getId(), username, phone, address);
+            if (result.isSuccess()) {
+                session.setAttribute("user", result.getData());
+                session.setAttribute("profileSuccess", result.getMessage());
+                session.removeAttribute("profileError");
             } else {
-                boolean ok = userService.updateProfile(currentUser.getId(), username, phone, address);
-                if (ok) {
-                    User updatedUser = userService.getUserById(currentUser.getId());
-                    session.setAttribute("user", updatedUser);
-                    session.setAttribute("profileSuccess", "Cập nhật thông tin cá nhân thành công!");
-                    session.removeAttribute("profileError");
-                } else {
-                    session.setAttribute("profileError", "Không thể cập nhật thông tin cá nhân. Vui lòng thử lại!");
-                    session.removeAttribute("profileSuccess");
-                }
+                session.setAttribute("profileError", result.getMessage());
+                session.removeAttribute("profileSuccess");
             }
             response.sendRedirect(request.getContextPath() + "/profile?tab=profile");
 
@@ -114,29 +99,14 @@ public class ProfileServlet extends HttpServlet {
             String newPassword = request.getParameter("newPassword");
             String confirmPassword = request.getParameter("confirmPassword");
 
-            if (oldPassword == null || !oldPassword.equals(currentUser.getPassword())) {
-                session.setAttribute("profileError", "Mật khẩu hiện tại không chính xác!");
-                session.removeAttribute("profileSuccess");
-            } else if (newPassword == null || newPassword.length() < 6) {
-                session.setAttribute("profileError", "Mật khẩu mới phải có ít nhất 6 ký tự!");
-                session.removeAttribute("profileSuccess");
-            } else if (!newPassword.equals(confirmPassword)) {
-                session.setAttribute("profileError", "Mật khẩu xác nhận không khớp!");
-                session.removeAttribute("profileSuccess");
-            } else if (newPassword.equals(oldPassword)) {
-                session.setAttribute("profileError", "Mật khẩu mới không được trùng với mật khẩu hiện tại!");
-                session.removeAttribute("profileSuccess");
+            ServiceResult<User> result = userService.changePasswordWithValidation(currentUser.getId(), oldPassword, newPassword, confirmPassword);
+            if (result.isSuccess()) {
+                session.setAttribute("user", result.getData());
+                session.setAttribute("profileSuccess", result.getMessage());
+                session.removeAttribute("profileError");
             } else {
-                boolean ok = userService.changePassword(currentUser.getId(), oldPassword, newPassword);
-                if (ok) {
-                    User updatedUser = userService.getUserById(currentUser.getId());
-                    session.setAttribute("user", updatedUser);
-                    session.setAttribute("profileSuccess", "Đổi mật khẩu thành công!");
-                    session.removeAttribute("profileError");
-                } else {
-                    session.setAttribute("profileError", "Không thể đổi mật khẩu. Vui lòng thử lại!");
-                    session.removeAttribute("profileSuccess");
-                }
+                session.setAttribute("profileError", result.getMessage());
+                session.removeAttribute("profileSuccess");
             }
             response.sendRedirect(request.getContextPath() + "/profile?tab=password");
 

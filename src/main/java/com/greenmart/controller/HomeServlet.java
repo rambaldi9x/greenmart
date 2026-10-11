@@ -29,18 +29,12 @@ public class HomeServlet extends HttpServlet {
         String detailIdStr = request.getParameter("detailId");
 
         List<Product> products = productService.filterProducts(category, keyword, minPriceStr, maxPriceStr);
-
-        if (detailIdStr != null && !detailIdStr.trim().isEmpty()) {
-            try {
-                Long detailId = Long.parseLong(detailIdStr.trim());
-                Product selectedProduct = productService.getProductById(detailId);
-                request.setAttribute("selectedProduct", selectedProduct);
-            } catch (Exception ignored) {}
-        }
+        Product selectedProduct = productService.getProductByIdSafe(detailIdStr);
 
         String activeSlug = ProductService.mapDbNameToSlug(category);
 
         request.setAttribute("products", products);
+        request.setAttribute("selectedProduct", selectedProduct);
         request.setAttribute("category", activeSlug);
         request.setAttribute("keyword", keyword != null ? keyword : "");
         request.setAttribute("minPrice", minPriceStr != null ? minPriceStr : "");

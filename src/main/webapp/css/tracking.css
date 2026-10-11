@@ -1,0 +1,464 @@
+.tracking-page {
+      background: #f6f8fb;
+      min-height: 100vh;
+      padding-bottom: 60px;
+    }
+    .tracking-hero {
+      background: linear-gradient(135deg, #253d4e 0%, #2f4858 100%);
+      color: white;
+      padding: 40px 20px;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    .tracking-hero h1 {
+      font-size: 28px;
+      margin-bottom: 8px;
+      color: white;
+    }
+    .tracking-hero p {
+      color: #cbd5e1;
+      font-size: 14px;
+      max-width: 600px;
+      margin: 0 auto 20px;
+    }
+    .search-tracking-card {
+      max-width: 650px;
+      margin: -30px auto 30px;
+      background: white;
+      border-radius: 12px;
+      padding: 24px 28px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+      border: 1px solid #e2e8f0;
+    }
+    .tracking-input-group {
+      display: flex;
+      gap: 10px;
+    }
+    .tracking-input-group input {
+      flex: 1;
+      padding: 12px 18px;
+      border: 2px solid #e2e8f0;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .tracking-input-group input:focus {
+      border-color: var(--primary-color);
+    }
+    .tracking-input-group button {
+      padding: 12px 24px;
+      background: var(--primary-color);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: background 0.2s;
+    }
+    .tracking-input-group button:hover {
+      background: var(--primary-dark);
+    }
+    .quick-codes-bar {
+      margin-top: 14px;
+      font-size: 13px;
+      color: #64748b;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .quick-code-pill {
+      background: #f1f5f9;
+      color: #334155;
+      padding: 3px 10px;
+      border-radius: 12px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 12px;
+      transition: all 0.2s;
+    }
+    .quick-code-pill:hover {
+      background: var(--primary-color);
+      color: white;
+    }
+    .tracking-result-container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    .order-status-card {
+      background: white;
+      border-radius: 14px;
+      padding: 30px;
+      border: 1px solid #e2e8f0;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+      margin-bottom: 25px;
+    }
+    .order-summary-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 18px;
+      border-bottom: 1px dashed #cbd5e1;
+      margin-bottom: 25px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .order-summary-header .title-col h2 {
+      font-size: 20px;
+      color: #0f172a;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .order-summary-header .date-text {
+      color: #64748b;
+      font-size: 13px;
+      margin-top: 4px;
+    }
+
+    /* TRACKER PROGRESS STEPPER */
+    .stepper-wrapper {
+      position: relative;
+      display: flex;
+      justify-content: space-between;
+      margin: 35px 15px 40px;
+    }
+    .stepper-progress-bar {
+      position: absolute;
+      top: 24px;
+      left: 30px;
+      right: 30px;
+      height: 4px;
+      background: #e2e8f0;
+      z-index: 1;
+    }
+    .stepper-progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #3bb77e 0%, #10b981 100%);
+      transition: width 0.4s ease;
+    }
+    .step-node {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      width: 120px;
+    }
+    .step-icon-wrap {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: #f1f5f9;
+      color: #94a3b8;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      margin: 0 auto 10px;
+      border: 3px solid white;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      transition: all 0.3s;
+    }
+    .step-node.completed .step-icon-wrap {
+      background: #3bb77e;
+      color: white;
+      box-shadow: 0 4px 12px rgba(59, 183, 126, 0.4);
+    }
+    .step-node.active .step-icon-wrap {
+      background: #3bb77e;
+      color: white;
+      border-color: #d1fae5;
+      box-shadow: 0 0 0 4px rgba(59, 183, 126, 0.25);
+      animation: pulseActive 2s infinite;
+    }
+    @keyframes pulseActive {
+      0% { box-shadow: 0 0 0 0 rgba(59, 183, 126, 0.5); }
+      70% { box-shadow: 0 0 0 8px rgba(59, 183, 126, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(59, 183, 126, 0); }
+    }
+    .step-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: #1e293b;
+      margin-bottom: 2px;
+    }
+    .step-node.completed .step-title,
+    .step-node.active .step-title {
+      color: #065f46;
+    }
+    .step-desc {
+      font-size: 11px;
+      color: #64748b;
+      line-height: 1.3;
+    }
+    .step-node.pending .step-title {
+      color: #94a3b8;
+    }
+
+    /* Cancelled banner */
+    .banner-canceled {
+      background: #fef2f2;
+      border: 1px solid #fecaca;
+      border-radius: 10px;
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      color: #991b1b;
+      margin-bottom: 20px;
+    }
+    .banner-canceled i {
+      font-size: 28px;
+    }
+
+    /* Info Grid */
+    .tracking-info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      background: #f8fafc;
+      padding: 20px;
+      border-radius: 10px;
+      margin-bottom: 25px;
+    }
+    .info-block label {
+      font-size: 12px;
+      color: #64748b;
+      display: block;
+      margin-bottom: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .info-block .val {
+      font-size: 14px;
+      font-weight: 600;
+      color: #1e293b;
+    }
+
+    /* Items table */
+    .tracking-items-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+    }
+    .tracking-items-table th, .tracking-items-table td {
+      padding: 12px 14px;
+      text-align: left;
+      border-bottom: 1px solid #f1f5f9;
+      font-size: 14px;
+    }
+    .tracking-items-table th {
+      background: #f8fafc;
+      color: #475569;
+      font-size: 13px;
+    }
+
+    .tracking-footer-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 20px;
+      border-top: 1px solid #e2e8f0;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+
+    @media (max-width: 700px) {
+      .tracking-input-group {
+        flex-direction: column;
+      }
+      .tracking-info-grid {
+        grid-template-columns: 1fr;
+      }
+      .stepper-wrapper {
+        flex-direction: column;
+        gap: 20px;
+        margin: 20px 0;
+      }
+      .stepper-progress-bar {
+        display: none;
+      }
+      .step-node {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        width: 100%;
+        text-align: left;
+      }
+      .step-icon-wrap {
+        margin: 0;
+        flex-shrink: 0;
+      }
+    }
+
+    /* ===================================================
+       BOTTOM STICKY ACTION TABS (Thanh tab tiện ích dính đáy màn hình)
+       Luôn luôn cố định ở đáy màn hình (bottom: 0) kể cả khi cuộn trang
+       =================================================== */
+    .gm-floating-dock {
+      position: fixed !important;
+      bottom: 0 !important;
+      right: 24px !important;
+      z-index: 99999 !important;
+      display: flex !important;
+      flex-direction: row !important;
+      align-items: flex-end !important;
+      gap: 10px !important;
+      pointer-events: none !important;
+      line-height: normal !important;
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+
+    .dock-btn {
+      pointer-events: auto !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      gap: 7px !important;
+      height: 42px !important;
+      padding: 0 16px !important;
+      border-radius: 8px 8px 0 0 !important;
+      text-decoration: none !important;
+      font-weight: 600 !important;
+      font-size: 13.5px !important;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
+      box-shadow: 0 -3px 12px rgba(0, 0, 0, 0.16) !important;
+      transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s ease, background-color 0.2s ease !important;
+      cursor: pointer !important;
+      user-select: none !important;
+      border: none !important;
+      outline: none !important;
+      position: relative !important;
+      box-sizing: border-box !important;
+      white-space: nowrap !important;
+    }
+
+    .dock-btn:hover {
+      transform: translateY(-4px) !important;
+      box-shadow: 0 -6px 18px rgba(0, 0, 0, 0.24) !important;
+    }
+
+    .dock-btn:active {
+      transform: translateY(0) !important;
+    }
+
+    /* Tab 1: Giỏ hàng GreenMart */
+    .dock-btn-cart {
+      background: #3bb77e !important;
+      color: #ffffff !important;
+    }
+
+    .dock-btn-cart:hover {
+      background: #2ea06c !important;
+      color: #ffffff !important;
+    }
+
+    .dock-btn-cart i {
+      color: #ffffff !important;
+      font-size: 15px !important;
+    }
+
+    /* Tab 2: Chat Shopee-style (Đỏ cam #ee4d2d chuẩn 100% theo mẫu) */
+    .dock-btn-chat {
+      background: #ee4d2d !important;
+      color: #ffffff !important;
+    }
+
+    .dock-btn-chat:hover {
+      background: #d73211 !important;
+      color: #ffffff !important;
+    }
+
+    .dock-chat-icon-wrap {
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+    }
+
+    .dock-chat-caret {
+      font-size: 10px !important;
+      margin-left: 2px !important;
+      opacity: 0.85 !important;
+      color: #ffffff !important;
+    }
+
+    /* Badge số 1 góc trên bên phải của tab Chat (Chuẩn như ảnh mẫu pasted-image-1.png) */
+    .dock-badge-tab {
+      position: absolute !important;
+      top: -7px !important;
+      right: -5px !important;
+      background-color: #ee4d2d !important;
+      color: #ffffff !important;
+      border-radius: 50% !important;
+      min-width: 18px !important;
+      height: 18px !important;
+      padding: 0 4px !important;
+      font-size: 11px !important;
+      font-weight: 700 !important;
+      line-height: 14px !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      border: 2px solid #ffffff !important;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25) !important;
+    }
+
+    .dock-icon-box {
+      position: relative !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+    }
+
+    .dock-badge {
+      position: absolute !important;
+      top: -8px !important;
+      right: -10px !important;
+      background-color: #ef4444 !important;
+      color: white !important;
+      border-radius: 12px !important;
+      padding: 1px 6px !important;
+      font-size: 10.5px !important;
+      font-weight: 700 !important;
+      min-width: 16px !important;
+      text-align: center !important;
+      line-height: 14px !important;
+      border: 2px solid #ffffff !important;
+    }
+
+    .dock-cart-info {
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 6px !important;
+    }
+
+    .dock-subtotal {
+      background: rgba(0, 0, 0, 0.2) !important;
+      padding: 2px 8px !important;
+      border-radius: 12px !important;
+      font-size: 12px !important;
+      font-weight: 700 !important;
+    }
+
+    @media (max-width: 600px) {
+      .gm-floating-dock {
+        right: 12px !important;
+        gap: 6px !important;
+      }
+      .dock-btn {
+        height: 38px !important;
+        padding: 0 12px !important;
+        font-size: 12px !important;
+      }
+      .dock-subtotal {
+        display: none !important;
+      }
+    }
